@@ -1,10 +1,6 @@
 title: Single RNA-seq data analysis with R
-description: [/logos/excelerate.png](/logos/excelerate.png)
+description: ELIXIR EXCELERATE
 theme: jekyll-theme-leap-day
-url: https://olgadet.github.io/excelerate-scRNAseq/
-use_logo: true
-logo: /logos/excelerate.png
-search_in_topnav: true
 plugins:
   - jekyll-relative-links
 relative_links:
