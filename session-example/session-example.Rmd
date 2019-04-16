@@ -1,6 +1,6 @@
 ---
 title: "Example session"
-output: pdf_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
