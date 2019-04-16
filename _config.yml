@@ -1,4 +1,7 @@
+title: Single RNA-seq data analysis with R
 theme: jekyll-theme-leap-day
+url: https://olgadet.github.io/excelerate-scRNAseq/
+logo: logos/excelerate.png
 plugins:
   - jekyll-relative-links
 relative_links:
