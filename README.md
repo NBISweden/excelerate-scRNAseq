@@ -1,42 +1,61 @@
-## Welcome to GitHub Pages
+[logo](logos/excelerate.png)
 
-You can use the [editor on GitHub](https://github.com/olgadet/test-02/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+## About
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+This international hands-on course covers several aspects of single cell RNA-seq data analysis, ranging from clustering and differential gene expression analysis to trajectories, cell type identification and spatial transcriptomics. The course is kindly sponsored by the ELIXIR EXCELERATE project.
 
-### Markdown
+### Date
+27-05-2019 - 29.05.2019
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Location
+The event is organised at the CSC Training Facilities located in the premises of CSC at Keilaranta 14, Espoo, Finland. The best way to reach us is by public transportation; more detailed travel tips are available.
 
-```markdown
-Syntax highlighted code block
+### Prerequisities
+In order to participate in this course you should have prior experience in using R.
 
-# Header 1
-## Header 2
-### Header 3
+## Programme
+### Monday 27.5.2019
 
-- Bulleted
-- List
+- Introduction and experimental design (Åsa Björklund)
+- QC, data preprocessing (Åsa Björklund)
+- Normalisation and batch effect correction (Heli Pessa, Ahmed Mahfouz)
 
-1. Numbered
-2. List
+### Tuesday 28.5.2019
+- Dimensionality reduction (PCA, tSNE and UMAP) (Paulo Czarnewski)
+- Clustering and visualisation (Ahmed Mahfouz)
+- Differential gene expression analysis (Ståle Nygård and Olga Dethlefsen)
 
-**Bold** and _Italic_ and `Code` text
+### Wednesday 29.5.2019
+- Cell type identification (Philip Lijnzaad)
+- Trajectories/Pseudo-time (Paulo Czarnewski)
+- Spatial transcriptomics (Jeongbin Park and Lars Borm)
+- Integration of data, e.g. CITE-Seq (Ahmed Mahfouz)
 
-[Link](url) and ![Image](src)
-```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### Learning objectives
+After this course you will be able to:
+- use a range of bioinformatics tools to analyze single cell RNA-seq data
+- discuss a variety of aspects of single cell RNA-seq data analysis
+- understand the advantages and limitations of single cell RNA-seq data analysis
 
-### Jekyll Themes
+### Lecturers
+- Åsa Björklund (SciLifeLab, NBIS, Sweden)
+- Paulo Czarnewski (SciLifeLab, NBIS, Sweden)
+- Ahmed Mahfouz (LUMC, Netherlands)
+- Ståle Nygård (UIO, Norway)
+- Olga Dethlefsen (SciLifeLab, NBIS, Sweden)
+- Jeongbin Park (Charité-Universitätsmedizin Berlin, Germany)
+- Lars Borm (Karolinska Institutet, Sweden)
+- Jules Gilet (Institut Curie, France)
+- Heli Pessa (University of Helsinki, Finland)
+- Bishwa Ghimire (FIMM, Finland)
+- Philip Lijnzaad (Princess Maxima Center for Pediatric Oncology, Netherlands)
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/olgadet/test-02/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
 
-### Support or Contact
+### Additional information
+- Content: eija.korpelainen@csc.fi
+- Practicalities: event-support@csc.fi
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
-
-### Example links
-[Example session tutorial.md](session-example/session-example.md)
-
-[Example session slides.pdf](session-example/session-example.pdf)
+### Example links (_will be removed_)
+- [Example session tutorial.md](session-example/session-example.md)
+- [Example session slides.pdf](session-example/session-example.pdf)
