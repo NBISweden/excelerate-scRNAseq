@@ -1,4 +1,4 @@
-[logo](logos/excelerate.png)
+![logo](logos/excelerate.png)
 
 ## About
 
