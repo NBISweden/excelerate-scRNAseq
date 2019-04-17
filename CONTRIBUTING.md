@@ -38,7 +38,6 @@ e.g. session-example
 
  # Push to feature when ready
  git push
-
  ```
 
 _Note Git commit good practices_
