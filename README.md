@@ -8,7 +8,7 @@ This international hands-on course covers several aspects of single cell RNA-seq
 27-05-2019 - 29.05.2019
 
 ### Location
-The event is organised at the CSC Training Facilities located in the premises of CSC at Keilaranta 14, Espoo, Finland. The best way to reach us is by public transportation; more detailed travel tips are available.
+The event is organised at the CSC Training Facilities located in the premises of CSC at Keilaranta 14, Espoo, Finland. The best way to reach us is by public transportation; more detailed travel tips are available [here](https://www.csc.fi/how-to-reach-us). 
 
 ### Prerequisities
 In order to participate in this course you should have prior experience in using R.
