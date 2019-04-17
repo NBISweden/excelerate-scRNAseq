@@ -1,6 +1,8 @@
 ![logo](logos/excelerate.png)
 
 # [Schedule](schedule.md)
+-------------
+
 
 ## About
 
@@ -53,5 +55,5 @@ After this course you will be able to:
 - Philip Lijnzaad (Princess Maxima Center for Pediatric Oncology, Netherlands)
 
 ### Additional information
-- Content: eija.korpelainen@csc.fi
-- Practicalities: event-support@csc.fi
+- Content: <eija.korpelainen@csc.fi>
+- Practicalities: <event-support@csc.fi>
