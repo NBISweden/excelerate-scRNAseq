@@ -8,10 +8,16 @@ This international hands-on course covers several aspects of single cell RNA-seq
 27-05-2019 - 29.05.2019
 
 ### Location
-The event is organised at the CSC Training Facilities located in the premises of CSC at Keilaranta 14, Espoo, Finland. The best way to reach us is by public transportation; more detailed travel tips are available [here](https://www.csc.fi/how-to-reach-us). 
+The event is organised at the CSC Training Facilities located in the premises of CSC at Keilaranta 14, Espoo, Finland. The best way to reach us is by public transportation; more detailed travel tips are available [here](https://www.csc.fi/how-to-reach-us).
 
 ### Prerequisities
 In order to participate in this course you should have prior experience in using R.
+
+### Learning objectives
+After this course you will be able to:
+- use a range of bioinformatics tools to analyze single cell RNA-seq data
+- discuss a variety of aspects of single cell RNA-seq data analysis
+- understand the advantages and limitations of single cell RNA-seq data analysis
 
 ## Programme
 ### Monday 27.5.2019
@@ -31,13 +37,6 @@ In order to participate in this course you should have prior experience in using
 - Spatial transcriptomics (Jeongbin Park and Lars Borm)
 - Integration of data, e.g. CITE-Seq (Ahmed Mahfouz)
 
-
-### Learning objectives
-After this course you will be able to:
-- use a range of bioinformatics tools to analyze single cell RNA-seq data
-- discuss a variety of aspects of single cell RNA-seq data analysis
-- understand the advantages and limitations of single cell RNA-seq data analysis
-
 ### Lecturers
 - Åsa Björklund (SciLifeLab, NBIS, Sweden)
 - Paulo Czarnewski (SciLifeLab, NBIS, Sweden)
@@ -50,7 +49,6 @@ After this course you will be able to:
 - Heli Pessa (University of Helsinki, Finland)
 - Bishwa Ghimire (FIMM, Finland)
 - Philip Lijnzaad (Princess Maxima Center for Pediatric Oncology, Netherlands)
-
 
 ### Additional information
 - Content: eija.korpelainen@csc.fi
