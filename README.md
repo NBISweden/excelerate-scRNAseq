@@ -53,7 +53,3 @@ After this course you will be able to:
 ### Additional information
 - Content: eija.korpelainen@csc.fi
 - Practicalities: event-support@csc.fi
-
-### Example links (_will be removed_)
-- [Example session tutorial.md](session-example/session-example.md)
-- [Example session slides.pdf](session-example/session-example.pdf)
