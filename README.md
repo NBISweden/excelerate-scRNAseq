@@ -1,5 +1,7 @@
 ![logo](logos/excelerate.png)
 
+# [Schedule](schedule.md)
+
 ## About
 
 This international hands-on course covers several aspects of single cell RNA-seq data analysis, ranging from clustering and differential gene expression analysis to trajectories, cell type identification and spatial transcriptomics. The course is kindly sponsored by the ELIXIR EXCELERATE project.
