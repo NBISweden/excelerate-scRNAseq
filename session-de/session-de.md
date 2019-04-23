@@ -49,6 +49,8 @@ Differential expression
 
 ![menti](session-de-files/images/intro-menti-01.png)
 
+-----
+
 ## Characteristics of scRNA-seq data
 
   - high noise levels (technical and biological factors)
@@ -63,6 +65,8 @@ Differential expression
 ##### Example distributions
 
 ![menti](session-de-files/images/intro-distributions.png)
+
+-----
 
 ## Live-coding
 

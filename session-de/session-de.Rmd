@@ -49,6 +49,8 @@ knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 #### So why do we need to think about DE?
 ![menti](session-de-files/images/intro-menti-01.png)
 
+--------
+
 ## Characteristics of scRNA-seq data
 - high noise levels (technical and biological factors)
 - low library sizes
@@ -59,6 +61,8 @@ knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 
 ##### Example distributions
 ![menti](session-de-files/images/intro-distributions.png)
+
+----------
 
 ## Live-coding
 _Idea: add a small example of looking at the data, distributions, number of zeros, boxplots comparisons of selected genes_
