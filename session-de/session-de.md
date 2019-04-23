@@ -71,10 +71,14 @@ of zeros, boxplots comparisons of selected genes*
 
 -----
 
-## ToDo (working notes, not part of the tutorial)
+## ToDo
+
+*working notes, not part of the tutorial, will be removed*
 
   - rethink and upadate Menti, maybe use google forms instead
   - add live-coding demo at the end
+  - improve distribution example plot
+  - check image size & set equal dimensions
   - discuss this part: add more plots? add more text? How to improve?
 
 ## [Back to main](../README.md)

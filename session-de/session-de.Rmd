@@ -65,9 +65,13 @@ _Idea: add a small example of looking at the data, distributions, number of zero
 
 ---------
 
-## ToDo (working notes, not part of the tutorial)
+## ToDo 
+_working notes, not part of the tutorial, will be removed_
+
 - rethink and upadate Menti, maybe use google forms instead
 - add live-coding demo at the end
+- improve distribution example plot
+- check image size & set equal dimensions
 - discuss this part: add more plots? add more text? How to improve?
 
 
