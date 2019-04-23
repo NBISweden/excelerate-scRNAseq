@@ -59,6 +59,7 @@
 
 ### Example links (_will be removed_)
 - [Example session tutorial.md](session-example/session-example.md)
+- [Example session tutorial.md](session-example/session-de.md)
 - [Example session slides.pdf](session-example/session-example.pdf)
 
 ## [Back to main](README.md)
