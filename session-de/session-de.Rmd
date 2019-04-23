@@ -1,5 +1,5 @@
 ---
-title: "Differential expression: introduction"
+title: "Differential expression"
 #author: Olga Dethlefsen, Ståle Nygård 
 output: github_document
 
@@ -8,6 +8,8 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 ```
+
+# Introduction
 
 ## Content overview
 - Introduction
@@ -40,7 +42,6 @@ knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 - performing statistical analysis to discover quantitative changes in expression levels between experimental groups
 - i.e. to decide whether, for a given gene, an observed difference in read counts is significant (greater than what would be expected just due to natural random variation)
 
-
 #### DE is an "old problem"
 - known from bulk RNA-seq and microarray studies
 - in fact building on one of the most common statistical problems, i.e comparing groups for statistical differences
@@ -48,7 +49,7 @@ knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 #### So why do we need to think about DE?
 ![menti](session-de-files/images/intro-menti-01.png)
 
-#### Characteristics of scRNA-seq data
+## Characteristics of scRNA-seq data
 - high noise levels (technical and biological factors)
 - low library sizes
 - low amount of available mRNAs results in amplification biases and "dropout events"
@@ -58,6 +59,20 @@ knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 
 ##### Example distributions
 ![menti](session-de-files/images/intro-distributions.png)
+
+## Live-coding
+_Idea: add a small example of looking at the data, distributions, number of zeros, boxplots comparisons of selected genes_
+
+---------
+
+## ToDo 
+_working notes, not part of the tutorial, will be removed_
+
+- rethink and upadate Menti, maybe use google forms instead
+- add live-coding demo at the end
+- improve distribution example plot
+- check image size & set equal dimensions
+- discuss this part: add more plots? add more text? How to improve?
 
 
 ## [Back to main](../README.md)
