@@ -1,5 +1,7 @@
-Differential expression: introduction
+Differential expression
 ================
+
+# Introduction
 
 ## Content overview
 
@@ -47,7 +49,7 @@ Differential expression: introduction
 
 ![menti](session-de-files/images/intro-menti-01.png)
 
-#### Characteristics of scRNA-seq data
+## Characteristics of scRNA-seq data
 
   - high noise levels (technical and biological factors)
   - low library sizes
@@ -61,5 +63,18 @@ Differential expression: introduction
 ##### Example distributions
 
 ![menti](session-de-files/images/intro-distributions.png)
+
+## Live-coding
+
+*Idea: add a small example of looking at the data, distributions, number
+of zeros, boxplots comparisons of selected genes*
+
+-----
+
+## ToDo (working notes, not part of the tutorial)
+
+  - rethink and upadate Menti, maybe use google forms instead
+  - add live-coding demo at the end
+  - discuss this part: add more plots? add more text? How to improve?
 
 ## [Back to main](../README.md)
