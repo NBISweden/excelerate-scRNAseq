@@ -1,11 +1,12 @@
 Quality Control
 ================
 
+Created by: Åsa Björklund
+
 Overview
 ========
 
-Quality control of data for filtering cells using Seurat and Scater packages.
------------------------------------------------------------------------------
+#### Quality control of data for filtering cells using Seurat and Scater packages.
 
 In this tutorial we will look at different ways of doing filtering and cell and exploring variablility in the data.
 
@@ -13,8 +14,7 @@ The first part is using Seurat (<https://satijalab.org/seurat/>) for visualizing
 
 The second part will explore the scater package (<https://bioconductor.org/packages/release/bioc/html/scater.html>) in some more detail. Looking at different ways of visualizing QC-stats and exploring variation in the data.
 
-Dataset
--------
+### Dataset
 
 For this tutorial we will use 3 different PBMC datasets from the 10x Genomics website (<https://support.10xgenomics.com/single-cell-gene-expression/datasets>).
 
@@ -24,6 +24,7 @@ For this tutorial we will use 3 different PBMC datasets from the 10x Genomics we
 
 The datsets can be downloaded with these commands:
 
+    cd data
     curl -O http://cf.10xgenomics.com/samples/cell-exp/3.0.0/pbmc_1k_v2/pbmc_1k_v2_filtered_feature_bc_matrix.h5
     curl -O http://cf.10xgenomics.com/samples/cell-exp/3.0.0/pbmc_1k_v3/pbmc_1k_v3_filtered_feature_bc_matrix.h5
     curl -O http://cf.10xgenomics.com/samples/cell-exp/3.0.0/pbmc_1k_protein_v3/pbmc_1k_protein_v3_filtered_feature_bc_matrix.h5
@@ -36,8 +37,7 @@ suppressMessages(require(scater))
 suppressMessages(require(Matrix))
 ```
 
-Read data
----------
+#### Read data
 
 Here, we use the function Read10X\_h5 to read in the expression matrices.
 
@@ -57,8 +57,7 @@ p3.1k <- p3.1k$`Gene Expression`
 Seurat
 ======
 
-Create Seurat object
---------------------
+### Create Seurat object
 
 First, create Seurat objects for each of the datasets, and then merge into one large seurat object.
 
@@ -90,7 +89,7 @@ table(Idents(alldata))
     ## p3.1k v2.1k v3.1k 
     ##   713   996  1222
 
-### Calculate mitochondrial proportion
+#### Calculate mitochondrial proportion
 
 Seurat automatically calculates some QC-stats, like number of UMIs and features per cell. Stored in columns nCount\_RNA & nFeature\_RNA of the metadata.
 
@@ -104,7 +103,7 @@ percent.mito <- colSums(C[mt.genes,])/colSums(C)*100
 alldata <- AddMetaData(alldata, percent.mito, col.name = "percent.mito")
 ```
 
-### Calculate ribosomal proportion
+#### Calculate ribosomal proportion
 
 In the same manner we will calculate the proportion gene expression that comes from ribosomal proteins. NOTE - add text on why!
 
@@ -114,8 +113,7 @@ percent.ribo <- colSums(C[rb.genes,])/colSums(C)*100
 alldata <- AddMetaData(alldata, percent.ribo, col.name = "percent.ribo")
 ```
 
-Plot QC
--------
+### Plot QC
 
 Now we can plot some of the QC-features as violin plots
 
@@ -171,10 +169,9 @@ FeatureScatter(alldata, feature1 = "nCount_RNA", feature2 = "nFeature_RNA", cell
 
 ![](Quality_control_files/figure-markdown_github/scatter2-1.png)
 
-Filtering
----------
+### Filtering
 
-### Mitochondrial filtering
+#### Mitochondrial filtering
 
 We have quite a lot of cells with high proportion of mitochondrial reads. It could be wise to remove those cells, if we have enough cells left after filtering. Another option would be to either remove all mitochondrial reads from the dataset and hope that the remaining genes still have enough biological signal. A third option would be to just regress out the percent.mito variable during scaling.
 
@@ -202,7 +199,7 @@ VlnPlot(data.filt, features = "percent.mito")
 
 As you can see, there is still quite a lot of variation in percent mito, so it will have to be dealt with in the data analysis.
 
-### Gene detection filtering
+#### Gene detection filtering
 
 Extremely high number of detected genes could indicate doublets. However, depending on the celltype composition in your sample, you may have cells with higher number of genes (and also higher counts) from one celltype.
 
@@ -242,7 +239,7 @@ ncol(data.filt)
 
     ## [1] 2531
 
-### Plot QC-stats again
+#### Plot QC-stats again
 
 Lets plot the same qc-stats another time.
 
@@ -287,8 +284,7 @@ table(Idents(data.filt))
     ## p3.1k v2.1k v3.1k 
     ##   526   933  1072
 
-Calculate cell-cycle scores
----------------------------
+### Calculate cell-cycle scores
 
 Seurat has a function for calculating cell cycle scores based on a list of know S-phase and G2/M-phase genes.
 
@@ -329,8 +325,7 @@ The SCE object also has slots for:
 -   Cell metadata, which can be supplied as a DataFrame object, where rows are cells, and columns are cell attributes (such as cell type, culture condition, day captured, etc.).
 -   Feature metadata, which can be supplied as a DataFrame object, where rows are features (e.g. genes), and columns are feature attributes, such as Ensembl ID, biotype, gc content, etc.
 
-Calculate QC-metrics
---------------------
+### Calculate QC-metrics
 
 By default, the QC metrics are computed from the count data, but this can be changed through the exprs\_values argument. We can also include information on which genes are mitochondrial in the function call.
 
@@ -404,7 +399,9 @@ colnames(rowData(sce))
 
 We will give examples on how to plot some of these.
 
-### Most expressed features
+### Plot QC stats
+
+#### Most expressed features
 
 Let's look at what the top 50 expressed genes are. This can be valuable for detecting genes that are overabundant that may be driving a lot of the variation.
 
@@ -416,7 +413,7 @@ plotHighestExprs(sce, exprs_values = "counts")
 
 As you can see, MALAT1 corresponds to an average of around 4% of the counts. And in some cells as high as ~30% of the counts. I would consider removing that gene before further analysis and clustering. Also, the mitochondrial genes correspond to a high proportion of the total counts.
 
-### Cumulative expression
+#### Cumulative expression
 
 Plot the relative proportion of the library size that is accounted for by the most highly expressed features for each cell (default 500 genes). This can help us look for differences in expression distributions between samples.
 
@@ -427,7 +424,7 @@ plotScater(sce, block1 = "ident", nfeatures = 1000)
 
 ![](Quality_control_files/figure-markdown_github/seq.sat-1.png)
 
-### Plot gene stats
+#### Plot gene stats
 
 The function plotRowData can plot any of the stats in rowData, for instance mean expressioni vs number of cells with detection.
 
@@ -437,7 +434,7 @@ plotRowData(sce, x = "n_cells_by_counts", y = "mean_counts")
 
 ![](Quality_control_files/figure-markdown_github/plot.row-1.png)
 
-### Plot cell stats
+#### Plot cell stats
 
 In the same manner plotColData can plot any of the qc-measures for cells.
 
@@ -453,8 +450,7 @@ multiplot(p1, p2, p3, cols = 2)
 
 ![](Quality_control_files/figure-markdown_github/plot.col-1.png)
 
-Identify outliers in QC-stats
------------------------------
+#### Identify outliers in QC-stats
 
 On method of identifying low quality cells is to run PCA on all the qc-stats and then identify outliers in PCA space.
 
@@ -482,8 +478,7 @@ table(colData(sce)$outlier)
 
 In this case we already filtered out low quality cells and we do not detect any outliers in the QC PCA.
 
-Dimensionality reduction
-------------------------
+### Dimensionality reduction
 
 Plot the cells in reduced space and define color/shape/size by different qc-metrics or meta-data entries.
 
@@ -540,8 +535,7 @@ plotUMAP(object = sce, colour_by="ident")
 
 ![](Quality_control_files/figure-markdown_github/dim.red-5.png)
 
-Explanatory factors
--------------------
+### Explanatory factors
 
 We can check how much of different factors - like different metadata (e.g samples, timepoints, treatments etc.) or different QC-metrics,
 
