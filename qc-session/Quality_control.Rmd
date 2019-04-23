@@ -1,0 +1,400 @@
+---
+title: "Quality Control"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Overview
+
+## Quality control of data for filtering cells using Seurat and Scater packages.
+
+In this tutorial we will look at different ways of doing filtering and cell and exploring variablility in the data. 
+
+The first part is using Seurat (https://satijalab.org/seurat/) for visualizing QC-measures and filtering cells. However, we will not go into depth in how to use the Seurat package as this will be covered in other tutorials. 
+
+The second part will explore the scater package (https://bioconductor.org/packages/release/bioc/html/scater.html) in some more detail. Looking at different ways of visualizing QC-stats and exploring variation in the data.
+
+## Dataset
+
+For this tutorial we will use 3 different PBMC datasets from the 10x Genomics website (https://support.10xgenomics.com/single-cell-gene-expression/datasets). 
+
+* 1k PBMCs using 10x v2 chemistry
+* 1k PBMCs using 10x v3 chemistry
+* 1k PBMCs using 10x v3 chemistry in combination with cell surface proteins, but disregarding the protein data and only looking at gene expression.
+
+The datsets can be downloaded with these commands:
+
+```
+curl -O http://cf.10xgenomics.com/samples/cell-exp/3.0.0/pbmc_1k_v2/pbmc_1k_v2_filtered_feature_bc_matrix.h5
+curl -O http://cf.10xgenomics.com/samples/cell-exp/3.0.0/pbmc_1k_v3/pbmc_1k_v3_filtered_feature_bc_matrix.h5
+curl -O http://cf.10xgenomics.com/samples/cell-exp/3.0.0/pbmc_1k_protein_v3/pbmc_1k_protein_v3_filtered_feature_bc_matrix.h5
+```
+
+
+Load required packages:
+
+```{r packages}
+suppressMessages(require(Seurat))
+suppressMessages(require(scater))
+suppressMessages(require(Matrix))
+```
+
+## Read data
+
+Here, we use the function Read10X_h5 to read in the expression matrices.
+
+```{r load}
+v3.1k <- Read10X_h5("data/pbmc_1k_v3_filtered_feature_bc_matrix.h5", use.names = T)
+v2.1k <- Read10X_h5("data/pbmc_1k_v2_filtered_feature_bc_matrix.h5", use.names = T)
+p3.1k <- Read10X_h5("data/pbmc_1k_protein_v3_filtered_feature_bc_matrix.h5", use.names = T)
+# select only gene expression data
+p3.1k <- p3.1k$`Gene Expression`
+
+```
+
+# Seurat
+
+## Create Seurat object
+
+First, create Seurat objects for each of the datasets, and then merge into one large seurat object.
+
+```{r create.seurat}
+sdata.v2.1k <- CreateSeuratObject(v2.1k, project = "v2.1k")
+sdata.v3.1k <- CreateSeuratObject(v3.1k, project = "v3.1k")
+sdata.p3.1k <- CreateSeuratObject(p3.1k, project = "p3.1k")
+
+# merge into one single seurat object. Add cell ids just in case you have overlapping barcodes between the datasets.
+alldata <- merge(sdata.v2.1k, c(sdata.v3.1k,sdata.p3.1k), add.cell.ids=c("v2.1k","v3.1k","p3.1k"))
+
+# also add in a metadata column that indicates v2 vs v3 chemistry
+chemistry <- rep("v3",ncol(alldata))
+chemistry[Idents(alldata) == "v2.1k"] <- "v2"
+alldata <- AddMetaData(alldata, chemistry, col.name = "Chemistry")
+alldata
+
+# check number of cells from each sample, is stored in the orig.ident slot of metadata and is autmatically set as active ident.
+table(Idents(alldata))
+```
+
+### Calculate mitochondrial proportion
+
+Seurat automatically calculates some QC-stats, like number of UMIs and features per cell. Stored in columns nCount_RNA & nFeature_RNA of the metadata.
+
+We will manually calculate the proportion of mitochondrial reads and add to the metadata slot.
+
+```{r mito}
+mt.genes <- rownames(alldata)[grep("^MT-",rownames(alldata))]
+C<-GetAssayData(object = alldata, slot = "counts")
+
+percent.mito <- colSums(C[mt.genes,])/colSums(C)*100
+alldata <- AddMetaData(alldata, percent.mito, col.name = "percent.mito")
+```
+
+### Calculate ribosomal proportion
+
+In the same manner we will calculate the proportion gene expression that comes from ribosomal proteins. NOTE - add text on why!
+
+```{r ribo}
+rb.genes <- rownames(alldata)[grep("^RP[SL]",rownames(alldata))]
+percent.ribo <- colSums(C[rb.genes,])/colSums(C)*100
+alldata <- AddMetaData(alldata, percent.ribo, col.name = "percent.ribo")
+```
+
+## Plot QC
+
+Now we can plot some of the QC-features as violin plots
+
+```{r vln.plot}
+VlnPlot(alldata, features = "nFeature_RNA", pt.size = 0.1) + NoLegend()
+VlnPlot(alldata, features = "nCount_RNA", pt.size = 0.1) + NoLegend()
+VlnPlot(alldata, features = "percent.mito", pt.size = 0.1) + NoLegend()
+VlnPlot(alldata, features = "percent.ribo", pt.size = 0.1) + NoLegend()
+```
+
+And we can plot the different QC-measures as scatter plots
+
+```{r scatter}
+FeatureScatter(alldata, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+FeatureScatter(alldata, feature1 = "nFeature_RNA", feature2 = "percent.mito")
+FeatureScatter(alldata, feature1="percent.ribo", feature2="nFeature_RNA")
+```
+
+We can also subset the data to only plot one sample. 
+
+```{r scatter2} 
+FeatureScatter(alldata, feature1 = "nCount_RNA", feature2 = "nFeature_RNA", cells = WhichCells(alldata, expression = orig.ident == "v3.1k") )
+```
+
+## Filtering
+
+### Mitochondrial filtering
+
+We have quite a lot of cells with high proportion of mitochondrial reads. It could be wise to remove those cells, if we have enough cells left after filtering. Another option would be to either remove all mitochondrial reads from the dataset and hope that the remaining genes still have enough biological signal. A third option would be to just regress out the percent.mito variable during scaling. 
+
+In this case we have as much as 99.7% mitochondrial reads in some of the cells, so it is quite unlikely that there is much celltype signature left in those.
+
+Looking at the plots, make resonable decisions on where to draw the cutoff. In this case, the bulk of the cells are below 25% mitochondrial reads. 
+
+```{r mito.filt}
+#select cells with percent.mito < 25
+selected <- WhichCells(alldata, expression = percent.mito < 25)
+length(selected)
+
+# and subset the object to only keep those cells
+data.filt <- subset(alldata, cells = selected)
+
+# plot violins for new data
+VlnPlot(data.filt, features = "percent.mito")
+```
+
+As you can see, there is still quite a lot of variation in percent mito, so it will have to be dealt with in the data analysis.
+
+### Gene detection filtering
+
+Extremely high number of detected genes could indicate doublets. However, depending on the celltype composition in your sample, you may have cells with higher number of genes (and also higher counts) from one celltype.
+
+In these datasets, there is also a clear difference between the v2 vs v3 10x chemistry with regards to gene detection, so it may not be fair to apply the same cutoffs to all of them. 
+
+Also, in the protein assay data there is a lot of cells with few detected genes giving a bimodal distribution. This type of distribution is not seen in the other 2 datasets. Considering that they are all pbmc datasets it makes sense to regard this distribution as low quality libraries.
+
+Filter the cells with high gene detection (putative doublets):
+
+```{r gene.filt}
+#start with cells with many genes detected.
+high.det.v3 <- WhichCells(data.filt, expression = nFeature_RNA > 4100)
+high.det.v2 <- WhichCells(data.filt, expression = nFeature_RNA > 2000 & orig.ident == "v2.1k")
+
+# remove these cells
+data.filt <- subset(data.filt, cells=setdiff(WhichCells(data.filt),c(high.det.v2,high.det.v3)))
+
+# check number of cells
+ncol(data.filt)
+```
+
+Filter the cells with low gene detection (low quality libraries):
+
+```{r gene.filt2}
+#start with cells with many genes detected.
+low.det.v3 <- WhichCells(data.filt, expression = nFeature_RNA < 1000 & orig.ident != "v2.1k")
+low.det.v2 <- WhichCells(data.filt, expression = nFeature_RNA < 500 & orig.ident == "v2.1k")
+
+# remove these cells
+data.filt <- subset(data.filt, cells=setdiff(WhichCells(data.filt),c(low.det.v2,low.det.v3)))
+
+# check number of cells
+ncol(data.filt)
+```
+
+### Plot QC-stats again
+
+Lets plot the same qc-stats another time.
+
+```{r vln.plot2}
+VlnPlot(data.filt, features = "nFeature_RNA", pt.size = 0.1) + NoLegend()
+VlnPlot(data.filt, features = "nCount_RNA", pt.size = 0.1) + NoLegend()
+VlnPlot(data.filt, features = "percent.mito", pt.size = 0.1) + NoLegend()
+VlnPlot(data.filt, features = "percent.ribo", pt.size = 0.1) + NoLegend()
+
+# and check the number of cells per sample before and after filtering
+table(Idents(alldata))
+table(Idents(data.filt))
+
+```
+
+## Calculate cell-cycle scores 
+
+Seurat has a function for calculating cell cycle scores based on a list of know S-phase and G2/M-phase genes. 
+
+```{r cc}
+data.filt <- CellCycleScoring(
+  object = data.filt,
+  g2m.features = cc.genes$g2m.genes,
+  s.features = cc.genes$s.genes
+)
+
+VlnPlot(data.filt, features = c("S.Score","G2M.Score"))
+```
+
+In this case it looks like we only have a few cycling cells in the datasets.
+
+# Scater
+
+Very similar QC-plots and filtering of cells can be done with the scater package, but since we alredy filtered cells using Seurat we will now just use scater to explore technical bias in the data. 
+
+You can either create an SCE object directly from the count matrices, but in this case we can convert directly from Seurat to SCE. 
+
+```{r sce}
+sce <- as.SingleCellExperiment(data.filt)
+```
+
+We have accessor functions to access elements of the SingleCellExperiment object.
+
+* counts(object): returns the matrix of read counts. As you can see above, if no counts are defined for the object, then the counts matrix slot is simpy NULL.
+* exprs(object): returns the matrix of (log-counts) expression values, in fact accessing the logcounts slot of the object (synonym for logcounts).
+
+For convenience (and backwards compatibility with SCESet) getters and setters are provided as follows: exprs, tpm, cpm, fpkm and versions of these with the prefix “norm_”)
+
+The SCE object also has slots for:
+
+* Cell metadata, which can be supplied as a DataFrame object, where rows are cells, and columns are cell attributes (such as cell type, culture condition, day captured, etc.).
+* Feature metadata, which can be supplied as a DataFrame object, where rows are features (e.g. genes), and columns are feature attributes, such as Ensembl ID, biotype, gc content, etc.
+
+## Calculate QC-metrics
+
+By default, the QC metrics are computed from the count data, but this can be changed through the exprs_values argument. We can also include information on which genes are mitochondrial in the function call.
+
+```{r qc.stats}
+# calculate all qc-metrics
+sce <- calculateQCMetrics(sce, feature_controls = list(mito = mt.genes))
+
+# check what all entries are - 
+colnames(colData(sce))
+```
+
+As you can see, scater calculates quite a few different QC-measures for the cells. 
+
+Scater also calculates some stats based on the genes:
+
+```{r}
+colnames(rowData(sce))
+```
+
+
+We will give examples on how to plot some of these.
+
+### Most expressed features
+
+Let's look at what the top 50 expressed genes are. This can be valuable for detecting genes that are overabundant that may be driving a lot of the variation.
+
+```{r high.exr}
+plotHighestExprs(sce, exprs_values = "counts")
+
+```
+
+As you can see, MALAT1 corresponds to an average of around 4% of the counts. And in some cells as high as ~30% of the counts. I would consider removing that gene before further analysis and clustering. Also, the mitochondrial genes correspond to a high proportion of the total counts.
+
+### Cumulative expression
+
+Plot the relative proportion of the library size that is accounted for by the most highly expressed features for each cell (default 500 genes). This can help us look for differences in expression distributions between samples.
+
+```{r seq.sat}
+# plot each sample separately
+plotScater(sce, block1 = "ident", nfeatures = 1000)
+```
+
+### Plot gene stats
+
+The function plotRowData can plot any of the stats in rowData, for instance mean expressioni vs number of cells with detection.
+
+```{r plot.row}
+plotRowData(sce, x = "n_cells_by_counts", y = "mean_counts")
+```
+
+### Plot cell stats
+
+In the same manner plotColData can plot any of the qc-measures for cells. 
+
+```{r plot.col} 
+p1 <- plotColData(sce, x = "total_counts", 
+    y = "total_features_by_counts", colour_by = "ident")
+p2 <- plotColData(sce, x = "pct_counts_feature_control",
+    y = "total_features_by_counts", colour_by = "ident")
+p3 <- plotColData(sce, x = "pct_counts_feature_control",
+    y = "pct_counts_in_top_50_features", colour_by = "ident")
+multiplot(p1, p2, p3, cols = 2)
+```
+
+## Identify outliers in QC-stats
+
+On method of identifying low quality cells is to run PCA on all the qc-stats and then identify outliers in PCA space.
+
+```{r outlier, warning=FALSE}
+sce <- runPCA(sce, use_coldata = TRUE,
+    detect_outliers = TRUE)
+plotReducedDim(sce, use_dimred="PCA_coldata", colour_by = "ident")
+
+# check if we have any outliers
+table(colData(sce)$outlier)
+```
+
+In this case we already filtered out low quality cells and we do not detect any outliers in the QC PCA.
+
+## Dimensionality reduction
+
+Plot the cells in reduced space and define color/shape/size by different qc-metrics or meta-data entries.
+
+It is adviced to first run functions like `runPCA`, `runTSNE` etc before hand so that they are stored in the SCE object, so that there is no need to rerun those functions each time that you are plotting.
+
+The reduced dimensions can either be plotted with functions like `plotPCA`, `plotTSNE` etc. Or with the fucntion `plotReducedDim` and specifying `use_dimred = "pca"` or similar.
+
+OBS! Before running any dimensionality reduction with a random component, remeber to set the seed so that you can reproduce the exact same 
+
+Also, some of these dimensionality reduction functions requires installation of additional R packages. 
+
+```{r dim.red, warning=FALSE}
+# run PCA with 1000 top variable genes
+sce <- runPCA(sce, ntop = 1000, exprs_values = "logcounts", ncomponents = 20)
+
+# PCA - with different coloring, first 4 components
+# first by sample
+plotPCA(sce,ncomponents=4,colour_by="ident")
+# then by Celltype
+plotPCA(sce,ncomponents=4,colour_by="percent.mito")
+
+# Diffusion map, OBS! Requires installation of package destiny to run!
+set.seed(1)
+sce <- runDiffusionMap(sce, ntop = 1000, ncomponents = 4)
+plotDiffusionMap(sce, colour_by="ident",ncomponents=4)
+
+# tSNE - uses Rtsne function to run tsne, here run with first 10 PCs
+set.seed(1)
+sce <- runTSNE(sce, ntop = 1000, ncomponents = 2, perplexity = 30, n_dimred = 10)
+plotTSNE(sce, colour_by="ident")
+
+
+# UMAP, OBS! Requires installation of package umap to run!
+set.seed(1)
+sce <- runUMAP(sce)
+plotUMAP(object = sce, colour_by="ident")
+
+```
+
+## Explanatory factors
+
+We can check how much of different factors - like different metadata (e.g samples, timepoints, treatments etc.) or different QC-metrics, 
+
+We can investigate the relative importance of different explanatory factors with the  plotExplanatoryVariables function. We compute the R2 for each factor in  colData(sce) when fitting a linear model regressing expression values for each gene against that factor. This is best done on the log-expression values to reduce the effect of the mean on the variance - hence, we run normalize first.
+
+By default top 10 factors are plotted, but here we select some specific factors. 
+
+OBS! This takes a while to calculate and plot.
+
+```{r expl.var}
+plotExplanatoryVariables(sce, variables =  c("ident","Chemistry","pct_counts_mito", "total_features_by_counts", "pct_counts_in_top_50_features", "pct_counts_in_top_500_features", "total_counts", "S.Score","G2M.Score"))
+```
+
+Each line corresponds to one factor and represents the distribution of R2 values across all genes. 
+
+
+Identify PCs that correlate strongly to certain QC or Meta-data values. By default top 10 factors are plotted, but here we select some specific factors. 
+
+```{r expl.pc, warning=FALSE}
+# for total_features
+plotExplanatoryPCs(sce, variables = c("ident", "Chemistry","pct_counts_mito", "total_features_by_counts", "pct_counts_in_top_50_features", "total_counts","S.Score","G2M.Score"), npcs_to_plot = 20)
+```
+
+Question: Do you think that you can see some clear batch effects in the data? Do you think that there are any technical biases?
+
+PC1 clearly correlates to the distribution of the data, e.g. the proportion of counts in top 50-500 highly expressed genes, and also to total_features/total_counts. Which is a common problem in scRNAseq data. This may be a technical artifact, or a biological features of celltypes with very different sizes and transcriptional landscape..
+
+It is also clear that many of the top PCs (especially PCs 2,3,6,7,8) are largely explained by the different samples (ident) or just by v2 vs v3 (Chemistry).
+
+
+### Session info
+
+```{r}
+sessionInfo()
+```
