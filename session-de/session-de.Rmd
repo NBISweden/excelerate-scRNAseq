@@ -60,6 +60,9 @@ knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 ![menti](session-de-files/images/intro-distributions.png)
 
 
+## [Back to main](../README.md)
+
+
 
 
 
