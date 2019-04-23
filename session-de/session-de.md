@@ -20,15 +20,15 @@ Differential expression: introduction
 
 ## Defining differential expression
 
-### What does `differential expression` mean to you?
+#### What does `differential expression` mean to you?
 
 ![menti](session-de-files/images/intro-menti-01.png)
 
-### Context
+#### Context
 
 ![menti](session-de-files/images/intro-de-overview-02.png)
 
-### DE Definition
+#### DE Definition
 
   - taking read count data &
   - performing statistical analysis to discover quantitative changes in
@@ -37,17 +37,17 @@ Differential expression: introduction
     read counts is significant (greater than what would be expected just
     due to natural random variation)
 
-### DE is an “old problem”
+#### DE is an “old problem”
 
   - known from bulk RNA-seq and microarray studies
   - in fact building on one of the most common statistical problems, i.e
     comparing groups for statistical differences
 
-### So why do we need to think about DE?
+#### So why do we need to think about DE?
 
 ![menti](session-de-files/images/intro-menti-01.png)
 
-## Characteristics of scRNA-seq data
+#### Characteristics of scRNA-seq data
 
   - high noise levels (technical and biological factors)
   - low library sizes
@@ -58,6 +58,8 @@ Differential expression: introduction
   - multimodality in gene expression; presence of multiple possible cell
     states within a cell population (biological)
 
-### Example distributions
+##### Example distributions
 
 ![menti](session-de-files/images/intro-distributions.png)
+
+## [Back to main](../README.md)
