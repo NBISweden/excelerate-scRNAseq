@@ -54,6 +54,10 @@ _Note Git commit good practices_
 #### Course website
 https://nbisweden.github.io/excelerate-scRNAseq/
 
+#### Questions, feedback etc. 
+Create an issue or contact Olga Dethlefsen <olga.dethlefsen@nbis.se>
+
+
 ## [Back to main](README.md)
 
 
