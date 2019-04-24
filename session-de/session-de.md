@@ -1,16 +1,21 @@
 Differential expression
 ================
 
-# Introduction
+*Created by Olga Dethlefsen & Ståle Nygård. The code were adapted from
+<https://nbisweden.github.io/workshop-scRNAseq/>, courtesy of Åsa
+Björklund*
 
-## Content overview
+# Content overview
 
-  - Introduction
-  - Common methods
-  - Methods performance and evaluation
-  - Practicalities
+  - Introduction (\~15 min)
+  - [Common methods](session-de-methods.md) (\~30 min)
+  - [Methods performance and
+    evaluation](session-de-methods-evaluation.md) (\~30 min)
+  - [Practicalities & wrap-up](session-de-wrap-up.md) (\~30 min)
 
 -----
+
+# Introduction
 
 ## Learning objectives
 
@@ -28,7 +33,17 @@ Differential expression
 
 #### Context
 
-![menti](session-de-files/images/intro-de-overview-02.png)
+<figure>
+
+<img src="session-de-files/images/intro-de-overview-02.png">
+
+<figcaption>
+
+Figure: single cell RNA-seq workflow \[adapted from Wikipedia\]
+
+</figcaption>
+
+</figure>
 
 #### DE Definition
 
@@ -78,7 +93,11 @@ of zeros, boxplots comparisons of selected genes*
   - rethink and upadate Menti, maybe use google forms instead
   - add live-coding demo at the end
   - improve distribution example plot
-  - check image size & set equal dimensions
   - discuss this part: add more plots? add more text? How to improve?
 
-## [Back to main](../README.md)
+## [Back to Main](../README.md)
+
+## [Next to Methods](session-de-methods.md)
+
+
+
