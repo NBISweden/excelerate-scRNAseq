@@ -1,0 +1,42 @@
+---
+title: "Differential expression wrap-up"
+#author: Olga Dethlefsen, Ståle Nygård 
+output: github_document
+editor_options: 
+  chunk_output_type: console
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.path="session-de-files/figures/")
+```
+
+## Learning objectives
+- identify factors in the scRNA-seq workflow connected to differential expression
+- assess how filtering and missing data imputations affect differential expresson results
+- identify resoures to learn more about differential expression
+
+
+-------
+
+
+## Bigger picture
+
+
+## Live-coding
+_Idea: add a small example of looking at the data, distributions, number of zeros, boxplots comparisons of selected genes_
+
+---------
+
+## ToDo 
+_working notes, not part of the tutorial, will be removed_
+- improve the session
+
+
+## [Back to main](../README.md)
+
+
+
+
+
+
+

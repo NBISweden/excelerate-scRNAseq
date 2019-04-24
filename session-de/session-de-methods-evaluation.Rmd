@@ -1,0 +1,61 @@
+---
+title: "Differential expression methods evaluation"
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.path="session-de-files/figures/")
+```
+
+## Learning objectives
+- describe common methods to assess methods' performance
+- explain `false positive` and `false negative` errors
+- assess method given top DE genes and consistency matrix
+
+
+-------
+
+## Main classes
+#### Non-parameteric tests
+#### bulk RNA-seq based method
+#### scRNA-seq specific methods
+
+## Statistical thinking
+#### Normal distribution example
+#### Common distributions
+
+## Under the hood
+### MAST
+### SCDE
+### Monocole
+### Wilcoxon Rank Sum test 
+
+## Live coding session
+
+```{r}
+
+sessionInfo()
+
+```
+
+
+
+## Live-coding
+_Idea: add a small example of looking at the data, distributions, number of zeros, boxplots comparisons of selected genes_
+
+---------
+
+## ToDo 
+_working notes, not part of the tutorial, will be removed_
+- improve the session
+
+
+
+## [Back to main](../README.md)
+
+
+
+
+
+
+
+
