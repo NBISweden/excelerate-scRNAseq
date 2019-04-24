@@ -1,6 +1,7 @@
 ---
 title: "Differential expression methods"
 bibliography: bibliography.bib
+#output: github_document
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -206,6 +207,15 @@ $E(Y)=s(\varphi_t(b_x, s_i))+\epsilon$ where $\varphi_t(b_x, s_i)$ is the assign
 - The DE test is performed using an _approx. $\chi^2$ likelihood ratio test_
 
 ## Live coding session
+
+
+```{r}
+x2 <- rnorm(1000, 173, 1)
+xfit2<-seq(min(x2),max(x2),length=40) 
+yfit2<-dnorm(xfit2,mean=mean(x2),sd=sd(x2)) 
+yfit2 <- yfit2*diff(h$mids[1:2])*length(x2) 
+
+```
 
 
 ---------
