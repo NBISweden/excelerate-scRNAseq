@@ -18,6 +18,7 @@ knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 - [Methods performance and evaluation](session-de-methods-evaluation.md) (~30 min)
 - [Practicalities & wrap-up](session-de-wrap-up.md) (~30 min)
 
+
 --------
 
 # Introduction

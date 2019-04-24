@@ -1,0 +1,14 @@
+### CRAN:
+Seurat v3.0.0
+Matrix_1.2-16
+Rtsne
+umap
+mvoutlier
+
+### Bioconductor:
+scater_1.10.1
+destiny
+
+### For running UMAP in Seurat package
+pip install umap-learn
+
