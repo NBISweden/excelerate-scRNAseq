@@ -43,7 +43,7 @@ And even more examples in the  [Soneson, Charlotte, and Mark D Robinson](session
 
 #### scRNA-seq specific methods
 - developed for scRNA-seq
-- e.g. MAST, SCDE, Monocle, Pagoda, D$^3$E etc. 
+- e.g. MAST, SCDE, Monocle, Pagoda, D$$^3$$E etc. 
 - large number of samples, i.e. cells, for each group we are comparing in single-cell experiments. Thus we can take advantage of the whole distribution of expression values in each group to identify differences between groups 
 -we usually do not have a defined set of experimental conditions; instead we try to  identify the cell groups by using an unsupervised clustering approach.
 
@@ -61,7 +61,7 @@ And even more examples in the  [Soneson, Charlotte, and Mark D Robinson](session
 
 <figure>
 <img src="session-de-files/images/methods-stats.png" width="400" height="400">
-<figcaption>$Outcome_i=(Model_i)+error_i$</figcaption>
+<figcaption>$$Outcome_i=(Model_i)+error_i$$</figcaption>
 </figure>
 
 #### Normal distribution example
@@ -81,7 +81,7 @@ yfit2<-dnorm(xfit2,mean=mean(x2),sd=sd(x2))
 yfit2 <- yfit2*diff(h$mids[1:2])*length(x2) 
 lines(xfit2, yfit2, col="black", lwd=2)
 ```
-$t=\frac{x_1-x_2}{s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}$
+$$t=\frac{x_1-x_2}{s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}$$
 
 #### Generic recipe
 - model e.g. gene expression with random error
@@ -105,7 +105,7 @@ hist(rnbinom(1000, mu = 4, size = 100), col="grey", xlab="Read Counts", main="mu
 ```
 $$\mu=mu$$
 $$\delta^2=mu+mu^2/size$$
-$\mu$, mean expression
+$$\mu$$, mean expression
 
 _size_: and the dispersion, which is inversely related to the variance
 
