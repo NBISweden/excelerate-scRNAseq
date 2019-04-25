@@ -1,9 +1,9 @@
 Differential expression
 ================
 
-*Created by Olga Dethlefsen & Ståle Nygård. The code were adapted from
-<https://nbisweden.github.io/workshop-scRNAseq/>, courtesy of Åsa
-Björklund*
+*Created by Olga Dethlefsen & Ståle Nygård. Parts of the code were
+adapted from <https://nbisweden.github.io/workshop-scRNAseq/>, courtesy
+of Åsa Björklund*
 
 ## Content overview
 
@@ -71,30 +71,21 @@ Figure: single cell RNA-seq workflow \[adapted from Wikipedia\]
   - 3’ bias, partial coverage and uneven depth (technical)
   - stochastic nature of transcription (biological)
   - multimodality in gene expression; presence of multiple possible cell
-    states within a cell population (biological)
+    states within a cell population
+(biological)
 
 ##### Example distributions
 
 ![menti](session-de-files/images/intro-distributions.png)
 
-## Live-coding
+<!-- ## Live-coding -->
 
-*Idea: add a small example of looking at the data, distributions, number
-of zeros, boxplots comparisons of selected genes*
-
------
-
-#### ToDo
-
-*working notes, not part of the tutorial, will be removed*
-
-  - rethink and upadate Menti, maybe use google forms instead
-  - add live-coding demo at the end
-  - improve distribution example plot
-  - discuss this part: add more plots? add more text? How to improve?
+<!-- _Idea: add a small example of looking at the data, distributions, number of zeros, boxplots comparisons of selected genes_ -->
 
 -----
 
-# [Back to Main](../README.md)
+# [Back to Schedule](../schedule.md)
 
 # [Next to Methods](session-de-methods.html)
+
+-----

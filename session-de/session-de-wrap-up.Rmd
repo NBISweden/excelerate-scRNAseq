@@ -47,8 +47,12 @@ _working notes, not part of the tutorial, will be removed_
 
 - improve the session
 
+-------
 
-## [Back to main](../README.md)
+# [Jump to Schedule](../schedule.md)
+# [Back to Methods Evaluation](session-de-methods-evaluation.md)
+
+-------
 
 
 

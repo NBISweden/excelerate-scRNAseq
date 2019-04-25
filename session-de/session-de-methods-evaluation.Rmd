@@ -162,17 +162,17 @@ for (n in names(sign.genes)){
 
 
 
----------
+------
 
-#### ToDo 
-_working notes, not part of the tutorial, will be removed_
+# [Jump to Schedule](../schedule.md)
+# [Back to Methods](session-de-methods.md)
+# [Next to Wrap-up](../session-de-wrap-up.md)
 
-- improve the session
+-------
 
 
 
-## [Back to main](../README.md)
-## [Next to Wrap-up](../session-de-wrap-up.md)
+
 
 
 

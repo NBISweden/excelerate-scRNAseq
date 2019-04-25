@@ -439,16 +439,13 @@ yfit2 <- yfit2*diff(h$mids[1:2])*length(x2)
 
 -----
 
-#### ToDo
+# [Jump to Schedule](../schedule.md)
 
-*working notes, not part of the tutorial, will be removed*
-
-  - improve the session
-  - add tutorials / coding sessions
-
-# [Back to main](../README.md)
+# [Back to Introduction](session-de.md)
 
 # [Next to Methods Evaluation](session-de-methods-evaluation.md)
+
+-----
 
 -----
 
