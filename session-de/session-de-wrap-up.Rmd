@@ -2,9 +2,10 @@
 title: "Differential expression wrap-up"
 #author: Olga Dethlefsen, Ståle Nygård 
 output: github_document
-editor_options: 
-  chunk_output_type: console
+bibliography: bibliography.bib
+
 ---
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.path="session-de-files/figures/")
@@ -18,17 +19,32 @@ knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 
 -------
 
-
 ## Bigger picture
+<figure>
+<img src="session-de-files/images/wrap-Robinson-2018.png">
+<figcaption> Fig: Choosing the right method [@Soneson2018] </figcaption>
+</figure>
+
+ 
+<figure>
+<img src="session-de-files/images/wrap-Stegle-2015.png">
+<figcaption> Fig: DE as part of the workflow [@Stegle2015]  </figcaption>
+</figure>
+
+
+<figure>
+<img src="session-de-files/images/wrap-dist.png">
+<figcaption> Fig: Staying critical </figcaption>
+</figure>
 
 
 ## Live-coding
-_Idea: add a small example of looking at the data, distributions, number of zeros, boxplots comparisons of selected genes_
 
 ---------
 
 ## ToDo 
 _working notes, not part of the tutorial, will be removed_
+
 - improve the session
 
 
