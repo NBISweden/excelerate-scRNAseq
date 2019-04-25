@@ -3,6 +3,7 @@ title: "Differential expression methods"
 bibliography: bibliography.bib
 output: github_document
 ---
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.path="session-de-files/figures/")
@@ -185,7 +186,7 @@ May be further expanded to explicitly account for other sources of gene expressi
 ### MAST
 - uses _generalized linear hurdle model_
 - designed to account for stochastic dropouts and bimodal expression distribution in which expression is either strongly non-zero or non-detectable
-- the rate of expression _Z_, and the level of expression _Y_, are modeled for each gene _g_, indicating whether gene _g_ is expressed in cell _i_ (i.e., $Z_{ig}=0$ if $y_{ig}=0$ and $z_{ig}=1$ if $y_{ig}>0$)
+- the rate of expression _Z_, and the level of expression _Y_, are modeled for each gene _g_, indicating whether gene _g_ is expressed in cell _i_ (i.e., $$Z_{ig}=0$$ if $y_{ig}=0$ and $z_{ig}=1$ if $y_{ig}>0$)
 - A *logistic regression model* for the discrete variable _Z_ and a _Gaussian linear model_ for the continuous variable (Y|Z=1):
     $logit (P_r(Z_{ig}=1))=X_i\beta_g^D$
     $P_r(Y_{ig}=Y|Z_{ig}=1)=N(X_i\beta_g^C,\sigma_g^2)$, where $X_i$ is a design matrix
