@@ -13,7 +13,7 @@ knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 ```
 
 # Content overview
-- Introduction (~15 min)
+- [Introduction](session-de.md) (~15 min)
 - [Common methods](session-de-methods.md) (~30 min)
 - [Methods performance and evaluation](session-de-methods-evaluation.md) (~30 min)
 - [Practicalities & wrap-up](session-de-wrap-up.md) (~30 min)
@@ -31,7 +31,7 @@ knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 -------
 
 
-## Defining differential expression
+# Defining differential expression
 
 #### What does `differential expression` mean to you?
 ![menti](session-de-files/images/intro-menti-01.png)
@@ -55,7 +55,7 @@ knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 #### So why do we need to think about DE?
 ![menti](session-de-files/images/intro-menti-01.png)
 
-## Characteristics of scRNA-seq data
+# Characteristics of scRNA-seq data
 - high noise levels (technical and biological factors)
 - low library sizes
 - low amount of available mRNAs results in amplification biases and "dropout events"
@@ -66,12 +66,12 @@ knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 ##### Example distributions
 ![menti](session-de-files/images/intro-distributions.png)
 
-## Live-coding
+# Live-coding
 _Idea: add a small example of looking at the data, distributions, number of zeros, boxplots comparisons of selected genes_
 
 ---------
 
-## ToDo 
+#### ToDo 
 _working notes, not part of the tutorial, will be removed_
 
 - rethink and upadate Menti, maybe use google forms instead
@@ -80,8 +80,8 @@ _working notes, not part of the tutorial, will be removed_
 - discuss this part: add more plots? add more text? How to improve?
 
 
-## [Back to Main](../README.md)
-## [Next to Methods](session-de-methods.html)
+# [Back to Main](../README.md)
+# [Next to Methods](session-de-methods.html)
 
 
 

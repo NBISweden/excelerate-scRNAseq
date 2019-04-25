@@ -7,7 +7,7 @@ Björklund*
 
 # Content overview
 
-  - Introduction (\~15 min)
+  - [Introduction](session-de.md) (\~15 min)
   - [Common methods](session-de-methods.md) (\~30 min)
   - [Methods performance and
     evaluation](session-de-methods-evaluation.md) (\~30 min)
@@ -25,7 +25,7 @@ Björklund*
 
 -----
 
-## Defining differential expression
+# Defining differential expression
 
 #### What does `differential expression` mean to you?
 
@@ -64,7 +64,7 @@ Figure: single cell RNA-seq workflow \[adapted from Wikipedia\]
 
 ![menti](session-de-files/images/intro-menti-01.png)
 
-## Characteristics of scRNA-seq data
+# Characteristics of scRNA-seq data
 
   - high noise levels (technical and biological factors)
   - low library sizes
@@ -79,14 +79,14 @@ Figure: single cell RNA-seq workflow \[adapted from Wikipedia\]
 
 ![menti](session-de-files/images/intro-distributions.png)
 
-## Live-coding
+# Live-coding
 
 *Idea: add a small example of looking at the data, distributions, number
 of zeros, boxplots comparisons of selected genes*
 
 -----
 
-## ToDo
+#### ToDo
 
 *working notes, not part of the tutorial, will be removed*
 
@@ -95,6 +95,6 @@ of zeros, boxplots comparisons of selected genes*
   - improve distribution example plot
   - discuss this part: add more plots? add more text? How to improve?
 
-## [Back to Main](../README.md)
+# [Back to Main](../README.md)
 
-## [Next to Methods](session-de-methods.html)
+# [Next to Methods](session-de-methods.html)

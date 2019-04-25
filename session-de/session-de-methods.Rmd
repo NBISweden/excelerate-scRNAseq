@@ -1,31 +1,33 @@
 ---
 title: "Differential expression methods"
 bibliography: bibliography.bib
-#output: github_document
+output: github_document
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 ```
 
-## Learning objectives
+# Learning objectives
 - describe main classes of methods used
 - understand statistical concepts behind the key scRNA-seq DE methods
 - run the key scRNA-seq DE methods
 
 -------
 
-## Examples
+# Methods examples
 <figure>
-<img src="session-de-files/images/methods-Wang-2019.png" width="800" height="800">
+<img src="session-de-files/images/methods-Wang-2019.png">
 <figcaption>Figure: Software tools for identifying DE genes using scRNAseq data [@Wang2019]</figcaption></figure>
+
+<!-- <img src="session-de-files/images/methods-Wang-2019.png" width="800" height="800"> -->
 
 #### More more examples
 And even more examples in the  [Soneson, Charlotte, and Mark D Robinson](session-de-files/images/methods-Robinson-2018.pdf) [-@Soneson2018]
 
 ----------
 
-## Main classes
+# Main classes
 #### non-parameteric tests
 - generic methods
 - e.g. Wilcoxon rank-sum test, Kruskal-Wallis, Kolmogorov-Smirnov test
@@ -55,7 +57,7 @@ And even more examples in the  [Soneson, Charlotte, and Mark D Robinson](session
 
 --------
 
-## Statistical thinking
+# Statistical thinking
 
 <figure>
 <img src="session-de-files/images/methods-stats.png" width="400" height="400">
@@ -63,7 +65,7 @@ And even more examples in the  [Soneson, Charlotte, and Mark D Robinson](session
 </figure>
 
 #### Normal distribution example
-```{r, echo=F, eval=T}
+```{r, dist-normal, echo=F, eval=T}
 set.seed(1)
 x <- rnorm(1000, 170, 1)
 h <-hist(x, col=rgb(1,0,0,0.5), xlab="height [cm]", n=50, main="", xlim=c(165, 180))
@@ -89,7 +91,7 @@ $t=\frac{x_1-x_2}{s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}$
 \end{block}
 \end{frame}
 
-## Common distributions
+# Common distributions
 
 #### Negative binomial (NB)
 ```{r, dist-NB, echo=F, fig.height=3}
@@ -178,7 +180,7 @@ May be further expanded to explicitly account for other sources of gene expressi
 
 ----------
 
-## Under the hood
+# Under the hood
 
 ### MAST
 - uses _generalized linear hurdle model_
@@ -206,7 +208,7 @@ For DE, the posterior probability that the gene shows a fold expression differen
 $E(Y)=s(\varphi_t(b_x, s_i))+\epsilon$ where $\varphi_t(b_x, s_i)$ is the assigned pseudo-time of a cell and $s$ is a cubic smoothing function with three degrees of freedom. The error term $\epsilon$ is normally distributed with a mean of zero
 - The DE test is performed using an _approx. $\chi^2$ likelihood ratio test_
 
-## Live coding session
+# Live coding session
 
 
 ```{r}
@@ -220,7 +222,7 @@ yfit2 <- yfit2*diff(h$mids[1:2])*length(x2)
 
 ---------
 
-## ToDo 
+#### ToDo 
 _working notes, not part of the tutorial, will be removed_
 
 - improve the session
@@ -228,8 +230,8 @@ _working notes, not part of the tutorial, will be removed_
 
 
 
-## [Back to main](../README.md)
-## [Next to Methods Evaluation](session-de-methods-evaluation.md)
+# [Back to main](../README.md)
+# [Next to Methods Evaluation](session-de-methods-evaluation.md)
 
 
 
