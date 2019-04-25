@@ -22,7 +22,7 @@
 - **12:00-13:00** _lunch_
 - **13:00-15:00** Clustering II (Ahmed Mahfouz)
 - **14:30-15:00** _coffee break_
-- **15:00-17:00**	[Differential expression](session-de/session-de-methods.md) (Ståle Nygård and Olga Dethlefsen)
+- **15:00-17:00**	[Differential expression](session-de/session-de.md) (Ståle Nygård and Olga Dethlefsen)
 
 ### Wednesday 29.5.2019
 - **09:00-11:00**	Cell type identification I (Philip Lijnzaad)
