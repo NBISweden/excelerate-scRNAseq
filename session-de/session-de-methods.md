@@ -62,7 +62,7 @@ Robinson](session-de-files/images/methods-Robinson-2018.pdf) (2018)
 #### scRNA-seq specific methods
 
   - developed for scRNA-seq
-  - e.g. MAST, SCDE, Monocle, Pagoda, D\(^3\)E etc.
+  - e.g. MAST, SCDE, Monocle, Pagoda, D$^3$E etc.
   - large number of samples, i.e. cells, for each group we are comparing
     in single-cell experiments. Thus we can take advantage of the whole
     distribution of expression values in each group to identify
@@ -90,7 +90,7 @@ GAM
 
 <figcaption>
 
-\(Outcome_i=(Model_i)+error_i\)
+$$Outcome_i=(Model_i)+error_i$$
 
 </figcaption>
 
@@ -99,7 +99,7 @@ GAM
 #### Normal distribution example
 
 ![](session-de-files/figures/dist-normal-1.png)<!-- -->
-\(t=\frac{x_1-x_2}{s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}\)
+\[t=\frac{x_1-x_2}{s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}\]
 
 #### Generic recipe
 
@@ -115,7 +115,8 @@ GAM
 #### Negative binomial (NB)
 
 ![](session-de-files/figures/dist-NB-1.png)<!-- --> \[\mu=mu\]
-\[\delta^2=mu+mu^2/size\] \(\mu\), mean expression
+$$\delta^2=mu+mu^2/size$$
+ \[\mu\], mean expression
 
 *size*: and the dispersion, which is inversely related to the variance
 
@@ -169,7 +170,7 @@ on the particular DE algorithm.
 
   - the rate of expression *Z*, and the level of expression *Y*, are
     modeled for each gene *g*, indicating whether gene *g* is expressed
-    in cell *i* (i.e., \(Z_{ig}=0\) if \(y_{ig}=0\) and \(z_{ig}=1\) if
+    in cell *i* (i.e., $Z_{ig}=0$ if \(y_{ig}=0\) and \(z_{ig}=1\) if
     \(y_{ig}>0\))
 
   - A *logistic regression model* for the discrete variable *Z* and a
@@ -221,9 +222,9 @@ on the particular DE algorithm.
 
 ``` r
 x2 <- rnorm(1000, 173, 1)
-xfit2<-seq(min(x2),max(x2),length=40) 
-yfit2<-dnorm(xfit2,mean=mean(x2),sd=sd(x2)) 
-yfit2 <- yfit2*diff(h$mids[1:2])*length(x2) 
+xfit2<-seq(min(x2),max(x2),length=40)
+yfit2<-dnorm(xfit2,mean=mean(x2),sd=sd(x2))
+yfit2 <- yfit2*diff(h$mids[1:2])*length(x2)
 ```
 
 -----
