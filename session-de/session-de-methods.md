@@ -1,7 +1,7 @@
 Differential expression methods
 ================
 
-# Learning objectives
+## Learning objectives
 
   - describe main classes of methods used
   - understand statistical concepts behind the key scRNA-seq DE methods
@@ -9,7 +9,7 @@ Differential expression methods
 
 -----
 
-# Methods examples
+## Methods examples
 
 <figure>
 
@@ -18,14 +18,11 @@ Differential expression methods
 <figcaption>
 
 Figure: Software tools for identifying DE genes using scRNAseq data
-(Wang et al.
-2019)
+(Wang et al. 2019)
 
 </figcaption>
 
 </figure>
-
-<!-- <img src="session-de-files/images/methods-Wang-2019.png" width="800" height="800"> -->
 
 #### More more examples
 
@@ -34,7 +31,7 @@ Robinson](session-de-files/images/methods-Robinson-2018.pdf) (2018)
 
 -----
 
-# Main classes
+## Main classes
 
 #### non-parameteric tests
 
@@ -62,7 +59,7 @@ Robinson](session-de-files/images/methods-Robinson-2018.pdf) (2018)
 #### scRNA-seq specific methods
 
   - developed for scRNA-seq
-  - e.g. MAST, SCDE, Monocle, Pagoda, D$^3$E etc.
+  - e.g. MAST, SCDE, Monocle, Pagoda, D\[^3\]E etc.
   - large number of samples, i.e. cells, for each group we are comparing
     in single-cell experiments. Thus we can take advantage of the whole
     distribution of expression values in each group to identify
@@ -82,15 +79,17 @@ GAM
 
 -----
 
-# Statistical thinking
+## Statistical thinking
 
 <figure>
 
-<img src="session-de-files/images/methods-stats.png" width="400" height="400">
+<!-- <img src="session-de-files/images/methods-stats.png" width="400" height="400"> -->
+
+<img src="session-de-files/images/methods-stats.png">
 
 <figcaption>
 
-$$Outcome_i=(Model_i)+error_i$$
+\[Outcome_i=(Model_i)+error_i\]
 
 </figcaption>
 
@@ -110,13 +109,12 @@ $$Outcome_i=(Model_i)+error_i$$
   - the better model fits the data the better statistics \\end{block}
     \\end{frame}
 
-# Common distributions
+## Common distributions
 
-#### Negative binomial (NB)
+### Negative binomial (NB)
 
 ![](session-de-files/figures/dist-NB-1.png)<!-- --> \[\mu=mu\]
-$$\delta^2=mu+mu^2/size$$
- \[\mu\], mean expression
+\[\delta^2=mu+mu^2/size\] \[\mu\], mean expression
 
 *size*: and the dispersion, which is inversely related to the variance
 
@@ -126,7 +124,7 @@ distribution of molecule counts obtained from data tagged by unique
 molecular identifiers (UMIs) quite well (Grun et al. 2014, Islam et
 al. 2011).
 
-#### zero inflated NB
+### zero inflated NB
 
 ![](session-de-files/figures/dist-zero-inflated-NB-1.png)<!-- -->
 \[\mu=mu*(1-d)\] \[\delta^2=\mu*(1-d)*(1+d*\mu+\mu/size)\]
@@ -137,7 +135,7 @@ binomial models use different relationships between *mu* and *d* and
 some may fit *mu* and *d* to the expression of each gene independently.
 Implemented in MAST, SCDE.
 
-#### Poisson distribution
+### Poisson distribution
 
 ![](session-de-files/figures/dist-Poisson-1.png)<!-- -->
 \[\mu=g*a/(a+b)\] \[\delta^2=g^2*a*b/((a+b+1)*(a+b)^2)\]
@@ -158,7 +156,7 @@ on the particular DE algorithm.
 
 -----
 
-# Under the hood
+## Under the hood
 
 ### MAST
 
@@ -170,7 +168,7 @@ on the particular DE algorithm.
 
   - the rate of expression *Z*, and the level of expression *Y*, are
     modeled for each gene *g*, indicating whether gene *g* is expressed
-    in cell *i* (i.e., $Z_{ig}=0$ if \(y_{ig}=0\) and \(z_{ig}=1\) if
+    in cell *i* (i.e., \[Z_{ig}=0\] if \(y_{ig}=0\) and \(z_{ig}=1\) if
     \(y_{ig}>0\))
 
   - A *logistic regression model* for the discrete variable *Z* and a
@@ -218,13 +216,13 @@ on the particular DE algorithm.
   - The DE test is performed using an *approx. \(\chi^2\) likelihood
     ratio test*
 
-# Live coding session
+## Live coding session
 
 ``` r
 x2 <- rnorm(1000, 173, 1)
-xfit2<-seq(min(x2),max(x2),length=40)
-yfit2<-dnorm(xfit2,mean=mean(x2),sd=sd(x2))
-yfit2 <- yfit2*diff(h$mids[1:2])*length(x2)
+xfit2<-seq(min(x2),max(x2),length=40) 
+yfit2<-dnorm(xfit2,mean=mean(x2),sd=sd(x2)) 
+yfit2 <- yfit2*diff(h$mids[1:2])*length(x2) 
 ```
 
 -----
@@ -235,6 +233,8 @@ yfit2 <- yfit2*diff(h$mids[1:2])*length(x2)
 
   - improve the session
   - add tutorials / coding sessions
+
+-----
 
 # [Back to main](../README.md)
 

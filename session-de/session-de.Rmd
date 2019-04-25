@@ -21,8 +21,6 @@ knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 
 --------
 
-## Introduction
-
 ## Learning objectives
 - define differential expression DE
 - identify properties of scRNA-seq data influencing DE
@@ -66,7 +64,7 @@ knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 ##### Example distributions
 ![menti](session-de-files/images/intro-distributions.png)
 
-# Live-coding
+## Live-coding
 _Idea: add a small example of looking at the data, distributions, number of zeros, boxplots comparisons of selected genes_
 
 ---------
@@ -79,6 +77,7 @@ _working notes, not part of the tutorial, will be removed_
 - improve distribution example plot
 - discuss this part: add more plots? add more text? How to improve?
 
+---------
 
 # [Back to Main](../README.md)
 # [Next to Methods](session-de-methods.html)

@@ -59,7 +59,8 @@ And even more examples in the  [Soneson, Charlotte, and Mark D Robinson](session
 ## Statistical thinking
 
 <figure>
-<img src="session-de-files/images/methods-stats.png" width="400" height="400">
+<!-- <img src="session-de-files/images/methods-stats.png" width="400" height="400"> -->
+<img src="session-de-files/images/methods-stats.png">
 <figcaption>$$Outcome_i=(Model_i)+error_i$$</figcaption>
 </figure>
 
@@ -92,7 +93,7 @@ $$t=\frac{x_1-x_2}{s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}$$
 
 ## Common distributions
 
-#### Negative binomial (NB)
+### Negative binomial (NB)
 ```{r, dist-NB, echo=F, fig.height=3}
 
 set.seed(1)
@@ -110,7 +111,7 @@ _size_: and the dispersion, which is inversely related to the variance
 
 NB fits bulk RNA-seq data very well and it is used for most statistical methods designed for such data. In addition, it has been show to fit the distribution of molecule counts obtained from data tagged by unique molecular identifiers (UMIs) quite well (Grun et al. 2014, Islam et al. 2011).
 
-#### zero inflated NB
+### zero inflated NB
 ```{r, dist-zero-inflated-NB, echo=F, fig.height=3}
 
 set.seed(1)
@@ -132,7 +133,7 @@ $$\delta^2=\mu*(1-d)*(1+d*\mu+\mu/size)$$
 
 _d_, dropout rate; dropout rate of a gene is strongly correlated with the mean expression of the gene. Different zero-inflated negative binomial models use different relationships between _mu_ and _d_ and some may fit _mu_ and _d_ to the expression of each gene independently. Implemented in MAST, SCDE.
 
-#### Poisson distribution
+### Poisson distribution
 ```{r, dist-Poisson, echo=F, fig.height=3}
 
 set.seed(1)
@@ -227,6 +228,10 @@ _working notes, not part of the tutorial, will be removed_
 - improve the session
 - add tutorials / coding sessions
 
+
+
+
+-------
 
 
 # [Back to main](../README.md)
