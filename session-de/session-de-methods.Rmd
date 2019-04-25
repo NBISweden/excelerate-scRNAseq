@@ -9,26 +9,24 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 ```
 
-# Learning objectives
+## Learning objectives
 - describe main classes of methods used
 - understand statistical concepts behind the key scRNA-seq DE methods
 - run the key scRNA-seq DE methods
 
 -------
 
-# Methods examples
+## Methods examples
 <figure>
 <img src="session-de-files/images/methods-Wang-2019.png">
 <figcaption>Figure: Software tools for identifying DE genes using scRNAseq data [@Wang2019]</figcaption></figure>
-
-<!-- <img src="session-de-files/images/methods-Wang-2019.png" width="800" height="800"> -->
 
 #### More more examples
 And even more examples in the  [Soneson, Charlotte, and Mark D Robinson](session-de-files/images/methods-Robinson-2018.pdf) [-@Soneson2018]
 
 ----------
 
-# Main classes
+## Main classes
 #### non-parameteric tests
 - generic methods
 - e.g. Wilcoxon rank-sum test, Kruskal-Wallis, Kolmogorov-Smirnov test
@@ -58,7 +56,7 @@ And even more examples in the  [Soneson, Charlotte, and Mark D Robinson](session
 
 --------
 
-# Statistical thinking
+## Statistical thinking
 
 <figure>
 <img src="session-de-files/images/methods-stats.png" width="400" height="400">
@@ -92,7 +90,7 @@ $$t=\frac{x_1-x_2}{s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}$$
 \end{block}
 \end{frame}
 
-# Common distributions
+## Common distributions
 
 #### Negative binomial (NB)
 ```{r, dist-NB, echo=F, fig.height=3}
@@ -181,7 +179,7 @@ May be further expanded to explicitly account for other sources of gene expressi
 
 ----------
 
-# Under the hood
+## Under the hood
 
 ### MAST
 - uses _generalized linear hurdle model_
@@ -209,7 +207,7 @@ For DE, the posterior probability that the gene shows a fold expression differen
 $E(Y)=s(\varphi_t(b_x, s_i))+\epsilon$ where $\varphi_t(b_x, s_i)$ is the assigned pseudo-time of a cell and $s$ is a cubic smoothing function with three degrees of freedom. The error term $\epsilon$ is normally distributed with a mean of zero
 - The DE test is performed using an _approx. $\chi^2$ likelihood ratio test_
 
-# Live coding session
+## Live coding session
 
 
 ```{r}

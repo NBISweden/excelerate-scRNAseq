@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 ```
 
-# Content overview
+## Content overview
 - [Introduction](session-de.md) (~15 min)
 - [Common methods](session-de-methods.md) (~30 min)
 - [Methods performance and evaluation](session-de-methods-evaluation.md) (~30 min)
@@ -21,7 +21,7 @@ knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 
 --------
 
-# Introduction
+## Introduction
 
 ## Learning objectives
 - define differential expression DE
@@ -31,7 +31,7 @@ knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 -------
 
 
-# Defining differential expression
+## Defining differential expression
 
 #### What does `differential expression` mean to you?
 ![menti](session-de-files/images/intro-menti-01.png)
@@ -55,7 +55,7 @@ knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 #### So why do we need to think about DE?
 ![menti](session-de-files/images/intro-menti-01.png)
 
-# Characteristics of scRNA-seq data
+## Characteristics of scRNA-seq data
 - high noise levels (technical and biological factors)
 - low library sizes
 - low amount of available mRNAs results in amplification biases and "dropout events"
