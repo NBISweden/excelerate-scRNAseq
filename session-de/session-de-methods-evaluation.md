@@ -195,9 +195,9 @@ for (n in names(sign.genes)){
 
 # [Jump to Schedule](../schedule.md)
 
-# [Back to Methods](session-de-methods.md)
+# [Back to Introduction](session-de.md)
 
-# [Next to Wrap-up](../session-de-wrap-up.md)
+# [Next to Wrap-up](session-de-wrap-up.md)
 
 -----
 
