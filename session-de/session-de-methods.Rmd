@@ -435,18 +435,12 @@ yfit2 <- yfit2*diff(h$mids[1:2])*length(x2)
 
 ---------
 
-#### ToDo 
-_working notes, not part of the tutorial, will be removed_
-
-- improve the session
-- add tutorials / coding sessions
-
-
-# [Back to main](../README.md)
+# [Jump to Schedule](../schedule.md)
+# [Back to Introduction](session-de.md)
 # [Next to Methods Evaluation](session-de-methods-evaluation.md)
 
 
-
+---------
 
 
 

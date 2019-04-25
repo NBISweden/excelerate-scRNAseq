@@ -193,15 +193,13 @@ for (n in names(sign.genes)){
 
 -----
 
-#### ToDo
+# [Jump to Schedule](../schedule.md)
 
-*working notes, not part of the tutorial, will be removed*
+# [Back to Methods](session-de-methods.md)
 
-  - improve the session
+# [Next to Wrap-up](../session-de-wrap-up.md)
 
-## [Back to main](../README.md)
-
-## [Next to Wrap-up](../session-de-wrap-up.md)
+-----
 
 <div id="refs" class="references">
 

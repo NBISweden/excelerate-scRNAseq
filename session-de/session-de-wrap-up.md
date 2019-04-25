@@ -55,10 +55,17 @@ Fig: Staying critical
 
 ## ToDo
 
-*working notes, not part of the tutorial, will be removed* - improve the
-session
+*working notes, not part of the tutorial, will be removed*
 
-## [Back to main](../README.md)
+  - improve the session
+
+-----
+
+# [Jump to Schedule](../schedule.md)
+
+# [Back to Methods Evaluation](session-de-methods-evaluation.md)
+
+-----
 
 <div id="refs" class="references">
 
