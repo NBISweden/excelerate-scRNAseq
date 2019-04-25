@@ -5,8 +5,8 @@
 ### Monday 27.5.2019
 - **09:00-09:45**	Lecture: Introduction and experimental design (Jules Gilet, Åsa Björklund)
 - **09:45-10:15** _coffee break_
-- **10:15-11:00** Lecture: [QC \& data preprocessing](session-qc/scRNAseq_QC_Asa_Bjorklund_2019.pdf) (Åsa)
-- **11:00-12:00** Labs: [QC \& data preprocessing](session-qc/Quality_control.md) (Åsa & Jules)
+- **10:15-11:00** Lecture: [QC & data preprocessing](session-qc/scRNAseq_QC_Asa_Bjorklund_2019.pdf) (Åsa)
+- **11:00-12:00** Labs: [QC & data preprocessing](session-qc/Quality_control.md) (Åsa & Jules)
 - **12:00-13:00** _lunch_
 - **13:00-13:45** Lecture: Normalisation and removal of confounding factors (Heli Pessa  & Bishwa Ghimire)
 - **13:45-14:30** Labs: Normalisation and removal of confounding factors (Heli & Bishwa)
@@ -22,7 +22,7 @@
 - **12:00-13:00** _lunch_
 - **13:00-15:00** Clustering II (Ahmed Mahfouz)
 - **14:30-15:00** _coffee break_
-- **15:00-17:00**	 Differential expression (Ståle Nygård and Olga Dethlefsen)
+- **15:00-17:00**	[Differential expression](session-de/session-de-methods.md) (Ståle Nygård and Olga Dethlefsen)
 
 ### Wednesday 29.5.2019
 - **09:00-11:00**	Cell type identification I (Philip Lijnzaad)
@@ -31,9 +31,9 @@
 - **11:00-12:00**	LeTrajectories/Pseudo-time I (Paulo, Jules)
 - **12:00-13:00** _lunch_
 - **13:00-14:00**	Trajectories/Pseudo-time II (Paulo, Jules)
-- **14:00-14:30**	Spatial transcriptomics I (Jeongbin Park \& Lars Borm)
+- **14:00-14:30**	Spatial transcriptomics I (Jeongbin Park & Lars Borm)
 - **14:30-15:00** _coffee break_
-- **15:00-16:00**	Spatial transcriptomics I (Jeongbin Park \& Lars Borm)
+- **15:00-16:00**	Spatial transcriptomics I (Jeongbin Park & Lars Borm)
 - **16:00-17:00** Discussion and questions
 
 ### Example links (_will be removed_)
@@ -60,7 +60,6 @@
 ### Example links (_will be removed_)
 - [Example session tutorial.md](session-example/session-example.md)
 - [Example session tutorial.md](session-de/session-de-methods.md)
-- [Example session tutorial.html](session-de/session-de-methods.html)
 - [Example session slides.pdf](session-example/session-example.pdf)
 
 ## [Back to main](README.md)
