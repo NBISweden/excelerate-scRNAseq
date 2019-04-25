@@ -1,7 +1,7 @@
 ---
 title: "Differential expression"
 #author: Olga Dethlefsen, Ståle Nygård 
-#output: github_document
+output: github_document
 
 ---
 _Created by Olga Dethlefsen & Ståle Nygård. The code were adapted from [https://nbisweden.github.io/workshop-scRNAseq/](https://nbisweden.github.io/workshop-scRNAseq/), courtesy of Åsa Björklund_
