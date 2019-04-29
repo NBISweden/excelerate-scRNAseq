@@ -1,0 +1,28 @@
+channels:
+ - conda-forge
+ - bioconda
+ - defaults
+dependencies:
+ - r-base=3.5.1
+ - rstudio=1.1.456
+ - r-seurat=3.0.0 
+ - bioconductor-biomart=2.38
+ - r-biocmanager=1.30
+ - r-pheatmap=1.0 
+ - r-fields=9.6.1
+ - r-optparse=1.6
+ - r-umap=0.2
+ - r-modes=0.7.0
+ - umap-learn=0.3.8
+ - wget=1.19.4
+ - fftw=3.3.8
+ - bioconductor-singlecellexperiment=1.4.0
+ - bioconductor-scran=1.10.1
+ - r-hdf5r=1.2.0
+ - r-rmarkdown
+ - r-knitr=1.20
+ - r-mvoutlier=2.0.9
+ - bioconductor-destiny=2.12.0
+ - r-umap=0.2.0.0
+
+
