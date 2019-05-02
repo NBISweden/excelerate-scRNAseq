@@ -28,7 +28,7 @@
 - **09:00-11:00**	Cell type identification I (Philip Lijnzaad)
 - **09:45-10:15** _coffee break_
 - **10:15-11:00**	Cell type identification I (Philip)
-- **11:00-12:00**	LeTrajectories/Pseudo-time I (Paulo, Jules)
+- **11:00-12:00**	Lecture: Trajectories/Pseudo-time I (Paulo, Jules)
 - **12:00-13:00** _lunch_
 - **13:00-14:00**	Trajectories/Pseudo-time II (Paulo, Jules)
 - **14:00-14:30**	Spatial transcriptomics I (Jeongbin Park & Lars Borm)
@@ -46,7 +46,7 @@
 - [Ahmed Mahfouz](https://www.lumc.nl/org/radiologie/medewerkers/1201110201322222) (LUMC, Netherlands), <a.mahfouz@lumc.nl>
 - [Ståle Nygård](https://www.mn.uio.no/ifi/english/people/aca/staaln/) (UIO, Norway), <staaln@ifi.uio.no>
 - [Olga Dethlefsen](https://nbis.se/about/staff/olga-dethlefsen/) (SciLifeLab, NBIS, Sweden), <olga.dethlefsen@nbis.se>
-- Jeongbin Park (Charité-Universitätsmedizin Berlin, Germany), <>
+- Jeongbin Park (Charité-Universitätsmedizin Berlin, Germany), <jeongbin.park@charite.de>
 - [Lars Borm](https://ki.se/en/people/larbor) (Karolinska Institutet, Sweden), <ars.borm@ki.se>
 - Jules Gilet (Institut Curie, France), <jules.gilet@curie.fr>
 - [Heli Pessa](https://tuhat.helsinki.fi/portal/en/persons/heli-pessa(1c5905eb-fc9c-4b2e-9a9a-3dacc88c9943).html) (University of Helsinki, Finland), <Heli.Pessa@helsinki.fi>
