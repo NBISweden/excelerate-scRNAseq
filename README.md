@@ -43,7 +43,6 @@ After this course you will be able to:
 - Cell type identification (Philip Lijnzaad)
 - Trajectories/Pseudo-time (Paulo Czarnewski)
 - Spatial transcriptomics (Jeongbin Park and Lars Borm)
-- Integration of data, e.g. CITE-Seq (Ahmed Mahfouz)
 
 ### Lecturers
 - Åsa Björklund (SciLifeLab, NBIS, Sweden)
