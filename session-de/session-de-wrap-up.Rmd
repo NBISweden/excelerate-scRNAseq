@@ -1,0 +1,63 @@
+---
+title: "Differential expression wrap-up"
+#author: Olga Dethlefsen, Ståle Nygård 
+output: github_document
+bibliography: bibliography.bib
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.path="session-de-files/figures/")
+```
+
+## Learning objectives
+- identify factors in the scRNA-seq workflow connected to differential expression
+- assess how filtering and missing data imputations affect differential expresson results
+- identify resoures to learn more about differential expression
+
+
+-------
+
+## Bigger picture
+<figure>
+<img src="session-de-files/images/wrap-Robinson-2018.png">
+<figcaption> Fig: Choosing the right method [@Soneson2018] </figcaption>
+</figure>
+
+ 
+<figure>
+<img src="session-de-files/images/wrap-Stegle-2015.png">
+<figcaption> Fig: DE as part of the workflow [@Stegle2015]  </figcaption>
+</figure>
+
+
+<figure>
+<img src="session-de-files/images/wrap-dist.png">
+<figcaption> Fig: Staying critical </figcaption>
+</figure>
+
+
+## Live-coding
+
+---------
+
+## ToDo 
+_working notes, not part of the tutorial, will be removed_
+
+- improve the session
+
+-------
+
+# [Jump to Schedule](../schedule.md)
+# [Back to Introduction](session-de.md)
+# [Back to Methods Evaluation](session-de-methods-evaluation.md)
+
+-------
+
+
+
+
+
+
+
