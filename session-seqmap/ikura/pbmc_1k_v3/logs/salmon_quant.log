@@ -1,0 +1,16 @@
+[2019-05-01 18:20:18.819] [jointLog] [info] Fragment incompatibility prior below threshold.  Incompatible fragments will be ignored.
+[2019-05-01 18:20:18.819] [jointLog] [info] Usage of --validateMappings implies use of minScoreFraction. Since not explicitly specified, it is being set to 0.65
+[2019-05-01 18:20:18.819] [jointLog] [info] Usage of --validateMappings, without --hardFilter implies use of range factorization. rangeFactorizationBins is being set to 4
+[2019-05-01 18:20:18.819] [jointLog] [info] Usage of --validateMappings implies a default consensus slack of 0.2. Setting consensusSlack to 0.2.
+[2019-05-01 18:20:18.819] [jointLog] [info] Using default value of 0.87 for minScoreFraction in Alevin
+Using default value of 0.6 for consensusSlack in Alevin
+[2019-05-01 18:21:04.305] [jointLog] [info] There is 1 library.
+[2019-05-01 18:21:04.420] [jointLog] [info] Loading Quasi index
+[2019-05-01 18:21:04.420] [jointLog] [info] Loading 32-bit quasi index
+[2019-05-01 18:21:12.854] [jointLog] [info] done
+[2019-05-01 18:21:12.854] [jointLog] [info] Index contained 205,870 targets
+[2019-05-01 18:31:11.027] [jointLog] [info] Computed 166,747 rich equivalence classes for further processing
+[2019-05-01 18:31:11.027] [jointLog] [info] Counted 30,033,532 total reads in the equivalence classes 
+[2019-05-01 18:31:11.027] [jointLog] [info] Mapping rate = 51.1619%
+
+[2019-05-01 18:31:11.027] [jointLog] [info] finished quantifyLibrary()

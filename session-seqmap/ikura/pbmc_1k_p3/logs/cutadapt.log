@@ -1,0 +1,24 @@
+This is cutadapt 1.18 with Python 3.6.5
+Command line parameters: -j 10 -q 30 --max-n 0 --minimum-length 28:90 --pair-filter=any -o fastq/pbmc_1k_p3_trimmed_R1.fastq.gz -p fastq/pbmc_1k_p3_trimmed_R2.fastq.gz /storage1/courses/ELIXIR/workOnCourse/fastqs/pbmc_1k_p3_R1.fastq.gz /storage1/courses/ELIXIR/workOnCourse/fastqs/pbmc_1k_p3_R2.fastq.gz
+Processing reads on 10 cores in paired-end mode ...
+Finished in 290.65 s (6 us/read; 9.36 M reads/minute).
+
+=== Summary ===
+
+Total read pairs processed:         45,359,427
+  Read 1 with adapter:                       0 (0.0%)
+  Read 2 with adapter:                       0 (0.0%)
+Pairs that were too short:           5,274,803 (11.6%)
+Pairs with too many N:                  91,499 (0.2%)
+Pairs written (passing filters):    39,993,125 (88.2%)
+
+Total basepairs processed: 5,397,771,813 bp
+  Read 1: 1,270,063,956 bp
+  Read 2: 4,127,707,857 bp
+Quality-trimmed:              79,213,257 bp (1.5%)
+  Read 1:     7,940,654 bp
+  Read 2:    71,272,603 bp
+Total written (filtered):  4,755,612,060 bp (88.1%)
+  Read 1: 1,119,807,500 bp
+  Read 2: 3,635,804,560 bp
+
