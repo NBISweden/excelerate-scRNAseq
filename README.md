@@ -1,6 +1,7 @@
 ![logo](logos/excelerate.png)
 
-# [Schedule](schedule.md)
+# Single cell RNA-seq data analysis with R
+
 -------------
 
 
@@ -8,8 +9,10 @@
 
 This international hands-on course covers several aspects of single cell RNA-seq data analysis, ranging from clustering and differential gene expression analysis to trajectories, cell type identification and spatial transcriptomics. The course is kindly sponsored by the ELIXIR EXCELERATE project.
 
+### [Schedule](schedule.md)
+
 ### Date
-27-05-2019 - 29.05.2019
+27.05.2019 - 29.05.2019
 
 ### Location
 The event is organised at the CSC Training Facilities located in the premises of CSC at Keilaranta 14, Espoo, Finland. The best way to reach us is by public transportation; more detailed travel tips are available [here](https://www.csc.fi/how-to-reach-us).
@@ -48,7 +51,7 @@ After this course you will be able to:
 - Ahmed Mahfouz (LUMC, Netherlands)
 - Ståle Nygård (UIO, Norway)
 - Olga Dethlefsen (SciLifeLab, NBIS, Sweden)
-- Jeongbin Park (Charité-Universitätsmedizin Berlin, Germany)
+- Jeongbin Park (Charité-Universitätsmedizin Berlin & de.NBI - German Network for Bioinformatics Infrastructure, Germany)
 - Lars Borm (Karolinska Institutet, Sweden)
 - Jules Gilet (Institut Curie, France)
 - Heli Pessa (University of Helsinki, Finland)
