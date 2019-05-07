@@ -1,0 +1,3 @@
+*.fastq
+*.fastq.gz
+session-trajectories/data/*

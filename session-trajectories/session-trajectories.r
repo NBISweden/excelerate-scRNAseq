@@ -1,5 +1,5 @@
 #'---
-#'title: "Trajectory inferrence"
+#'title: "Trajectory inference"
 #'author: "Jules GILET"
 #'
 #'---
@@ -8,10 +8,10 @@
 
 # Transcriptional trajectories will be inferred from data by Nestorowa, Hamey et al. (Blood, 2016):
 # https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5305050/
-# The dataset consists in 1600 hematopoietic stem and progenitor cells from
-# mouse bone marrow. Using flow cytometry and index sorting, 12 HSPC different phenotypes (about 10 cells each)
-# have been included in the dataset, and will be used as ground truth for the identification of the
-# root and branched of the inferred trajectories.
+# The dataset consists in 1600 hematopoietic stem and progenitor cells from mouse bone marrow
+# (sequenced using the SMARTseq2 technology). Using flow cytometry and index sorting, 12 HSPC of different phenotypes
+# (about 10 cells each) have been included in the dataset, and will be used in this lab as a biological prior for the
+# identification of the root and the branches in the transcriptional trajectory models.
 
 # bash:
 # 
@@ -33,15 +33,29 @@ library(biomaRt)
 
 # data loading
 
-counts <- read.table('data/GSE81682_HTSeq_counts.txt', sep="\t", header=TRUE, row.names='ID')
-annotable <- read.table('data/nestorowa_corrected_population_annotation.txt')
+# The authors provide an expression matrix that has been filtered (highly expressed genes, high quality cells)
+# scaled and log-normalized. An annotation table is also provided, with each cell type labelled according to
+# the immunophenotyping done by flow cytometry.
+
 lognorm <- t(read.table('data/nestorowa_corrected_log2_transformed_counts.txt', sep=" ", header=TRUE))
+annotable <- read.table('data/nestorowa_corrected_population_annotation.txt')
+
+# To infer a trajectory with Monocle2/DDRtree, using non-normalized UMI-based counts is highly recommended,
+# as Monocle2 will scale and normalize the data internaly and is especting data ditributed according to a negative binomial.
+
+# The count matrix has been downloaded and will be used for Monocle2.
+
+counts <- read.table('data/GSE81682_HTSeq_counts.txt', sep="\t", header=TRUE, row.names='ID')
 
 counts[1:5,1:5]
 dim(counts)
 
 lognorm[1:5,1:5]
 dim(lognorm)
+
+# Note that the count matrix is not filtered, and genes are labelled
+# according to ensembl gene IDs. We will first filter the matrix according to the authors choices
+# and we will map the gene official symbols.
 
 # we filter the counts to keep only high quality cells
 
@@ -89,7 +103,7 @@ cds <- newCellDataSet(as.matrix(counts), phenoData=Biobase::AnnotatedDataFrame(p
 cds
 
 # the monocle cds object is done
-# and ready for trajectory inferrence
+# and ready for trajectory inference
 dir.create('monocle', showWarnings=FALSE)
 saveRDS(cds, 'monocle/cds_hematopoiesis.rds')
 
