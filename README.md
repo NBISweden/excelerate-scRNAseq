@@ -26,13 +26,14 @@ After this course you will be able to:
 ## Programme
 ### Monday 27.5.2019
 
-- Introduction and experimental design (Åsa Björklund)
+- Introduction and experimental design (Åsa Björklund, Jules Gilet)
 - QC, data preprocessing (Åsa Björklund)
-- Normalisation and batch effect correction (Heli Pessa, Ahmed Mahfouz)
+- Normalisation and batch effect correction (Heli Pessa, Bishwa Ghimire)
+- Data integration (CCA, MNN, dataset alignment) (Ahmed Mahfouz)
 
 ### Tuesday 28.5.2019
 - Dimensionality reduction (PCA, tSNE and UMAP) (Paulo Czarnewski)
-- Clustering and visualisation (Ahmed Mahfouz)
+- Clustering (Ahmed Mahfouz)
 - Differential gene expression analysis (Ståle Nygård and Olga Dethlefsen)
 
 ### Wednesday 29.5.2019

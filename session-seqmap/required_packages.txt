@@ -1,0 +1,14 @@
+### Ikura
+https://github.com/juugii/ikura
+
+### dependencies
+python >= 3.6.5
+R
+salmon >= 0.11
+fastqc >= 0.11.7
+
+### python dependencies (automacially installed with Ikura)
+
+multiqc >= 1.5
+cutadapt >= 1.18
+umi_tools >= 0.5.4
