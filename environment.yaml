@@ -14,7 +14,7 @@ dependencies:
  - r-umap=0.2
  - r-modes=0.7.0
  - umap-learn=0.3.8
- - wget=1.19.4
+ - wget
  - fftw=3.3.8
  - bioconductor-singlecellexperiment=1.4.0
  - bioconductor-scran=1.10.1
@@ -24,5 +24,14 @@ dependencies:
  - r-mvoutlier=2.0.9
  - bioconductor-destiny=2.12.0
  - r-umap=0.2.0.0
+ - bioconductor-scnorm=1.4.3
+ - bioconductor-hsmmsinglecell=1.2.0
+ - bioconductor-netbiov=1.16.0
+ - bioconductor-scde=2.10.0
+ - bioconductor-mast=1.8.1
+ - bioconductor-sc3=1.10.0
+ - r-sctransform=0.2.0
+ - bioconductor-monocle=2.10.0
+
 
 
