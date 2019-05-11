@@ -1,0 +1,15 @@
+{
+    "salmon_version": "0.13.0",
+    "libType": "ISR",
+    "mates1": "fastq/pbmc_1k_p3_trimmed_R1.fastq.gz",
+    "mates2": "fastq/pbmc_1k_p3_trimmed_R2.fastq.gz",
+    "chromium": [],
+    "whitelist": "whitelist_pbmc_1k_p3_alevinReady.txt",
+    "index": "/storage1/annotations/ikura/human/genecode_GRCh38p12/ikuraIndex_gencodeGRCh38p12_release29",
+    "threads": "10",
+    "dumpFeatures": [],
+    "dumpCsvCounts": [],
+    "output": "alevinOut",
+    "tgMap": "/storage1/annotations/ikura/human/genecode_GRCh38p12/ikuraIndex_gencodeGRCh38p12_release29/txp2gene_ikuraIndex_gencodeGRCh38p12_release29.tsv",
+    "auxDir": "aux_info"
+}
