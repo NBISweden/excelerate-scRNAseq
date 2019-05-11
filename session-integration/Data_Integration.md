@@ -76,7 +76,7 @@ p2 <- DimPlot(pancreas, reduction = "umap", group.by = "celltype", label = TRUE,
 plot_grid(p1, p2)
 ```
 
-![](session-integration_files/figure-gfm/norm_clust_raw-1.png)<!-- -->
+![](Data_Integration_files/figure-gfm/norm_clust_raw-1.png)<!-- -->
 
 We split the combined object into a list, with each dataset as an
 element. We perform standard preprocessing (log-normalization), and
@@ -270,7 +270,7 @@ p2 <- DimPlot(pancreas.integrated, reduction = "umap", group.by = "celltype", la
 plot_grid(p1, p2)
 ```
 
-![](session-integration_files/figure-gfm/clust_integrated-1.png)<!-- -->
+![](Data_Integration_files/figure-gfm/clust_integrated-1.png)<!-- -->
 
 ## Mutual Nearest Neighbor (MNN)
 
@@ -417,24 +417,14 @@ sce <- runPCA(sce,
 
 names(reducedDims(sce)) <- "PCA_naive" 
 
-p1 <- plotReducedDim(sce, use_dimred = "PCA_naive", colour_by = "tech") + ggtitle("PCA Without batch correction")
-```
-
-    ## Warning: 'add_ticks' is deprecated.
-    ## Use '+ geom_rug(...)' instead.
-
-``` r
-p2 <- plotReducedDim(sce, use_dimred = "PCA_naive", colour_by = "celltype") + ggtitle("PCA Without batch correction")
-```
-
-    ## Warning: 'add_ticks' is deprecated.
-    ## Use '+ geom_rug(...)' instead.
-
-``` r
+p1 <- plotReducedDim(sce, use_dimred = "PCA_naive", colour_by = "tech") + 
+    ggtitle("PCA Without batch correction")
+p2 <- plotReducedDim(sce, use_dimred = "PCA_naive", colour_by = "celltype") + 
+    ggtitle("PCA Without batch correction")
 plot_grid(p1, p2)
 ```
 
-![](session-integration_files/figure-gfm/sce_visualize-1.png)<!-- -->
+![](Data_Integration_files/figure-gfm/sce_visualize-1.png)<!-- -->
 
 ### Integrating datasets using MNN
 
@@ -497,23 +487,11 @@ data.
 
 ``` r
 p1 <- plotReducedDim(sce, use_dimred = "MNN", colour_by = "tech") + ggtitle("MNN Ouput Reduced Dimensions")
-```
-
-    ## Warning: 'add_ticks' is deprecated.
-    ## Use '+ geom_rug(...)' instead.
-
-``` r
 p2 <- plotReducedDim(sce, use_dimred = "MNN", colour_by = "celltype") + ggtitle("MNN Ouput Reduced Dimensions")
-```
-
-    ## Warning: 'add_ticks' is deprecated.
-    ## Use '+ geom_rug(...)' instead.
-
-``` r
 plot_grid(p1, p2)
 ```
 
-![](session-integration_files/figure-gfm/MNN_plot-1.png)<!-- -->
+![](Data_Integration_files/figure-gfm/MNN_plot-1.png)<!-- -->
 
 ### Session info
 

@@ -12,7 +12,7 @@
 - **13:45-14:30** Labs: Normalisation and removal of confounding factors (Heli & Bishwa)
 - **14:30-15:00** _coffee break_
 - **15:00-15:45** Lecture: Data integration (Ahmed Mahfouz)
-- **15:45-17:00** Labs: Data integration (Ahmed)
+- **15:45-17:00** Labs: [Data integration](session-integration/Data_Integration.md) (Ahmed Mahfouz)
 
 ### Tuesday 28.5.2019
 - **09:00-09:45**	Dimensionality reduction I (Paulo Czarnewski)
