@@ -1,0 +1,290 @@
+---
+title: "Clustering"
+output: github_document
+---
+
+Created by: Ahmed Mahfouz
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=9, fig.height=6) 
+```
+
+# Overview
+
+In this tutorial we will look at different approaches to clustering scRNA-seq datasets in order to characterize the different subgroups of cells. Using unsupervised clustering, we will try to identify groups of cells based on the similarities of the transcriptomes without any prior knowledge of the labels.
+
+Load required packages:
+
+```{r packages}
+suppressMessages(require(tidyverse))
+suppressMessages(require(Seurat))
+suppressMessages(require(cowplot))
+suppressMessages(require(scater))
+suppressMessages(require(scran))
+suppressMessages(require(igraph))
+```
+
+## Datasets
+
+In this tutorial, we will use a small dataset of cells from developing mouse embryo [Deng et al. 2014](https://science.sciencemag.org/content/343/6167/193). We have preprocessed the dataset and created a `SingleCellExperiment` object in advance. We have also annotated the cells with the cell types identified in the original publication (it is the `cell_type2` column in the `colData` slot).
+
+```{r load}
+#load expression matrix
+deng <- readRDS("session-clustering_files/deng-reads.rds")
+deng
+
+#look at the cell type annotation
+table(colData(deng)$cell_type2)
+```
+
+## Feature selection
+
+The first step is to decide which genes to use in clustering the cells. Single cell RNASeq can profile a huge number of genes in a lot of cells. But most of the genes are not expressed enough to provide a meaningful signal and are often driven by technical noise. Including them could potentially add some unwanted signal that would blur the biological variation. Moreover gene filtering can also speed up the computational time for downstream analysis.
+
+First let's have a look at the average expression and the variance of all genes. Which genes seem less important and which are likely to be technical noise?
+
+```{r expression}
+#Calculate gene mean across cell
+gene_mean <- rowMeans(counts(deng)) 
+
+#Calculate gene variance across cell
+gene_var  <- rowVars(counts(deng))  
+
+#ggplot plot
+gene_stat_df <- tibble(gene_mean,gene_var)
+ggplot(data=gene_stat_df ,aes(x=log(gene_mean), y=log(gene_var))) + geom_point(size=0.5)  + theme_classic()
+```
+
+
+#### Filtering out low abundance genes
+Low-abundance genes are mostly non informative and are not representative of the biological variance of the data. They are often driven by technical noise such as dropout event. However, their presence in downstream analysis leads often to a lower accuracy since they can interfere with some statistical model that will be used and also will pointlessly increase the computational time which can be critical when working with very large data.
+
+```{r filt_low_abundance}
+abundant_genes <- gene_mean >= 0.5 #Remove Low abundance genes
+# plot low abundance gene filtering
+hist(log10(gene_mean), breaks=100, main="", col="grey80",
+     xlab=expression(Log[10]~"average count"))
+abline(v=log10(0.5), col="red", lwd=2, lty=2)
+```
+
+```{r remove_low_abund}
+#remove low abundance gene in SingleCellExperiment Object 
+deng <- deng[abundant_genes,]
+dim(deng)
+```
+
+#### Filtering genes that are expressed in very few cells
+We can also filter some genes that are in a small number of cells. This procedure would remove some outlier genes that is highly expressed in one or two cells. These genes are unwanted for further analysis since they mostly comes from an iregular amplification of artifacts. It is important to note that we might not want to filter with this procedure when the aim of the analysis is to detect a very rare subpopulation in the data.
+
+```{r remove_genes_in_few_cells}
+#Calculate the number of non zero expression for each genes
+numcells <- nexprs(deng, byrow=TRUE) 
+
+#Filter genes detected in less than 5 cells
+numcells2 <- numcells >= 5
+deng <- deng[numcells2,]
+dim(deng)
+```
+
+#### Detecting Highly Variable Genes
+HVG assumes that if genes have large differences in expression across cells some of those differences are due to biological difference between the cells rather than technical noise. However,there is a positive relationship between the mean expression of a gene and the variance in the read counts across cells. Keeping only high variance genes, will lead to keeping a lot of highly expressed housekeeping genes that are expressed in every cells and are not representative of the biological variance. This relationship must be corrected for to properly identify HVGs.
+
+We can use one of the following methods (RUN ONLY ONE) to determine the highly variable genes.
+
+**Option 1:** Model the coefficient of variation as a function of the mean.
+
+```{r hvg_1}
+# out <- technicalCV2(deng, spike.type=NA, assay.type= "counts")
+# out$genes <- rownames(deng)
+# out$HVG <- (out$FDR<0.05)
+# as_tibble(out)
+# 
+# # plot highly variable genes
+# ggplot(data = out) + geom_point(aes(x=log2(mean), y=log2(cv2), color=HVG), size=0.5) + geom_point(aes(x=log2(mean), y=log2(trend)), color="red", size=0.1)
+# 
+# ## save the HVG into metadata for safekeeping
+# metadata(deng)$hvg_genes <- rownames(deng)[out$HVG]
+```
+
+**Option 2:** Model the variance of the biological component as a function of the mean.
+
+First we estimation the variance in expression for each gene, followed by decomposition of the variance into biological and technical components. HVGs are then identified as those genes with the largest biological components. This avoids prioritizing genes that are highly variable due to technical factors such as sampling noise during RNA capture and library preparation. see the [scran vignette](https://bioconductor.org/packages/devel/bioc/vignettes/scran/inst/doc/scran.html#5_variance_modelling) for details.
+
+```{r hvg_2}
+fit <- trendVar(deng, parametric=TRUE, use.spikes = FALSE)
+dec <- decomposeVar(deng, fit)
+dec$HVG <- (dec$FDR<0.00001)
+hvg_genes <- rownames(dec[dec$FDR < 0.00001, ])
+
+# plot highly variable genes
+plot(dec$mean, dec$total, pch=16, cex=0.6, xlab="Mean log-expression",
+     ylab="Variance of log-expression")
+o <- order(dec$mean)
+lines(dec$mean[o], dec$tech[o], col="dodgerblue", lwd=2)
+points(dec$mean[dec$HVG], dec$total[dec$HVG], col="red", pch=16)
+
+## save the decomposed variance table and hvg_genes into metadata for safekeeping
+metadata(deng)$hvg_genes <- hvg_genes
+metadata(deng)$dec_var <- dec
+```
+
+## Dimensionality reduction
+
+The clustering problem is computationally difficult due to the high level of noise (both technical and biological) and the large number of dimensions (i.e. genes). We can solve these problems by applying dimensionality reduction methods (e.g. PCA, tSNE, and UMAP)
+
+```{r pca}
+#PCA (select the number of components to calculate)
+deng <- runPCA(deng, method = "irlba",
+             ncomponents = 30,
+             feature_set = metadata(deng)$hvg_genes)
+
+#Make a scree plot (percentage variance explained per PC) to determine the number of relevant components
+X <- attributes(deng@reducedDims$PCA)
+plot(X$percentVar~c(1:30), type="b", lwd=1, ylab="Percentage variance" , xlab="PCs" , bty="l" , pch=1)
+```
+
+Make a PCA plot (PC1 vs. PC2) 
+
+```{r pca_plot, warning=FALSE}
+plotReducedDim(deng, "PCA", colour_by = "cell_type2")
+```
+
+Make a tSNE plot
+*Note:* tSNE is a stochastic method. Everytime you run it you will get slightly different results. For convinience we can get the same results if we seet the seed.
+
+```{r tSNE, warning=FALSE}
+#tSNE
+deng <- runTSNE(deng,
+              perplexity = 30,
+              feature_set = metadata(deng)$hvg_genes,
+              set.seed = 1)
+
+
+plotReducedDim(deng, "TSNE", colour_by = "cell_type2")
+```
+
+## Clustering
+
+### Hierarchical clustering
+
+```{r hierarchical_eucledian_ward}
+# Calculate Distances (default: Eucledian distance)
+distance_eucledian <- dist(t(logcounts(deng)))
+
+#Perform hierarchical clustering using ward linkage
+ward_hclust_eucledian <- hclust(distance_eucledian,method = "ward.D2")
+plot(ward_hclust_eucledian, main = "dist = eucledian, Ward linkage")
+```
+
+Now cut the dendrogram to generate 10 clusters and plot the cluster labels on the PCA plot.
+
+```{r hierarchical_eucledian_ward_pcaplot, warning=FALSE}
+#Cutting the cluster tree to make 10 groups
+cluster_hclust <- cutree(ward_hclust_eucledian,k = 10)
+colData(deng)$cluster_hclust <- factor(cluster_hclust)
+
+plot_grid(plotReducedDim(deng, "PCA", colour_by = "cluster_hclust"),
+          plotReducedDim(deng, "PCA", colour_by = "cell_type2"))
+```
+
+Plot the cluster labels on the tSNE plot.
+
+```{r hierarchical_eucledian_ward_tSNEplot, warning=FALSE}
+plot_grid(plotReducedDim(deng, "TSNE", colour_by = "cluster_hclust"),
+          plotReducedDim(deng, "TSNE", colour_by = "cell_type2"))
+```
+
+Now let's try a different distance measure. A commonly used distance measue is 1 - correlation.
+
+```{r hierarchical_corr_ward}
+# Calculate Distances (1 - correlation)
+C <- cor(logcounts(deng))
+
+# Run clustering based on the correlations, where the distance will 
+# be 1-correlation, e.g. higher distance with lower correlation.
+distance_corr <- as.dist(1-C) 
+    
+#Perform hierarchical clustering using ward linkage
+ward_hclust_corr <- hclust(distance_corr,method="ward.D2")
+plot(ward_hclust_corr, main = "dist = 1-corr, Ward linkage")
+```
+
+Again, let's cut the dendrogram to generate 10 clusters and plot the cluster labels on the PCA plot.
+
+```{r hierarchical_corr_ward_pcaplot, warning=FALSE}
+#Cutting the cluster tree to make 10 groups
+cluster_hclust <- cutree(ward_hclust_corr,k = 10)
+colData(deng)$cluster_hclust <- factor(cluster_hclust)
+
+plot_grid(plotReducedDim(deng, "PCA", colour_by = "cluster_hclust"),
+          plotReducedDim(deng, "PCA", colour_by = "cell_type2"))
+```
+
+Instead of changing the distance metric, we can change the linkage method. Instead of using Ward's method, let's use complete linkage.
+
+```{r hierarchical_eucledian_complete}
+# Calculate Distances (default: Eucledian distance)
+distance_eucledian <- dist(t(logcounts(deng)))
+
+#Perform hierarchical clustering using ward linkage
+comp_hclust_eucledian <- hclust(distance_eucledian,method = "complete")
+plot(comp_hclust_eucledian, main = "dist = eucledian, complete linkage")
+```
+
+Once more, let's cut the dendrogram to generate 10 clusters and plot the cluster labels on the PCA plot.
+
+```{r hierarchical_eucledian_complete_pcaplot, warning=FALSE}
+#Cutting the cluster tree to make 10 groups
+cluster_hclust <- cutree(comp_hclust_eucledian,k = 10)
+colData(deng)$cluster_hclust <- factor(cluster_hclust)
+
+plot_grid(plotReducedDim(deng, "PCA", colour_by = "cluster_hclust"),
+          plotReducedDim(deng, "PCA", colour_by = "cell_type2"))
+```
+
+### TSNE + Kmeans
+
+```{r k-means, warning=FALSE}
+# Do kmeans algorithm on TSNE coordinates
+deng_kmeans <- kmeans(x = deng@reducedDims$TSNE,centers = 10)
+TSNE_kmeans <- factor(deng_kmeans$cluster)
+colData(deng)$TSNE_kmeans <- TSNE_kmeans
+#Compare with ground truth
+plot_grid(plotTSNE(deng, colour_by = "TSNE_kmeans"),
+          plotTSNE(deng, colour_by = "cell_type2"))
+```
+
+
+### Graph Based Clustering
+
+```{r graph_clust, warning=FALSE}
+#k=5
+#The k parameter denfines the number of closest cells to look for each cells
+SNNgraph_k5 <- buildSNNGraph(x = deng, k=5) 
+SNNcluster_k5 <- cluster_louvain(SNNgraph_k5)
+colData(deng)$SNNcluster_k5 <- factor(SNNcluster_k5$membership)
+p5<- plotPCA(deng, colour_by="SNNcluster_k5")+ guides(fill=guide_legend(ncol=2))
+
+# k30
+SNNgraph_k30 <- buildSNNGraph(x = deng, k=30) 
+SNNcluster_k30 <- cluster_louvain(SNNgraph_k30)
+colData(deng)$SNNcluster_k30 <- factor(SNNcluster_k30$membership)
+p30 <- plotPCA(deng, colour_by="SNNcluster_k30")
+
+#plot the different clustering.
+plot_grid(p5+ guides(fill=guide_legend(ncol=1)),p30) 
+```
+
+
+
+### Session info
+
+```{r}
+sessionInfo()
+```
+
+
+
+
+
