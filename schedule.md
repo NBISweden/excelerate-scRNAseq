@@ -49,7 +49,7 @@
 - Jeongbin Park (Charité-Universitätsmedizin Berlin, Germany), <jeongbin.park@charite.de>
 - [Lars Borm](https://ki.se/en/people/larbor) (Karolinska Institutet, Sweden), <ars.borm@ki.se>
 - Jules Gilet (Institut Curie, France), <jules.gilet@curie.fr>
-- [Heli Pessa](https://tuhat.helsinki.fi/portal/en/persons/heli-pessa(1c5905eb-fc9c-4b2e-9a9a-3dacc88c9943).html) (University of Helsinki, Finland), <Heli.Pessa@helsinki.fi>
+- Heli Pessa (University of Helsinki, Finland), <Heli.Pessa@helsinki.fi>
 - Bishwa Ghimire (FIMM, Finland), <bishwa.ghimire@helsinki.fi>
 - Philip Lijnzaad (Princess Maxima Center for Pediatric Oncology, Netherlands), <P.Lijnzaad-2@prinsesmaximacentrum.nl>
 
