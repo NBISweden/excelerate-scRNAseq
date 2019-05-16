@@ -18,9 +18,9 @@
 - **09:00-09:45**	Dimensionality reduction I (Paulo Czarnewski)
 - **09:45-10:15** _coffee break_
 - **10:15-11:00**	Dimensionality reduction II (Paulo)
-- **11:00-12:00**	Clustering I (Ahmed Mahfouz)
+- **11:00-12:00**	Lecture: Clustering (Ahmed Mahfouz)
 - **12:00-13:00** _lunch_
-- **13:00-15:00** Clustering II (Ahmed Mahfouz)
+- **13:00-15:00** Labs: [Clustering](session-clustering/CLustering.md) (Ahmed Mahfouz)
 - **14:30-15:00** _coffee break_
 - **15:00-17:00**	[Differential expression](session-de/session-de.md) (Ståle Nygård and Olga Dethlefsen)
 
