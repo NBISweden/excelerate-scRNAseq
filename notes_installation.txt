@@ -1,0 +1,67 @@
+# manual installations:
+
+# for SingleR
+install.packages("pbmcapply")
+devtools::install_github('dviraran/SingleR')
+# OBS! without updating any of the packages.
+
+
+# for CHETAH
+devtools::install_github("asabjorklund/CHETAH")
+
+# OBS! without updating any of the packages.
+# OBS! original github repo has R>=3.6 in Description, works fin to install from my fork with R 3.5.1
+# Should be installed from: "jdekanter/CHETAH"
+
+
+
+###################################################
+
+SingleR - https://github.com/dviraran/SingleR
+Imports: BiocManager, - installed
+    RColorBrewer, - installed
+    outliers, - fix
+    matrixStats, - installed
+    plyr, - installed
+    dplyr, - installed
+    ggplot2, - installed
+    pbmcapply, - fix
+    Matrix, - installed
+    GSEABase, - fix
+    GSVA, - fix
+    pheatmap, - installed
+    parallel,- installed
+    devtools, - installed
+    doFuture, - fix
+    data.table, - installed
+    foreach, - installed
+    singscore, - fix
+    doParallel - - installed
+
+# all but pbmcapply have conda env.
+- pbmcapply compilation errors req MacOSX SDKs insalled.
+# open /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg &
+
+
+CHETAH - https://github.com/jdekanter/CHETAH
+# OBS! Says R>=3.6
+Imports:
+    gplots, - installed
+    shiny, - installed
+    plotly, - installed
+    pheatmap, - installed
+    bioDist,  - fix
+    dendextend, - fix 
+    cowplot,- installed 
+  	corrplot, - fix
+  	grDevices, - installed
+  	stats, - installed
+  	graphics, - installed
+  	reshape2, - installed
+  	S4Vectors, - installed 
+  	SummarizedExperiment - installed
+Depends:
+    R (>= 3.6),
+	  ggplot2, - installed
+  	SingleCellExperiment - installed
+
