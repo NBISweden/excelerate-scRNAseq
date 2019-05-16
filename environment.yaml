@@ -23,6 +23,7 @@ dependencies:
  - r-knitr=1.20
  - r-mvoutlier=2.0.9
  - bioconductor-destiny=2.12.0
+ - bioconductor-monocle=2.10.1
  - r-umap=0.2.0.0
  - bioconductor-scnorm=1.4.3
  - bioconductor-hsmmsinglecell=1.2.0
