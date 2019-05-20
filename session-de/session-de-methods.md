@@ -1,5 +1,3 @@
-{% include mathjax.html %}
-
 Differential expression methods
 ================
 
@@ -129,8 +127,7 @@ al. 2011).
 #### zero inflated NB
 
 ![](session-de-files/figures/dist-zero-inflated-NB-1.png)<!-- -->
-$$mu=mu*(1-d)$$
-$$delta^2=mu*(1-d)*(1+d*mu+mu/size)$$
+\[\mu=mu*(1-d)\] \[\delta^2=\mu*(1-d)*(1+d*\mu+\mu/size)\]
 
 *d*, dropout rate; dropout rate of a gene is strongly correlated with
 the mean expression of the gene. Different zero-inflated negative
@@ -172,10 +169,12 @@ on the particular DE algorithm.
   - subset of robust genes is used to fit, via *EM* algorithm, the
     parameters to the mixture of models For DE, the posterior
     probability that the gene shows a fold expression difference between
-    two conditions is computed using a *Bayesian
-approach*
+    two conditions is computed using a *Bayesian approach*
 
 #### Loading the data
+
+Data can be downloaded from
+[here](https://stockholmuniversity.box.com/s/b2is7q3msfewnvnivky5w0gj9pj27pxi)
 
 ``` r
 # we will read both counts and rpkms as different method are more adopted for different type of data
