@@ -1,3 +1,5 @@
+{% include mathjax.html %}
+
 Differential expression methods
 ================
 
@@ -127,7 +129,8 @@ al. 2011).
 #### zero inflated NB
 
 ![](session-de-files/figures/dist-zero-inflated-NB-1.png)<!-- -->
-\[\mu=mu*(1-d)\] \[\delta^2=\mu*(1-d)*(1+d*\mu+\mu/size)\]
+$$mu=mu*(1-d)$$
+$$delta^2=mu*(1-d)*(1+d*mu+mu/size)$$
 
 *d*, dropout rate; dropout rate of a gene is strongly correlated with
 the mean expression of the gene. Different zero-inflated negative
