@@ -190,6 +190,8 @@ May be further expanded to explicitly account for other sources of gene expressi
 For DE, the posterior probability that the gene shows a fold expression difference between two conditions is computed using a _Bayesian approach_
 
 #### Loading the data
+
+Data can be downloaded from [here](https://stockholmuniversity.box.com/s/b2is7q3msfewnvnivky5w0gj9pj27pxi)
 ```{r, data-load, eval=F}
 
 # we will read both counts and rpkms as different method are more adopted for different type of data
