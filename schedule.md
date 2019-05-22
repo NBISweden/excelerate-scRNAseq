@@ -15,9 +15,9 @@
 - **15:45-17:00** Labs: [Data integration](session-integration/Data_Integration.md) (Ahmed Mahfouz)
 
 ### Tuesday 28.5.2019
-- **09:00-09:45**	Lecture: Dimensionality reduction I (Paulo Czarnewski)
+- **09:00-09:45**	[Dimensionality_reduction](session-dim-reduction/lecture_dimensionality_reduction.pdf) (Paulo Czarnewski)
 - **09:45-10:15** _coffee break_
-- **10:15-11:00**	Labs: Dimensionality reduction II (Paulo)
+- **10:15-11:00**	Labs: Continue from [Data integration](session-integration/Data_Integration.md)
 - **11:00-12:00**	Lecture: Clustering (Ahmed Mahfouz)
 - **12:00-13:00** _lunch_
 - **13:00-15:00** Labs: [Clustering](session-clustering/CLustering.md) (Ahmed Mahfouz)
