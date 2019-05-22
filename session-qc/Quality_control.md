@@ -8,7 +8,9 @@ Overview
 
 #### Quality control of data for filtering cells using Seurat and Scater packages.
 
-In this tutorial we will look at different ways of doing filtering and cell and exploring variablility in the data.
+In this tutorial we will look at different ways of doing filtering and cell and exploring variablility in the data. If you would like 
+to repeat these or any other analyses on your computer, please follow [these instructions](conda_instructions.md) to easily get all 
+software installed and ready.
 
 The first part is using Seurat (<https://satijalab.org/seurat/>) for visualizing QC-measures and filtering cells. However, we will not go into depth in how to use the Seurat package as this will be covered in other tutorials.
 
@@ -39,7 +41,7 @@ suppressMessages(require(Matrix))
 
 #### Read data
 
-Here, we use the function Read10X\_h5 to read in the expression matrices.
+Here, we use the function Read10X\_h5 to read in the expression matrices in R.
 
 ``` r
 v3.1k <- Read10X_h5("data/pbmc_1k_v3_filtered_feature_bc_matrix.h5", use.names = T)
