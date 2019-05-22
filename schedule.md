@@ -9,7 +9,7 @@
 - **11:00-12:00** Labs: [QC & data preprocessing](session-qc/Quality_control.md) (Åsa & Jules)
 - **12:00-13:00** _lunch_
 - **13:00-13:45** Lecture: Normalisation and removal of confounding factors (Heli Pessa  & Bishwa Ghimire)
-- **13:45-14:30** Labs: Normalisation and removal of confounding factors (Heli & Bishwa)
+- **13:45-14:30** Labs: [Normalisation and removal of confounding factors](session-normalization/Normalization.Rmd) (Heli & Bishwa)
 - **14:30-15:00** _coffee break_
 - **15:00-15:45** Lecture: Data integration (Ahmed Mahfouz)
 - **15:45-17:00** Labs: [Data integration](session-integration/Data_Integration.md) (Ahmed Mahfouz)

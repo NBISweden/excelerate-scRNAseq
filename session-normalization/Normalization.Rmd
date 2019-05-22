@@ -22,6 +22,7 @@ wget http://cf.10xgenomics.com/samples/cell-exp/3.0.0/pbmc_1k_v3/pbmc_1k_v3_filt
 ```
 
 ```{r}
+setwd('/my/path/to/downloaded/data/') #cd to where you've downloaded the data above
 pbmc.mat <- Seurat::Read10X_h5("pbmc_1k_v3_filtered_feature_bc_matrix.h5")
 pbmc.sce <- SingleCellExperiment(assays = list(counts = as.matrix(pbmc.mat)))
 pbmc.sce <- pbmc.sce[rowSums(counts(pbmc.sce) > 0) > 0,]
