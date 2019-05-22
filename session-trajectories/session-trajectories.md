@@ -27,7 +27,7 @@ wget -nH -nd ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE81nnn/GSE81682/suppl/GSE81
 gunzip *
 cd ..
 ```
-
+If you have issues loading these files in R below, make sure you have `gunzip`ed them correctly and that they are now found as `.txt` in your `data` folder.
 ## Part I - Monocle2/DDRtree
 
 
@@ -42,6 +42,9 @@ library(biomaRt)
 # The authors provide an expression matrix that has been filtered (highly expressed genes, high quality cells)
 # scaled and log-normalized. An annotation table is also provided, with each cell type labelled according to
 # the immunophenotyping done by flow cytometry.
+#
+# Use `getwd()` to see your working directory, and change it with `setwd(/my/file/path/)` if you the `read.table()`
+# commands below give errors.
 
 lognorm <- t(read.table('data/nestorowa_corrected_log2_transformed_counts.txt', sep=" ", header=TRUE))
 anno_table <- read.table('data/nestorowa_corrected_population_annotation.txt')
@@ -452,7 +455,7 @@ eset
 ```r
 # the expression set is ready for inference with destiny
 dir.create('destiny', showWarnings=FALSE)
-saveRDS(cds, 'destiny/eset_hematopoiesis.rds')
+saveRDS(eset, 'destiny/eset_hematopoiesis.rds')
 
 # diffusion map
 dmap <- DiffusionMap(eset)
