@@ -9,7 +9,7 @@
 - **11:00-12:00** Labs: [QC & data preprocessing](session-qc/Quality_control.md) (Åsa & Jules)
 - **12:00-13:00** _lunch_
 - **13:00-13:45** Lecture: Normalisation and removal of confounding factors (Heli Pessa  & Bishwa Ghimire)
-- **13:45-14:30** Labs: Normalisation and removal of confounding factors (Heli & Bishwa)
+- **13:45-14:30** Labs: [Normalisation and removal of confounding factors](session-normalization/Normalization.Rmd) (Heli & Bishwa)
 - **14:30-15:00** _coffee break_
 - **15:00-15:45** Lecture: Data integration (Ahmed Mahfouz)
 - **15:45-17:00** Labs: [Data integration](session-integration/Data_Integration.md) (Ahmed Mahfouz)
@@ -49,7 +49,7 @@
 - Jeongbin Park (Charité-Universitätsmedizin Berlin and de.NBI, Germany), <jeongbin.park@charite.de>
 - [Lars Borm](https://ki.se/en/people/larbor) (Karolinska Institutet, Sweden), <ars.borm@ki.se>
 - Jules Gilet (Institut Curie, France), <jules.gilet@curie.fr>
-- [Heli Pessa](https://tuhat.helsinki.fi/portal/en/persons/heli-pessa(1c5905eb-fc9c-4b2e-9a9a-3dacc88c9943).html) (University of Helsinki, Finland), <Heli.Pessa@helsinki.fi>
+- Heli Pessa (University of Helsinki, Finland), <Heli.Pessa@helsinki.fi>
 - Bishwa Ghimire (FIMM, Finland), <bishwa.ghimire@helsinki.fi>
 - Philip Lijnzaad (Princess Maxima Center for Pediatric Oncology, Netherlands), <P.Lijnzaad-2@prinsesmaximacentrum.nl>
 
