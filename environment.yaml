@@ -14,7 +14,7 @@ dependencies:
  - r-umap=0.2
  - r-modes=0.7.0
  - umap-learn=0.3.8
- - wget=1.19.4
+ - wget
  - fftw=3.3.8
  - bioconductor-singlecellexperiment=1.4.0
  - bioconductor-scran=1.10.1
@@ -25,5 +25,29 @@ dependencies:
  - bioconductor-destiny=2.12.0
  - bioconductor-monocle=2.10.1
  - r-umap=0.2.0.0
+ - bioconductor-scnorm=1.4.3
+ - bioconductor-hsmmsinglecell=1.2.0
+ - bioconductor-netbiov=1.16.0
+ - bioconductor-scde=2.10.0
+ - bioconductor-mast=1.8.1
+ - bioconductor-sc3=1.10.0
+ - r-sctransform=0.2.0
+ - bioconductor-monocle=2.10.0
+ - r-outliers=0.14
+ - bioconductor-gseabase=1.44.0
+ - bioconductor-gsva=1.30.0
+ - r-dofuture=0.8.0
+ - bioconductor-singscore=1.2.2
+ - clang=4.0.1
+ - gcc=4.8.5
+ # for CHETAH
+ - bioconductor-biodist=1.54.0
+ - r-dendextend=1.10.0
+ - r-cowplot=0.9.4
+ - r-corrplot=0.84
 
 
+
+
+# pbmcapply - has no conda, but cran.
+# singleR - is devtools installation
