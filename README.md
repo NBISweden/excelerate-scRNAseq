@@ -45,11 +45,11 @@ After this course you will be able to:
 - Spatial transcriptomics (Jeongbin Park and Lars Borm)
 
 ### Lecturers
-- Åsa Björklund (SciLifeLab, NBIS, Sweden)
-- Paulo Czarnewski (SciLifeLab, NBIS, Sweden)
+- Åsa Björklund (NBIS, ELIXIR-SE, Sweden)
+- Paulo Czarnewski (NBIS, ELIXIR-SE, Sweden)
 - Ahmed Mahfouz (LUMC, Netherlands)
 - Ståle Nygård (UIO, Norway)
-- Olga Dethlefsen (SciLifeLab, NBIS, Sweden)
+- Olga Dethlefsen (NBIS, ELIXIR-SE, Sweden)
 - Jeongbin Park (Charité-Universitätsmedizin Berlin & de.NBI - German Network for Bioinformatics Infrastructure, Germany)
 - Lars Borm (Karolinska Institutet, Sweden)
 - Jules Gilet (Institut Curie, France)
