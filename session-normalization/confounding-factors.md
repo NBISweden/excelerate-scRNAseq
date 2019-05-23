@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The data is from Seurat tutorial for cell cycle regression. The data is originally in dense matrix format, but it has been converted to sparse matrix similar to the one 10X pipeline generates. It saves a lot of disk space.
 
-```{r}
+```r
 suppressMessages( require(Seurat) )
 suppressMessages( require(Matrix) )
 
@@ -27,7 +27,7 @@ obj1 <- CreateSeuratObject(counts=data.mat)
 
 The data has undergone filtering. Thus, we only need to normalize the data and find variable features.
 
-```{r}
+```r
 ## Normalization
 obj1 <- NormalizeData(obj1, verbose = FALSE)
 obj1 <- FindVariableFeatures(obj1, 
@@ -40,7 +40,7 @@ obj1 <- FindVariableFeatures(obj1,
 
 The function `ScaleData` does centering and scaling of data. Furthermore, it regresses out variables if such variables are provided. At this point we do not regress out any variable to see how cell-cycle effect.
 
-```{r}
+```r
 obj1 <- ScaleData(obj1, features = rownames(obj1), verbose = FALSE) 
 
 ```
@@ -49,7 +49,7 @@ obj1 <- ScaleData(obj1, features = rownames(obj1), verbose = FALSE)
 
 Now we run PCA using variable features calculated above and check how cell-cycle genes are scored in PC. 
 
-```{r}
+```r
 ## Run PCA using all variable features
 obj1 <- RunPCA(obj1, features = VariableFeatures(obj1))
 
@@ -79,12 +79,13 @@ ggplot(lod, aes(x=PC_1,y=gene, color=cc.genes, label=cc.genes.name) ) +
         axis.text.y=element_blank(),
         axis.ticks.y=element_blank())
 ```
+![](figures/PC1_loadings.png.png)<!-- -->
 
 ## Importance of cell cycle genes in PCs
 
 Genes having PC scores further away from 0, have higher variance. We could rank genes by PC scores in each PC and check ranks of cell cycle markers.
 
-```{r}
+```r
 
 ## Take only 30 PCs
 lod.rnk <- lod[,1:51]
@@ -113,10 +114,10 @@ apply(lod.rnk, 2, FUN=function(x){
 
 In the above output we can see PC8 has cell cycle markers in top 15 list. We can visualize the expression of top 30 genes of PC 8 to see cell cycle genes.
 
-```{r}
+```r
 DimHeatmap(obj1, dims = 8, nfeatures = 30)
 ```
-
+![](figures/heatmap_PC8.png)<!-- -->
 
 Lets do cell cycle scoring and look into PCA plot how the cells seperate based on cell cycle phase
 
@@ -136,11 +137,11 @@ obj1 <- RunPCA(obj1, features = c(cc.genes$s.genes, cc.genes$g2m.genes), verbose
 DimPlot(obj1)
 
 ```
-
+![](figures/pca_before_correction.png)<!-- -->
 
 Now we regress out the effect coming from cell cycle. We give column name from metadata data frame of `obj1` object. If we want to regress out other variables it should be in the metadata data frame. 
 
-```{r}
+```r
 
 obj2 <- ScaleData(obj1, 
                   vars.to.regress = c("S.Score", "G2M.Score"), 
@@ -153,14 +154,15 @@ obj2 <- RunPCA(obj2, features = VariableFeatures(obj2), verbose=FALSE)
 
 DimPlot(obj2)
 
-
 ```
+![](figures/pca_after_correction.png)<!-- -->
+
 
 ## Variance explained by a confounding factor
 
 Using Scater package we can check the effect of confounding factors/variables. Scater calcualtes R-squared for a confounding factor/variable by fitting a line for each gene against the confounding factor/variable. R-squared is the propotion of variance for dependant variable explained by an independent variable.
 
-```{r}
+```r
 
 suppressMessages( require(SingleCellExperiment) )
 suppressMessages( require(scater) )
@@ -174,5 +176,5 @@ plotExplanatoryVariables(
 
 
 ```
-
+![](figures/variance_explained.png)<!-- -->
 
