@@ -15,6 +15,9 @@ The data is from Seurat tutorial for cell cycle regression. The data is original
 suppressMessages( require(Seurat) )
 suppressMessages( require(Matrix) )
 
+## extract the data
+untar("data/nestorawa/nestorawa.tar.gz", exdir = "data/nestorawa/")
+
 ## Read sparse matrix
 data.mat <- Read10X("data/nestorawa")
 
