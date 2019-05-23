@@ -1,12 +1,3 @@
----
-title: "Confounding factors"
-output: github_document
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ## Load the data
 
 The data is from Seurat tutorial for cell cycle regression. The data is originally in dense matrix format, but it has been converted to sparse matrix similar to the one 10X pipeline generates. It saves a lot of disk space.
@@ -79,7 +70,7 @@ ggplot(lod, aes(x=PC_1,y=gene, color=cc.genes, label=cc.genes.name) ) +
         axis.text.y=element_blank(),
         axis.ticks.y=element_blank())
 ```
-![](figures/PC1_loadings.png.png)<!-- -->
+![](figures/PC1_loadings.png)<!-- -->
 
 ## Importance of cell cycle genes in PCs
 
