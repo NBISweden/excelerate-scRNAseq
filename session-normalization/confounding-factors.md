@@ -112,7 +112,7 @@ DimHeatmap(obj1, dims = 8, nfeatures = 30)
 
 Lets do cell cycle scoring and look into PCA plot how the cells seperate based on cell cycle phase
 
-```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+```r
 
 ## cell cycle scoring
 obj1 <- CellCycleScoring(obj1, s.features = cc.genes$s.genes, g2m.features = cc.genes$g2m.genes, set.ident = TRUE)
