@@ -15,9 +15,9 @@
 - **15:45-17:00** Labs: Data integration (Ahmed)
 
 ### Tuesday 28.5.2019
-- **09:00-09:45**	Dimensionality reduction I (Paulo Czarnewski)
+- **09:00-09:45**	[Dimensionality reduction I](session-dim-reduction/lecture_dimensionality_reduction.pdf) (Paulo Czarnewski)
 - **09:45-10:15** _coffee break_
-- **10:15-11:00**	Dimensionality reduction II (Paulo)
+- **10:15-11:00**	Dimensionality reduction II (Paulo Czarnewski)
 - **11:00-12:00**	Clustering I (Ahmed Mahfouz)
 - **12:00-13:00** _lunch_
 - **13:00-15:00** Clustering II (Ahmed Mahfouz)
@@ -28,7 +28,7 @@
 - **09:00-11:00**	Cell type identification I (Philip Lijnzaad)
 - **09:45-10:15** _coffee break_
 - **10:15-11:00**	Cell type identification I (Philip)
-- **11:00-12:00**	Lecture: Trajectories/Pseudo-time I (Paulo, Jules). [Labs](session-trajectories/session-trajectories.md)
+- **11:00-12:00**	Lecture: [Trajectories/Pseudo-time I](session-trajectories/Trajectory inference analysis.pdf) (Paulo, Jules). [Labs](session-trajectories/session-trajectories.md)
 - **12:00-13:00** _lunch_
 - **13:00-14:00**	Trajectories/Pseudo-time II (Paulo, Jules). [Labs](session-trajectories/session-trajectories.md#part-ii---diffusion-map)
 - **14:00-14:30**	Spatial transcriptomics I (Jeongbin Park & Lars Borm)
