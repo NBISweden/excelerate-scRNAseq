@@ -37,6 +37,11 @@
 - **15:00-16:00**	Lecture: Spatial transcriptomics I (Jeongbin Park & Lars Borm)
 - **16:00-17:00** Discussion and questions
 
+### Additional information
+- Intstructions on how to insall the conda environment [here](session-qc/conda_instructions.md).
+- Bonus exercise: [Sequencing QC and Ikura pipeline](session-seqmap/sequencing_qc.md) (Jules).
+
+
 ### Lecturers
 - [Åsa Björklund](https://nbis.se/about/staff/asa-bjorklund/) (NBIS, ELIXIR-SE, Sweden), <asa.bjorklund@scilifelab.se>
 - [Paulo Czarnewski](https://nbis.se/about/staff/paulo-czarnewski/) (NBIS, ELIXIR-SE, Sweden), <paulo.czarnewski@scilifelab.se>
