@@ -37,10 +37,6 @@
 - **15:00-16:00**	Lecture: Spatial transcriptomics I (Jeongbin Park & Lars Borm)
 - **16:00-17:00** Discussion and questions
 
-### Example links (_will be removed_)
-- [Example session tutorial.md](session-example/session-example.md)
-- [Example session slides.pdf](session-example/session-example.pdf)
-
 ### Lecturers
 - [Åsa Björklund](https://nbis.se/about/staff/asa-bjorklund/) (NBIS, ELIXIR-SE, Sweden), <asa.bjorklund@scilifelab.se>
 - [Paulo Czarnewski](https://nbis.se/about/staff/paulo-czarnewski/) (NBIS, ELIXIR-SE, Sweden), <paulo.czarnewski@scilifelab.se>
@@ -57,10 +53,5 @@
 ### Additional information
 - Content: eija.korpelainen@csc.fi
 - Practicalities: event-support@csc.fi
-
-### Example links (_will be removed_)
-- [Example session tutorial.md](session-example/session-example.md)
-- [Example session tutorial.md](session-de/session-de-methods.md)
-- [Example session slides.pdf](session-example/session-example.pdf)
 
 ## [Back to main](README.md)
