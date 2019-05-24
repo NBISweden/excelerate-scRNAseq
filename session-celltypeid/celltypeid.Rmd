@@ -1,0 +1,57 @@
+---
+title: "Cell type identification"
+output: github_document
+---
+
+Created by: Philip Lijnzaad
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=9, fig.height=6) 
+```
+
+# Overview
+
+In any single-cell experiment where mixed populations are expected, a very important task is to identify the cell types (and/or cell states) that are present. In this practical, we will look at two tools for doing this: SingleR ([Aran et al. 2019](https://www.nature.com/articles/s41590-018-0276-y)) and CHETAH ([de Kanter et al., under review](http://dx.doi.org/10.1101/558908)).
+
+# Datasets
+
+We will try to classify the ovarian ascites data from [Schelker et al. 2017](https://www.nature.com/articles/s41467-017-02289-3) using, as a reference, the different reference data sets from SingleR and CHETAH. Let's first load the various pacckages.
+
+```{r packages}
+suppressMessages(require(SingleCellExperiment))
+suppressMessages(require(Seurat))
+suppressMessages(require(CHETAH))
+suppressMessages(require(Matrix))
+suppressMessages(require(SingleR))
+suppressMessages(require(cowplot))
+```
+
+Let's get the data; if you have (or downloaded) the data into folder
+`session-celltypeid_files` then load them with:
+
+
+```{r load}
+#load expression matrix
+
+data.dir <- "~/git/excelerate-scRNAseq/session-celltypeid/session-celltypeid_files"
+file <- paste(sep="/",data.dir,"ovarian1200.rds")
+ovarian <- readRDS(file=paste(sep="/",data.dir,"ovarian.rds") )
+
+#look at the cell type annotation
+table(colData(deng)$cell_type2)
+
+```
+
+
+
+### Session info
+
+```{r}
+sessionInfo()
+```
+
+
+
+
+
