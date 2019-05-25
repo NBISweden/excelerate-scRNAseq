@@ -32,7 +32,7 @@ suppressMessages(require(BiocNeighbors))
 
 ## Seurat (anchors and CCA)
 
-First we will use the data integration ethod presented in [Comprehensive
+First we will use the data integration method presented in [Comprehensive
 Integration of Single Cell
 Data](https://www.biorxiv.org/content/10.1101/460147v1).
 
@@ -57,7 +57,7 @@ pancreas <- CreateSeuratObject(pancreas.data, meta.data = metadata)
 Let’s first look at the datasets before applying any batch correction.
 We perform standard preprocessing (log-normalization), and identify
 variable features based on a variance stabilizing transformation
-(`"vst"`). Next, We scale the integrated data, run PCA, and visualize
+(`"vst"`). Next, we scale the integrated data, run PCA, and visualize
 the results with UMAP. The integrated datasets cluster by cell type,
 instead of by technology
 
@@ -274,7 +274,7 @@ plot_grid(p1, p2)
 
 ## Mutual Nearest Neighbor (MNN)
 
-AN alternative approach to integrate single cell RNA-seq data is to use
+An alternative approach to integrate single cell RNA-seq data is to use
 the Mutual Nearest Neighbor (MNN) batch-correction method by [Haghverdi
 et al.](https://www.nature.com/articles/nbt.4091).
 
@@ -303,7 +303,7 @@ smartseq2.data <- smartseq2.data[match(keep_genes, rownames(smartseq2.data)), ]
 ```
 
 Calculate quality control characteristics using `calculateQCMetrics()`
-to determine cells low quality cells by finding outliers with
+to determine low quality cells by finding outliers with
 uncharacteristically low total counts or total number of features
 (genes) detected.
 
@@ -330,8 +330,8 @@ low_genes_smartseq2.data <- isOutlier(smartseq2.data$log10_total_features_by_cou
 smartseq2.data <- smartseq2.data[, !(low_lib_smartseq2.data | low_genes_smartseq2.data)]
 ```
 
-Normalize the data by clalculating size using the `computeSumFactors()`
-and `normalize()` functions from `scarn`
+Normalize the data by calculating size using the `computeSumFactors()`
+and `normalize()` functions from `scran`
 
 ``` r
 # Compute sizefactors
@@ -453,7 +453,7 @@ fluidigmc1.data_rescaled <- rescaled[[3]]
 smartseq2.data_rescaled <- rescaled[[4]]
 ```
 
-We now run fastMNN. The `BNPARAM` can be specified to specify the
+We now run fastMNN. The `BNPARAM` can be used to specify the
 specific nearest neighbors method to use from the BiocNeighbors package.
 Here we make use of the `[Annoy
 library](https://github.com/spotify/annoy)` via the
@@ -482,7 +482,7 @@ reduced dimensionality representation, suitable for direct plotting,
 TSNE/UMAP, clustering, and trajectory analysis that relies on such
 results.
 
-Plot the catch-corrected
+Plot the batch-corrected
 data.
 
 ``` r
