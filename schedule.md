@@ -26,9 +26,9 @@
 - **15:00-17:00**	[Differential expression](session-de/session-de.md) (Ståle Nygård and Olga Dethlefsen)
 
 ### Wednesday 29.5.2019
-- **09:00-11:00**	Lecture: Cell type identification I (Philip Lijnzaad)
+- **09:00-11:00**	Lecture: Cell type identification (Philip Lijnzaad)
 - **09:45-10:15** _coffee break_
-- **10:15-11:00**	Cell type identification I (Philip)
+- **10:15-11:00**	Labs: [Cell type identification](session-celltypeid/celltypeid.Rmd) (Philip)
 - **11:00-12:00**	Lecture: [Trajectories/Pseudo-time I](session-trajectories/trajectory_inference_analysis.pdf) (Paulo, Jules). [Labs](session-trajectories/session-trajectories.md)
 - **12:00-13:00** _lunch_
 - **13:00-14:00**	Trajectories/Pseudo-time II (Paulo, Jules). [Labs](session-trajectories/session-trajectories.md#part-ii---diffusion-map)
