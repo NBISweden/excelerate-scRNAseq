@@ -6,9 +6,9 @@ Created by: Ahmed Mahfouz
 # Overview
 
 In this tutorial we will look at different ways of integrating multiple
-single cell RAN-seq datasets. We will explore two different methods to
-correct for batch effects across datastes. We will also look at a
-quantitative measure to assess the quality of the inegrated data.
+single cell RNA-seq datasets. We will explore two different methods to
+correct for batch effects across datasets. We will also look at a
+quantitative measure to assess the quality of the integrated data.
 
 ## Datasets
 
