@@ -30,7 +30,7 @@ The `ovarian1200` dataset contains 1200 cells randomly selected from the
 3114 single cell data provided by Schelker et al. (which is available
 from https://figshare.com/s/711d3fb2bd3288c8483). The data come from the
 ascites of 4 different ovarian cancer patients and contain a variety of
-leukycytes as well as tumor cells.
+leukocytes as well as tumor cells.
 
 First load the various packages:
 
@@ -133,7 +133,7 @@ SingleR's highly recommend vignettes).
 The other method we will look at, CHETAH, needs several (100-200)
 single-cell expression profiles for the classification. The advantage is
 that the inherent variability is fully account for. CHETAH, originally
-developed for working with cancer data has its 'own' reference data set
+developed for working with cancer data, has its 'own' reference data set
 that is based on single-cell data from Head-Neck cancer, melanoma,
 breast and colorectal cancer. (For details see
 https://figshare.com/s/aaf026376912366f81b6) Note that it is easy to
@@ -200,9 +200,9 @@ complete classifications for each of these reference sets, under the
 `$SingleR.single.main$labels[,1]`. 
 
 (side-note: SingleR also automatically classifies per cluster of
-cells, but we will not use this type of classification. )
+cells, but we will not use this type of classification.)
 
-To get a good overview it's easist to iterate over all elements of this
+To get a good overview it's easiest to iterate over all elements of this
 list.
 
 ```{r explore_snglr_results}
@@ -228,7 +228,7 @@ for (ref.set in c("hpca", "bpe") ) {
 ```
 
 We will stick to the `main_types` from now on, for brevity.  In order to
-easily visualize the various classifications in the TSNE plots we have
+easily visualize the various classifications in the tSNE plots we have
 to add them to `meta.data` slot of the Seurat object:
 
 ```
@@ -417,7 +417,7 @@ The data to be classified also must be cast as a `SingleCellExperiment`.
 You can use Seurat's `as.SingleCellExperiment()` function for that.
 Classifying is a matter of calling `CHETAHclassifier()` with the input
 and the reference as arguments (although there are loads of options, see
-the man page).  Classification takes a bit longer than SingleR
+the man page). Classification takes a bit longer than SingleR
 
 
 ```{r chetah_classify}
@@ -435,7 +435,7 @@ exception: CHETAH uses the odd 'Unassigned' and 'Node3', 'Node7' etc. type.
 The largest group, as expected, is again Macrophage
 
 (Note: the `snglr_chetah_type` column is the SingleR classification
-using the bulikified CHETAH reference, whereas the `celltype_CHETAH`
+using the bulkified CHETAH reference, whereas the `celltype_CHETAH`
 column is the CHETAH classifcation using the CHETAH reference.)
 
 ```{r explore_chetah_results}
