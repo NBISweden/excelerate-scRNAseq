@@ -9,7 +9,7 @@ You can use the classroom computers where all the necessary software has been in
 6. All the course data is available in the folder `scrna-seq2019`
 7. When the course is over you can deactivate the Conda environment by typing `conda deactivate`
 
-If you would like to have the same Conda environment on your own computer after the course, please read the [installation instructions](session-qc/conda_instructions.md). 
+If you would like to have the same software environment on your own computer after the course, please read the [Conda installation instructions](conda_instructions.md). 
 
 The course environment including the data is also available as a virtual machine image in CSC's cPouta cloud. You can access Rstudio server on the following 10 instances, ask Eija for login details if needed:
 

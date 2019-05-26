@@ -2,11 +2,6 @@
 
 # Single cell RNA-seq data analysis with R
 
--------------
-
-
-## About
-
 This international hands-on course covers several aspects of single cell RNA-seq data analysis, ranging from clustering and differential gene expression analysis to trajectories, cell type identification and spatial transcriptomics. The course is kindly sponsored by the ELIXIR EXCELERATE project.
 
 ### [Schedule](schedule.md)
@@ -17,14 +12,8 @@ This international hands-on course covers several aspects of single cell RNA-seq
 ### Location
 The course is organised in the training room Dogmi at CSC. When you come to the main entrance, turn right to the reception and follow the signs to the course. The street address is Keilaranta 14, Espoo, Finland. You can reach us easily by public transport, please find more details [here](https://www.csc.fi/how-to-reach-us).
 
-### Prerequisities
-In order to participate in this course you should have prior experience in using R.
-
-### Learning objectives
-After this course you will be able to:
-- use a range of bioinformatics tools to analyze single cell RNA-seq data
-- discuss a variety of aspects of single cell RNA-seq data analysis
-- understand the advantages and limitations of single cell RNA-seq data analysis
+### Course computing environment
+The software and data needed for the course is available on the classroom computers and in CSC's cPouta cloud as a virtual machine image. Please read the [instructions](computing_environment_instructions.md) and how to install the environment on your own computer after the course with [Conda](conda_instructions.md).
 
 ### Instructions on how to
 - [launch the Conda environment](computing_environment_instructions.md) on the classroom computers
@@ -48,6 +37,15 @@ After this course you will be able to:
 - Cell type identification (Philip Lijnzaad)
 - Trajectories/Pseudo-time (Paulo Czarnewski)
 - Spatial transcriptomics (Jeongbin Park and Lars Borm)
+
+### Prerequisities
+In order to participate in this course you should have prior experience in using R.
+
+### Learning objectives
+After this course you will be able to:
+- use a range of bioinformatics tools to analyze single cell RNA-seq data
+- discuss a variety of aspects of single cell RNA-seq data analysis
+- understand the advantages and limitations of single cell RNA-seq data analysis
 
 ### Lecturers
 - Åsa Björklund (NBIS, ELIXIR-SE, Sweden)
