@@ -49,7 +49,7 @@ After this course you will be able to:
 - Paulo Czarnewski (NBIS, ELIXIR-SE, Sweden)
 - Ahmed Mahfouz (LUMC, Netherlands)
 - Ståle Nygård (UIO, Norway)
-- Jeongbin Park (Charité-Universitätsmedizin Berlin & de.NBI - German Network for Bioinformatics Infrastructure, Germany)
+- Jeongbin Park (Charité-Universitätsmedizin Berlin & de.NBI, Germany)
 - Lars Borm (Karolinska Institutet, Sweden)
 - Jules Gilet (Institut Curie, France)
 - Heli Pessa (University of Helsinki, Finland)
