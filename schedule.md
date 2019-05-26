@@ -6,7 +6,7 @@
 - **09:00-09:45**	Lecture: Introduction and experimental design (Jules Gilet, Åsa Björklund)
 - **09:45-10:15** _coffee break_
 - **10:15-11:00** Lecture: [QC & data preprocessing](session-qc/scRNAseq_QC_Asa_Bjorklund_2019.pdf) (Åsa)
-- **11:00-12:00** Labs: [QC & data preprocessing](session-qc/Quality_control.md) (Åsa & Jules)
+- **11:00-12:00** Labs: [QC & data preprocessing](session-qc/Quality_control.md) (Åsa & Jules). Bonus exercise (not to be done in the class): [Sequencing QC and Ikura pipeline](session-seqmap/sequencing_qc.md) (Jules).
 - **12:00-13:00** _lunch_
 - **13:00-13:45** Lecture: Normalisation and removal of confounding factors (Heli Pessa  & Bishwa Ghimire)
 - **13:45-14:30** Labs: [Normalisation and removal of confounding factors](session-normalization/Normalization.Rmd) (Heli & Bishwa)
@@ -32,15 +32,15 @@
 - **11:00-12:00**	Lecture: [Trajectories/Pseudo-time I](session-trajectories/trajectory_inference_analysis.pdf) (Paulo, Jules). [Labs](session-trajectories/session-trajectories.md)
 - **12:00-13:00** _lunch_
 - **13:00-14:00**	Trajectories/Pseudo-time II (Paulo, Jules). [Labs](session-trajectories/session-trajectories.md#part-ii---diffusion-map)
-- **14:00-14:30**	Spatial transcriptomics I (Jeongbin Park & Lars Borm)
+- **14:00-14:30**	Lecture: Spatial transcriptomics I (Lars Borm)
 - **14:30-15:00** _coffee break_
-- **15:00-16:00**	Lecture: Spatial transcriptomics I (Jeongbin Park & Lars Borm)
-- **16:00-17:00** Discussion and questions
+- **15:00-16:30**	Lecture: Spatial transcriptomics II (Lars Borm & Jeongbin Park)
+- **16:30-17:00** Discussion and questions
 
-### Additional information
-- Intstructions on how to insall the conda environment [here](session-qc/conda_instructions.md).
-- Bonus exercise: [Sequencing QC and Ikura pipeline](session-seqmap/sequencing_qc.md) (Jules).
-
+### Instructions on how to
+- launch the Conda environment on the classroom computers.
+- [install the Conda environment](session-qc/conda_instructions.md) on your own computer.
+- access the virtual machine image in the CPouta cloud
 
 ### Lecturers
 - [Åsa Björklund](https://nbis.se/about/staff/asa-bjorklund/) (NBIS, ELIXIR-SE, Sweden), <asa.bjorklund@scilifelab.se>
