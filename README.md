@@ -15,7 +15,7 @@ This international hands-on course covers several aspects of single cell RNA-seq
 27.05.2019 - 29.05.2019
 
 ### Location
-The event is organised at the CSC Training Facilities located in the premises of CSC at Keilaranta 14, Espoo, Finland. The best way to reach us is by public transportation; more detailed travel tips are available [here](https://www.csc.fi/how-to-reach-us).
+The course is organised in the training room Dogmi at CSC. When you come to the main entrance, turn right to the reception and follow the signs to the course. The street address is Keilaranta 14, Espoo, Finland. You can reach us easily by public transport, please find more details [here](https://www.csc.fi/how-to-reach-us).
 
 ### Prerequisities
 In order to participate in this course you should have prior experience in using R.
@@ -37,7 +37,7 @@ After this course you will be able to:
 ### Tuesday 28.5.2019
 - Dimensionality reduction (PCA, tSNE and UMAP) (Paulo Czarnewski)
 - Clustering (Ahmed Mahfouz)
-- Differential gene expression analysis (Ståle Nygård and Olga Dethlefsen)
+- Differential gene expression analysis (Ståle Nygård)
 
 ### Wednesday 29.5.2019
 - Cell type identification (Philip Lijnzaad)
@@ -49,7 +49,6 @@ After this course you will be able to:
 - Paulo Czarnewski (NBIS, ELIXIR-SE, Sweden)
 - Ahmed Mahfouz (LUMC, Netherlands)
 - Ståle Nygård (UIO, Norway)
-- Olga Dethlefsen (NBIS, ELIXIR-SE, Sweden)
 - Jeongbin Park (Charité-Universitätsmedizin Berlin & de.NBI - German Network for Bioinformatics Infrastructure, Germany)
 - Lars Borm (Karolinska Institutet, Sweden)
 - Jules Gilet (Institut Curie, France)
