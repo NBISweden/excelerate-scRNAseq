@@ -43,16 +43,16 @@
 - [install the Conda environment](session-qc/conda_instructions.md) on your own computer after the course
 
 ### Lecturers
-- [Åsa Björklund](https://nbis.se/about/staff/asa-bjorklund/) (NBIS, ELIXIR-SE, Sweden), <asa.bjorklund@scilifelab.se>
-- [Paulo Czarnewski](https://nbis.se/about/staff/paulo-czarnewski/) (NBIS, ELIXIR-SE, Sweden), <paulo.czarnewski@scilifelab.se>
-- [Ahmed Mahfouz](https://www.lumc.nl/org/radiologie/medewerkers/1201110201322222) (LUMC, Netherlands), <a.mahfouz@lumc.nl>
-- [Ståle Nygård](https://www.mn.uio.no/ifi/english/people/aca/staaln/) (UIO, Norway), <staaln@ifi.uio.no>
-- Jeongbin Park (Charité-Universitätsmedizin Berlin and de.NBI, Germany), <jeongbin.park@charite.de>
-- [Lars Borm](https://ki.se/en/people/larbor) (Karolinska Institutet, Sweden), <lars.borm@ki.se>
-- Jules Gilet (Institut Curie, France), <jules.gilet@curie.fr>
-- Heli Pessa (University of Helsinki, Finland), <Heli.Pessa@helsinki.fi>
-- Bishwa Ghimire (FIMM, Finland), <bishwa.ghimire@helsinki.fi>
-- Philip Lijnzaad (Princess Maxima Center for Pediatric Oncology, Netherlands), <P.Lijnzaad-2@prinsesmaximacentrum.nl>
+- [Åsa Björklund](https://nbis.se/about/staff/asa-bjorklund/) (NBIS, ELIXIR-SE, Sweden)<!--, <asa.bjorklund@scilifelab.se>-->
+- [Paulo Czarnewski](https://nbis.se/about/staff/paulo-czarnewski/) (NBIS, ELIXIR-SE, Sweden)<!--, , <paulo.czarnewski@scilifelab.se>-->
+- [Ahmed Mahfouz](https://www.lumc.nl/org/radiologie/medewerkers/1201110201322222) (LUMC, Netherlands)<!--, , <a.mahfouz@lumc.nl>-->
+- [Ståle Nygård](https://www.mn.uio.no/ifi/english/people/aca/staaln/) (UIO, Norway)<!--, , <staaln@ifi.uio.no>-->
+- Jeongbin Park (Charité-Universitätsmedizin Berlin and de.NBI, Germany)<!--, , <jeongbin.park@charite.de>-->
+- [Lars Borm](https://ki.se/en/people/larbor) (Karolinska Institutet, Sweden)<!--, , <lars.borm@ki.se>-->
+- Jules Gilet (Institut Curie, France)<!--, , <jules.gilet@curie.fr>-->
+- Heli Pessa (University of Helsinki, Finland)<!--, , <Heli.Pessa@helsinki.fi>-->
+- Bishwa Ghimire (FIMM, Finland)<!--, , <bishwa.ghimire@helsinki.fi>-->
+- Philip Lijnzaad (Princess Maxima Center for Pediatric Oncology, Netherlands)<!--, , <P.Lijnzaad-2@prinsesmaximacentrum.nl>-->
 
 ### Additional information
 - Content: eija.korpelainen@csc.fi
