@@ -38,9 +38,9 @@
 - **16:30-17:00** Discussion and questions
 
 ### Instructions on how to
-- launch the Conda environment on the classroom computers.
-- [install the Conda environment](session-qc/conda_instructions.md) on your own computer.
-- access the virtual machine image in the CPouta cloud
+- [launch the Conda environment](computing_environment_instructions.md) on the classroom computers
+- [access the virtual machine image](computing_environment_instructions.md) in the cPouta cloud
+- [install the Conda environment](session-qc/conda_instructions.md) on your own computer after the course
 
 ### Lecturers
 - [Åsa Björklund](https://nbis.se/about/staff/asa-bjorklund/) (NBIS, ELIXIR-SE, Sweden), <asa.bjorklund@scilifelab.se>
