@@ -5,7 +5,7 @@ and ready to run everything.
 
 If you want to install the same software on your own laptop after the course, you can follow the 
 instructions below to do so. These rely on [Conda environments](https://docs.conda.io/projects/conda/en/latest/user-guide/concepts/environments.html), a self-contained directory that 
-you can use in order to reproduce all your results. Two of the required software are not available as Conda packages, please see the separate [instructions for installing SingleR and CHETAH](notes_installation.txt).
+you can use in order to reproduce all your results. Two of the required software are not available as Conda packages, please see the separate [instructions for installing SingleR and CHETAH](https://raw.githubusercontent.com/NBISweden/excelerate-scRNAseq/master/notes_installation.txt).
 
 Briefly, you need to:  
 
@@ -20,7 +20,7 @@ You can [read more](https://nbis-reproducible-research.readthedocs.io/en/latest/
 
 You should start by installing Conda. We suggest installing either Miniconda, or Anaconda if storage is 
 not an issue. After [installing Conda](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html), 
-download the course Conda file and put it in your working folder. Note that there is a separate [environment.yaml for Mac](https://raw.githubusercontent.com/NBISweden/excelerate-scRNAseq/master/environment.yaml) and for [environment_centos7.yaml for Linux](https://raw.githubusercontent.com/NBISweden/excelerate-scRNAseq/master/environment.yaml)
+download the course Conda file and put it in your working folder. Note that there is a separate [environment.yaml for Mac](https://raw.githubusercontent.com/NBISweden/excelerate-scRNAseq/master/environment.yaml) and for [environment_centos7.yaml for Linux](https://raw.githubusercontent.com/NBISweden/excelerate-scRNAseq/master/environment_centos7.yaml)
 . 
 
 **Create and activate the environment**
