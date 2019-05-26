@@ -13,13 +13,13 @@ If you would like to have the same Conda environment on your own computer after 
 
 The course environment including the data is also available as a virtual machine image in CSC's cPouta cloud. You can access Rstudio server on the following 10 instances, ask Eija for login details if needed:
 
-* 193.167.189.100
-* 195.148.31.253
-* 86.50.169.110
-* 86.50.169.17
-* 86.50.169.11
-* 86.50.169.46
-* 86.50.169.107
-* 86.50.169.121
-* 86.50.169.117
-* 86.50.169.89
+* 193.167.189.100:8787
+* 195.148.31.253:8787
+* 86.50.169.110:8787
+* 86.50.169.17:8787
+* 86.50.169.11:8787
+* 86.50.169.46:8787
+* 86.50.169.107:8787
+* 86.50.169.121:8787
+* 86.50.169.117:8787
+* 86.50.169.89:8787
