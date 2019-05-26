@@ -40,7 +40,7 @@
 ### Instructions on how to
 - [launch the Conda environment](computing_environment_instructions.md) on the classroom computers
 - [access the virtual machine image](computing_environment_instructions.md) in the cPouta cloud
-- [install the Conda environment](session-qc/conda_instructions.md) on your own computer after the course
+- [install the Conda environment](conda_instructions.md) on your own computer after the course
 
 ### Lecturers
 - [Åsa Björklund](https://nbis.se/about/staff/asa-bjorklund/) (NBIS, ELIXIR-SE, Sweden)<!--, <asa.bjorklund@scilifelab.se>-->

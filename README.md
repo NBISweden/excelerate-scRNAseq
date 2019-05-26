@@ -26,6 +26,11 @@ After this course you will be able to:
 - discuss a variety of aspects of single cell RNA-seq data analysis
 - understand the advantages and limitations of single cell RNA-seq data analysis
 
+### Instructions on how to
+- [launch the Conda environment](computing_environment_instructions.md) on the classroom computers
+- [access the virtual machine image](computing_environment_instructions.md) in the cPouta cloud
+- [install the Conda environment](conda_instructions.md) on your own computer after the course
+
 ## Programme
 ### Monday 27.5.2019
 
