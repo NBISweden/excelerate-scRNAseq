@@ -65,7 +65,7 @@ table(colData(deng)$cell_type2)
 ## Feature selection
 
 The first step is to decide which genes to use in clustering the cells.
-Single cell RNASeq can profile a huge number of genes in a lot of cells.
+Single cell RNA-seq can profile a huge number of genes in a lot of cells.
 But most of the genes are not expressed enough to provide a meaningful
 signal and are often driven by technical noise. Including them could
 potentially add some unwanted signal that would blur the biological
@@ -92,7 +92,7 @@ ggplot(data=gene_stat_df ,aes(x=log(gene_mean), y=log(gene_var))) + geom_point(s
 
 #### Filtering out low abundance genes
 
-Low-abundance genes are mostly non informative and are not
+Low-abundance genes are mostly non-informative and are not
 representative of the biological variance of the data. They are often
 driven by technical noise such as dropout event. However, their presence
 in downstream analysis leads often to a lower accuracy since they can
@@ -121,9 +121,9 @@ dim(deng)
 #### Filtering genes that are expressed in very few cells
 
 We can also filter some genes that are in a small number of cells. This
-procedure would remove some outlier genes that is highly expressed in
+procedure would remove some outlier genes that are highly expressed in
 one or two cells. These genes are unwanted for further analysis since
-they mostly comes from an iregular amplification of artifacts. It is
+they mostly comes from an irregular amplification of artifacts. It is
 important to note that we might not want to filter with this procedure
 when the aim of the analysis is to detect a very rare subpopulation in
 the data.
@@ -234,7 +234,7 @@ plotReducedDim(deng, "PCA", colour_by = "cell_type2")
 ![](Clustering_files/figure-gfm/pca_plot-1.png)<!-- -->
 
 Make a tSNE plot *Note:* tSNE is a stochastic method. Everytime you run
-it you will get slightly different results. For convinience we can get
+it you will get slightly different results. For convenience we can get
 the same results if we seet the seed.
 
 ``` r
@@ -289,7 +289,7 @@ plot_grid(plotReducedDim(deng, "TSNE", colour_by = "cluster_hclust"),
 ![](Clustering_files/figure-gfm/hierarchical_eucledian_ward_tSNEplot-1.png)<!-- -->
 
 Now let’s try a different distance measure. A commonly used distance
-measue is 1 - correlation.
+measure is 1 - correlation.
 
 ``` r
 # Calculate Distances (1 - correlation)
@@ -324,7 +324,7 @@ Instead of changing the distance metric, we can change the linkage
 method. Instead of using Ward’s method, let’s use complete linkage.
 
 ``` r
-# Calculate Distances (default: Eucledian distance)
+# Calculate distances (default: Eucledian distance)
 distance_eucledian <- dist(t(logcounts(deng)))
 
 #Perform hierarchical clustering using ward linkage
@@ -348,10 +348,10 @@ plot_grid(plotReducedDim(deng, "PCA", colour_by = "cluster_hclust"),
 
 ![](Clustering_files/figure-gfm/hierarchical_eucledian_complete_pcaplot-1.png)<!-- -->
 
-### TSNE + Kmeans
+### tSNE + Kmeans
 
 ``` r
-# Do kmeans algorithm on TSNE coordinates
+# Do kmeans algorithm on tSNE coordinates
 deng_kmeans <- kmeans(x = deng@reducedDims$TSNE,centers = 10)
 TSNE_kmeans <- factor(deng_kmeans$cluster)
 colData(deng)$TSNE_kmeans <- TSNE_kmeans
@@ -366,7 +366,7 @@ plot_grid(plotTSNE(deng, colour_by = "TSNE_kmeans"),
 
 ``` r
 #k=5
-#The k parameter denfines the number of closest cells to look for each cells
+#The k parameter defines the number of closest cells to look for each cells
 SNNgraph_k5 <- buildSNNGraph(x = deng, k=5) 
 SNNcluster_k5 <- cluster_louvain(SNNgraph_k5)
 colData(deng)$SNNcluster_k5 <- factor(SNNcluster_k5$membership)

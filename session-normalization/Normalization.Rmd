@@ -5,8 +5,9 @@ date: "27 May 2019"
 output: github_document
 ---
 
+In this exercise session, we normalize the data and select highly variable genes comparing two analysis packages, scran and Seurat. We use also the scater package for visualization.
 
-```{r setup, include=FALSE}
+```{r setup}
 knitr::opts_chunk$set(echo = TRUE)
 library(scater)
 library(scran)
@@ -15,23 +16,25 @@ options(stringsAsFactors = FALSE)
 set.seed(32546)
 ```
 
-Download data (one of the same 10X datasets as in Åsa's session)
+The data can be downloaded with the following command, but it is already included in the course repository. This is one of the 10X datasets used also in the QC session. 
 
+```{r eval = FALSE}
+system("curl -O http://cf.10xgenomics.com/samples/cell-exp/3.0.0/pbmc_1k_v3/pbmc_1k_v3_filtered_feature_bc_matrix.h5")
 ```
-wget http://cf.10xgenomics.com/samples/cell-exp/3.0.0/pbmc_1k_v3/pbmc_1k_v3_filtered_feature_bc_matrix.h5
-```
+
+Read in the data and set up the SingleCellExperiment object.
 
 ```{r}
-setwd('/my/path/to/downloaded/data/') #cd to where you've downloaded the data above
-pbmc.mat <- Seurat::Read10X_h5("pbmc_1k_v3_filtered_feature_bc_matrix.h5")
+setwd("~/scrna-seq2019/day1/2-normalization/")
+pbmc.mat <- Read10X_h5("pbmc_1k_v3_filtered_feature_bc_matrix.h5")
 pbmc.sce <- SingleCellExperiment(assays = list(counts = as.matrix(pbmc.mat)))
-pbmc.sce <- pbmc.sce[rowSums(counts(pbmc.sce) > 0) > 0,]
+pbmc.sce <- pbmc.sce[rowSums(counts(pbmc.sce) > 0) > 2,]
 isSpike(pbmc.sce, "MT") <- grepl("^MT-", rownames(pbmc.sce))
 pbmc.sce <- calculateQCMetrics(pbmc.sce)
 colnames(colData(pbmc.sce))
 ```
 
-Apply some cell and gene filters to avoid negative size factors
+Filter out poor quality cells to avoid negative size factors.
 
 ```{r}
 pbmc.sce <- filter(pbmc.sce, pct_counts_MT < 20)
@@ -40,61 +43,66 @@ pbmc.sce <- filter(pbmc.sce,
                      total_features_by_counts < 4100)
 ```
 
-Create a new assay with untransformed counts for comparison to normalized counts:
+Create a new assay with unnormalized counts for comparison to post-normalization.
 
 ```{r}
 assay(pbmc.sce, "logcounts_raw") <- log2(counts(pbmc.sce) + 1)
 plotRLE(pbmc.sce[,1:50], exprs_values = "logcounts_raw", style = "full")
 ```
 
+Run PCA and save the result in a new object, as we will overwrite the PCA slot later.
+
 ```{r}
 raw.sce <- runPCA(pbmc.sce, exprs_values = "logcounts_raw")
-plotPCA(raw.sce, colour_by = "total_features_by_counts")
+scater::plotPCA(raw.sce, colour_by = "total_counts")
 ```
 
-What do the above two plots tell you?
-
-### Normalization: log2
-
-In the default normalization method in Seurat, counts for each cell are divided by the total counts for that cell and multiplied by the scale factor 10 000. This is then log transformed.
-Here we convert the result back into a SingleCellExperiment object for comparison.
+Plot the expression of the B cell marker MS4A1.
 
 ```{r}
-# use filtered data from the counts slot of the SCE object
+plotReducedDim(raw.sce, use_dimred = "PCA", by_exprs_values = "logcounts_raw",
+               colour_by = "MS4A1")
+```
+
+
+What do the above plots tell you?
+
+### Normalization: Log
+
+In the default normalization method in Seurat, counts for each cell are divided by the total counts for that cell and multiplied by the scale factor 10 000. This is then log transformed.
+
+Here we use the filtered data from the counts slot of the SCE object to create a Seurat object. After normalization, we convert the result back into a SingleCellExperiment object for comparing plots.
+
+```{r}
 pbmc.seu <- CreateSeuratObject(counts(pbmc.sce), project = "PBMC")
 pbmc.seu <- NormalizeData(pbmc.seu)
 pbmc.seu.sce <- as.SingleCellExperiment(pbmc.seu)
-plotRLE(pbmc.seu.sce[,1:50], exprs_values = "logcounts", style = "full")
+pbmc.seu.sce <- calculateQCMetrics(pbmc.seu.sce)
 ```
 
-```{r}
-pbmc.seu.sce <- calculateQCMetrics(pbmc.seu.sce)
-plotPCA(pbmc.seu.sce, colour_by = "total_features_by_counts")
-```
+Perform PCA and examine the normalization results with plotRLE and plotReducedDim. This time, use "logcounts" as the expression values to plot (or omit the parameter, as "logcounts" is the default value). Check some marker genes, for example GNLY (NK cells) or LYZ (monocytes).
 
 
 ### Normalization: scran
 
-Deconvolution method by Lun et al (2016).
+The normalization procedure in scran is based on the deconvolution method by Lun et al (2016). Counts from many cells are pooled to avoid the drop-out problem. Pool-based size factors are then “deconvolved” into cell-based factors for cell-specific normalization. Clustering cells prior to normalization is not always necessary but it improves normalization accuracy by reducing the number of DE genes between cells in the same cluster.
 
 ```{r}
 qclust <- quickCluster(pbmc.sce)
 pbmc.sce <- computeSumFactors(pbmc.sce, clusters = qclust)
 summary(sizeFactors(pbmc.sce))
 pbmc.sce <- normalize(pbmc.sce)
-plotRLE(pbmc.sce[,1:50], exprs_values = "logcounts", exprs_logged = FALSE, 
-        style = "full")
 ```
 
-```{r}
-plotPCA(pbmc.sce, colour_by = "total_features_by_counts")
-```
+Examine the results and compare to the log-normalized result. Are they different? 
 
 
 ### Feature selection: scran
 
+In the scran method for finding HVGs, a trend is first fitted to the technical variances. In the absence of spike-ins, this is done using the whole data, assuming that the majority of genes are not variably expressed. Then, the biological component of the variance for each endogenous gene is computed by subtracting the fitted value of the trend from the total variance.
+
 ```{r}
-fit <- trendVar(pbmc.sce, use.spikes = FALSE, parametric = TRUE)
+fit <- trendVar(pbmc.sce, use.spikes = NA)
 decomp <- decomposeVar(pbmc.sce, fit)
 top.hvgs <- order(decomp$bio, decreasing = TRUE)
 head(decomp[top.hvgs,])
@@ -106,23 +114,26 @@ o <- order(decomp$mean)
 lines(decomp$mean[o], decomp$tech[o], col = "red", lwd = 2)
 ```
 
+We choose genes that have a biological component that is significantly greater than zero, using a false discovery rate (FDR) of 5%.
+
 ```{r}
 hvg.out <- decomp[which(decomp$FDR <= 0.05),]
-nrow(hvg.out)
 hvg.out <- hvg.out[order(hvg.out$bio, decreasing=TRUE),]
-plotExpression(pbmc.sce, features=rownames(hvg.out)[1:10])
+plotExpression(pbmc.sce, features = rownames(hvg.out)[1:10])
 ```
 
 ### Feature selection: Seurat
 
+The default method in Seurat 3 is variance-stabilizing transformation. A trend is fitted to to predict the variance of each gene as a function of its mean. For each gene, the variance of standardized values is computed across all cells and used to rank the features. By default, 2000 top genes are returned.
+ 
 ```{r}
-pbmc.seu <- FindVariableFeatures(pbmc.seu, selection.method = "vst", 
-                                 nfeatures = 2000)
+pbmc.seu <- FindVariableFeatures(pbmc.seu, selection.method = "vst")
 top10 <- head(VariableFeatures(pbmc.seu), 10)
 vplot <- VariableFeaturePlot(pbmc.seu)
 LabelPoints(plot = vplot, points = top10, repel = TRUE)
 ```
 
+How many of the variable genes detected with scran are included in VariableFeatures in Seurat?
 
 
 ```{r}

@@ -23,7 +23,7 @@ dependencies:
  - r-knitr=1.20
  - r-mvoutlier=2.0.9
  - bioconductor-destiny=2.12.0
- - bioconductor-monocle=2.10.1
+ - bioconductor-monocle=2.10.0
  - r-umap=0.2.0.0
  - bioconductor-scnorm=1.4.3
  - bioconductor-hsmmsinglecell=1.2.0
@@ -32,7 +32,6 @@ dependencies:
  - bioconductor-mast=1.8.1
  - bioconductor-sc3=1.10.0
  - r-sctransform=0.2.0
- - bioconductor-monocle=2.10.0
  - r-outliers=0.14
  - bioconductor-gseabase=1.44.0
  - bioconductor-gsva=1.30.0
