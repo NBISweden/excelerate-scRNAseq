@@ -23,7 +23,7 @@
 - **12:00-13:00** _lunch_
 - **13:00-15:00** Labs: [Clustering](session-clustering/CLustering.md) (Ahmed Mahfouz)
 - **14:30-15:00** _coffee break_
-- **15:00-17:00**	[Differential expression](session-de/session-de.md) (Ståle Nygård and Olga Dethlefsen)
+- **15:00-17:00**	[Differential expression](session-de/session-de.md) (Ståle Nygård)
 
 ### Wednesday 29.5.2019
 - **09:00-11:00**	Lecture: Cell type identification (Philip Lijnzaad)
@@ -47,9 +47,8 @@
 - [Paulo Czarnewski](https://nbis.se/about/staff/paulo-czarnewski/) (NBIS, ELIXIR-SE, Sweden), <paulo.czarnewski@scilifelab.se>
 - [Ahmed Mahfouz](https://www.lumc.nl/org/radiologie/medewerkers/1201110201322222) (LUMC, Netherlands), <a.mahfouz@lumc.nl>
 - [Ståle Nygård](https://www.mn.uio.no/ifi/english/people/aca/staaln/) (UIO, Norway), <staaln@ifi.uio.no>
-- [Olga Dethlefsen](https://nbis.se/about/staff/olga-dethlefsen/) (NBIS, ELIXIR-SE, Sweden), <olga.dethlefsen@nbis.se>
 - Jeongbin Park (Charité-Universitätsmedizin Berlin and de.NBI, Germany), <jeongbin.park@charite.de>
-- [Lars Borm](https://ki.se/en/people/larbor) (Karolinska Institutet, Sweden), <ars.borm@ki.se>
+- [Lars Borm](https://ki.se/en/people/larbor) (Karolinska Institutet, Sweden), <lars.borm@ki.se>
 - Jules Gilet (Institut Curie, France), <jules.gilet@curie.fr>
 - Heli Pessa (University of Helsinki, Finland), <Heli.Pessa@helsinki.fi>
 - Bishwa Ghimire (FIMM, Finland), <bishwa.ghimire@helsinki.fi>
