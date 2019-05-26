@@ -13,13 +13,13 @@ If you would like to have the same software environment on your own computer aft
 
 The course environment including the data is also available as a virtual machine image in CSC's cPouta cloud. You can access Rstudio server on the following 10 instances, ask Eija for login details if needed:
 
-* 193.167.189.100:8787
-* 195.148.31.253:8787
-* 86.50.169.110:8787
-* 86.50.169.17:8787
-* 86.50.169.11:8787
-* 86.50.169.46:8787
-* 86.50.169.107:8787
-* 86.50.169.121:8787
-* 86.50.169.117:8787
-* 86.50.169.89:8787
+1. 193.167.189.100:8787
+2. 195.148.31.253:8787
+3. 86.50.169.110:8787
+4. 86.50.169.17:8787
+5. 86.50.169.11:8787
+6. 86.50.169.46:8787
+7. 86.50.169.107:8787
+8. 86.50.169.121:8787
+9. 86.50.169.117:8787
+10. 86.50.169.89:8787
