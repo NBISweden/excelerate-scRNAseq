@@ -1,0 +1,627 @@
+---
+title: "Cell type identification"
+output: github_document
+---
+
+Created by: Philip Lijnzaad
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=9, fig.height=6) 
+```
+
+# Overview
+
+In any single-cell experiment where mixed populations are expected, a
+very important task is to identify the cell types (and/or cell states)
+that are present. In this practical, we will look at two tools for doing
+this: SingleR ([Aran et
+al. 2019](https://www.nature.com/articles/s41590-018-0276-y)) and CHETAH
+([de Kanter et al., under review](http://dx.doi.org/10.1101/558908)).
+
+# Datasets
+
+We will try to classify the ovarian ascites data from [Schelker et
+al. 2017](https://www.nature.com/articles/s41467-017-02289-3) using, as
+a reference, the different reference data sets from both SingleR and CHETAH.
+
+
+The `ovarian1200` dataset contains 1200 cells randomly selected from the
+3114 single cell data provided by Schelker et al. (which is available
+from https://figshare.com/s/711d3fb2bd3288c8483). The data come from the
+ascites of 4 different ovarian cancer patients and contain a variety of
+leukocytes as well as tumor cells.
+
+First load the various packages:
+
+```{r packages}
+suppressMessages(require(SingleCellExperiment))
+suppressMessages(require(Seurat))
+suppressMessages(require(CHETAH))
+suppressMessages(require(Matrix))
+suppressMessages(require(SingleR))
+suppressMessages(require(cowplot))
+```
+
+If you have (or downloaded) the ovarian data into folder
+`data.dir` then load the `Seurat` object with
+
+```{r load_ovarian}
+#load expression matrix
+
+data.dir <- "session-celltypeid_files" # or wherever the data is located
+file <- paste0(data.dir,"/ovarian1200.rds")
+ovarian <- readRDS(file=file)
+
+```
+
+The authors already classified the cells 'by hand' using marker genes. This classfication can be found in the `celltypes` column of the `meta.data` of the object. Get an overview of this:
+
+```{r overian_overview}
+
+head(ovarian@meta.data)
+
+sort(table(ovarian@meta.data$celltypes))
+
+```
+
+Clearly, most of the cells are Macrophages. 
+
+We now follow the 'standard' [Seurat workflow](https://satijalab.org/seurat/essential_commands.html#seurat-standard-worflow) to prepare the data. 
+
+```{r prepare_ovarian, warning=FALSE}
+ovarian <- NormalizeData(object = ovarian)
+ovarian <- FindVariableFeatures(object = ovarian)
+ovarian <- ScaleData(object = ovarian)
+ovarian <- RunPCA(object = ovarian, npcs=20)
+ovarian <- FindNeighbors(object = ovarian)
+ovarian <- FindClusters(object = ovarian, resolution=0.5) 
+## (the default resolution yields too manh clusters)
+ovarian <- RunTSNE(object = ovarian)
+ovarian <- RunUMAP(object = ovarian, dims=1:20)
+p1 <- TSNEPlot(ovarian)
+p2 <- UMAPPlot(ovarian)
+plot_grid(p1, p2)
+```
+
+This shows the data with Seurat clustering, but we're more interested in the cell types. Let's see if and how they coincide. For convenience and flexibility, we define `dim.red` to be our dimension reduction of choice.
+
+```{r cluster_vs_publ_types}
+dim.red <- 'tsne' # or 'umap' or 'pca'
+p1 <- DimPlot(ovarian, group.by="seurat_clusters", reduction=dim.red)
+p2 <- DimPlot(ovarian, group.by='celltypes', reduction=dim.red)
+plot_grid(p1, p2, labels=c('clusters', 'published types'))
+```
+
+# SingleR
+
+## SingleR reference data sets
+
+We will now do our cell type identification using SingleR. SingleR
+comes with a collection of reference data sets. There are two for human:
+`hpca`, the Human Primary Cell Atlas (microarray-based), and
+`blueprint\_encode`, a combined Blueprint Epigenomics and Encode data
+set (RNASeq based) .
+
+For mouse there are also two sets: `immgen`, the Immunological Genome
+Project (microarray-based) and `mouse.rnaseq`, a brain specific reference
+(RNASeq-based). For details I refer to the SingleR-specifications
+vignette.
+
+Each reference data set comes in two 'flavours': 'types', which are very
+fine-grained, detailed types, and 'main_types', which are less coarser
+subset of those types.
+
+The SingleR reference data sets are part of the package, and can be
+explored easily.
+
+```{r explore_singler_refs}
+table(hpca$main_types)
+table(hpca$types)
+table(blueprint_encode$main_types)
+table(blueprint_encode$types)
+```
+
+## Using SingleR with other reference data sets
+
+SingleR only needs a single gene expression profile per cell type, which
+makes it possible to use bulk-RNAsequencing and even micorarrays as
+reference data. The downside is that the variability within cell types
+is not represented (although their methods do provide a p-value. Again, see 
+SingleR's highly recommend vignettes).
+
+The other method we will look at, CHETAH, needs several (100-200)
+single-cell expression profiles for the classification. The advantage is
+that the inherent variability is fully account for. CHETAH, originally
+developed for working with cancer data, has its 'own' reference data set
+that is based on single-cell data from Head-Neck cancer, melanoma,
+breast and colorectal cancer. (For details see
+https://figshare.com/s/aaf026376912366f81b6) Note that it is easy to
+create your own reference data sets for both SingleR and CHETAH.
+
+SingleR can use the CHETAH reference if that has been 'bulkified' by
+averaging over all cells per reference cell type. We provide this as a
+ready-made object (`chetah.ref.singler`).
+
+The layout of the reference data is quite simple: a `list` with the name
+of the reference, a big data matrix (genes x celltypes), and the types
+per cell, both in a detailed version (`$types`) and the simple version
+(`$main_types`) For the CHETAH reference we duplicated the (`$types`)
+and the simple version (`$main_types`). (Note that the
+`chetah.ref.singler` reference object can only be used by SingleR, not
+by CHETAH).
+
+```{r chetah_ref_singler}
+
+file <- paste0(data.dir, "/chetah.ref.singler.rds")
+chetah.ref.singler <- readRDS(file=file)
+
+# which main type are there:
+unique(chetah.ref.singler$main_types)
+
+# layout of the object:
+str(chetah.ref.singler)
+
+```
+
+## Classifying with SingleR
+
+SingleR can classify using several different reference data sets at the
+same time; this saves time and memory.
+
+On to the actual classification with SingleR.
+
+```{r singler_classification}
+
+counts <- GetAssayData(ovarian)
+
+singler <- CreateSinglerObject(counts=counts,
+  project.name="excelerate course", # choose
+  min.genes = 200, # ignore cells with fewer than 200 transcripts
+  technology = "CEL-Seq2", # choose
+  species = "Human",
+  citation = "Schelker et al. 2017", # choose
+  ref.list = list(hpca=hpca, bpe=blueprint_encode, snglr_chetah=chetah.ref.singler),
+  normalize.gene.length = FALSE,        # needed for full-length platforms (e.g. smartseq)
+  variable.genes = "de",  # see vignette
+  fine.tune = FALSE, # TRUE would take very long
+  reduce.file.size = TRUE, # leave out less-often used fields 
+  do.signatures = FALSE,
+  do.main.types = TRUE,
+  numCores = SingleR.numCores)
+
+```
+
+The `ref.list` argument specified a named list with three different
+reference data sets: HPCA, blueprint\_encode ('bpe') and the bulkified
+chetah\_reference ('snglr\_chetah'). The resulting `singler` object has
+complete classifications for each of these reference sets, under the
+`$singler` member. The actual types per cell are found in sub-list
+`$SingleR.single.main$labels[,1]`. 
+
+(side-note: SingleR also automatically classifies per cluster of
+cells, but we will not use this type of classification.)
+
+To get a good overview it's easiest to iterate over all elements of this
+list.
+
+```{r explore_snglr_results}
+
+show(names(singler$singler))
+
+for (ref.set in names(singler$singler) ) {
+  types <- singler$singler[[ref.set]]$SingleR.single.main$labels[,1]
+  cat("==== ", ref.set, ": ====\n")
+  show(sort(table(types), decreasing=TRUE))
+}
+
+## For hpca and blueprint_encode also show the 
+## detailed cell typings (as opposed to main_types results) : 
+
+for (ref.set in c("hpca", "bpe") ) {
+  types <- singler$singler[[ref.set]]$SingleR.single$labels[,1]
+  subrefset <- paste(ref.set, "subtypes", sep="_") 
+  cat("==== ", subrefset, ": ====\n")
+  show(sort(table(types), decreasing=TRUE))
+}
+
+```
+
+We will stick to the `main_types` from now on, for brevity.  In order to
+easily visualize the various classifications in the tSNE plots we have
+to add them to `meta.data` slot of the Seurat object:
+
+```
+for (ref.set in names(singler$singler) ) {
+  types <- singler$singler[[ref.set]]$SingleR.single.main$labels[,1]
+  ovarian <- AddMetaData(ovarian,
+                         metadata=types,
+                         col.name=paste0(ref.set,"_type" ) )
+}
+
+## Check if this worked and get an impression of the concordance of classification
+
+interesting.columns <- c("celltypes", "hpca_type", "bpe_type", "snglr_chetah_type")
+
+## repeat the following a few times:
+random.rows <- sort(sample(ncol(ovarian), size=20))
+ovarian@meta.data[ random.rows,  interesting.columns]
+
+```
+
+Things seem largely concordant, now start plotting them. 
+
+```{r compare_singler_diffrefs}
+panel.labels <- c('publ','hpca','bpe','chet') #shorthand labels
+
+p1 <- DimPlot(ovarian, group.by="celltypes", label_size=6, reduction=dim.red)
+p2 <- DimPlot(ovarian, group.by='hpca_type', label_size=6, reduction=dim.red)
+p3 <- DimPlot(ovarian, group.by='bpe_type', label_size=6, reduction=dim.red)
+p4 <- DimPlot(ovarian, group.by='snglr_chetah_type', label_size=6, reduction=dim.red)
+plot_grid(p1, p2, p3, p4, nrow=2, ncol=2, labels=panel.labels)
+
+```
+
+This looks reasonable, but the colors are a bit messy. To see things
+better it may be better to highlight the cell type of interest (but note
+that the type names differ per reference set!!).  The Seurat function
+`WhichCells` is a bit too limited to find cells by 'any old meta data',
+so it's easier to use a little function to automatically find the cells
+that have a particular type:
+
+```{r plot_highlights_macrophages}
+findCells <- function(obj, column, values, name=NULL) {
+  ## Given a Seurat OBJ, return a list with the names of the cells where
+  ## the specified meta.data COLUMN equals any of the strings specified
+  ## in VALUES (both must be characters or factors). Name of the list member
+  ## must be specified using the NAME argument if length(values)>1
+  stopifnot(is(obj, "Seurat"))
+  stopifnot(is.character(column))
+  stopifnot(column %in% names(obj@meta.data))
+  col <- obj@meta.data[[column]]
+  stopifnot(is.character(col) || is.factor(col))
+  values <- unique(values)
+  stopifnot(is.character(values) || is.factor(values))
+  if (length(values)>1 && is.null(name))
+    stop("findCells: specify a name to be used for the selection")
+  if(is.null(name))
+    name <- values
+  stopifnot(is.character(name))
+  rem <- setdiff(c(values), col)
+  if(length(rem)>0)stop("findCells: requested value(s) never occurs in this column: ", rem)
+  l <- list(colnames(obj)[ col %in% values ])
+  names(l) <- name
+  l
+}                                       #findCells
+
+## "Let's look at the macrophages. This is the biggest group
+p1 <- DimPlot(ovarian, group.by="celltypes", reduction=dim.red,
+               cells.highlight=findCells(ovarian, 'celltypes', 'Macrophage'))
+p2 <- DimPlot(ovarian, group.by='hpca_type', reduction=dim.red,
+               cells.highlight=findCells(ovarian, 'hpca_type', 'Macrophage'))
+p3 <- DimPlot(ovarian, group.by='bpe_type', reduction=dim.red,
+               cells.highlight=findCells(ovarian, 'bpe_type', 'Macrophages'))
+p4 <- DimPlot(ovarian, group.by='snglr_chetah_type', reduction=dim.red,
+               cells.highlight=findCells(ovarian, 'snglr_chetah_type', 'Macrophage'))
+plot_grid(p1, p2, p3, p4, nrow=2, ncol=2, labels=paste(panel.labels, "Macrophage"))
+```
+
+No suprises there really. Note that monocytes (found by HPCA) are
+precursors to macrophages, but are called differently. That's why there
+are relatively fewer macrophages in the `hpca` plot.
+
+This 'missing-things-that-are-too-specific' is more prominent 
+for the B cells as identified by SingleR using the four different
+references:
+
+```{r plot_highlights_Bcells}
+p1 <- DimPlot(ovarian, group.by="celltypes", reduction=dim.red,
+               cells.highlight=findCells(ovarian, 'celltypes', 'B cell'))
+p2 <- DimPlot(ovarian, group.by='hpca_type', reduction=dim.red,
+               cells.highlight=findCells(ovarian, 'hpca_type', 'B_cell'))
+p3 <- DimPlot(ovarian, group.by='bpe_type', reduction=dim.red,
+               cells.highlight=findCells(ovarian, 'bpe_type', 'B-cells'))
+p4 <- DimPlot(ovarian, group.by='snglr_chetah_type', reduction=dim.red,
+               cells.highlight=findCells(ovarian, 'snglr_chetah_type', 'B cell'))
+plot_grid(p1, p2, p3, p4, nrow=2, ncol=2, labels=paste(panel.labels, "B cell"))
+```
+
+bpe and singlr\_chetah find more B-cells than the original publication,
+HPCA roughly the same. The reason is that HPCA has two more B-cell subtypes
+which were missed. We can lump them together (`findCells()` can handle
+it) by including the 'Pre-B_cell_CD34-' and 'Pro-B_cell_CD34+' cells, and
+calling the combination 'B-like' : 
+
+```{r plot_highlights_allBcells}
+p2 <- DimPlot(ovarian, group.by='hpca_type', reduction=dim.red,
+               cells.highlight=findCells(ovarian, 'hpca_type',
+                 c('B_cell', 'Pre-B_cell_CD34-'),
+                 name="B-like"))
+plot_grid(p1, p2, p3, p4, nrow=2, ncol=2, labels=paste(panel.labels, "all B cell"))
+```
+
+It looks like in the original publication quite a few B(-like) cells were
+missed.  The opposite may be the case for the dendritic cells: the
+publication assigns quite a few of them, which is a bit unusual in that
+these tissue-residing cells are relatively rare in fluids such as blood
+and ascites. Are the authors right?
+
+```{r plot_highlights_dendritic}
+p1 <- DimPlot(ovarian, group.by="celltypes", reduction=dim.red,
+               cells.highlight=findCells(ovarian, 'celltypes', 'Dendritic'))
+p2 <- DimPlot(ovarian, group.by='hpca_type', reduction=dim.red,
+               cells.highlight=findCells(ovarian, 'hpca_type', 'DC'))
+p3 <- DimPlot(ovarian, group.by='bpe_type', reduction=dim.red,
+               cells.highlight=findCells(ovarian, 'bpe_type', 'DC'))
+p4 <- DimPlot(ovarian, group.by='snglr_chetah_type', reduction=dim.red,
+               cells.highlight=findCells(ovarian, 'snglr_chetah_type', 'Dendritic'))
+plot_grid(p1, p2, p3, p4, nrow=2, ncol=2, labels=paste(panel.labels, "Dendritic"))
+```
+
+I guess the jury is out, but more on that later. 
+
+Feel free to play around with a few more cell types. In particular, have
+a good look at where the tumor cells are. You will find that there are 4
+clusters. I'm pretty sure each cluster derive from a different patient.
+
+###  Discrepancies
+
+A nice way to view any discrepancies is to split the cells by one
+classification, and color them by another (and perhaps vice versa).  If
+there are no discrepancies, each sub-plot has cells of one color.  (you
+can try this by using the same cell typing for both the `split.by` and
+`group.by` arguments).
+
+
+```{r plot_discrepancies}
+DimPlot(ovarian, split.by='celltypes', group.by='snglr_chetah_type', reduction=dim.red)
+
+## and also in reverse:
+
+DimPlot(ovarian, group.by='celltypes', split.by='snglr_chetah_type', reduction=dim.red)
+
+```
+
+# CHETAH
+
+## CHETAH reference
+
+Our second method, CHETAH, differs from SingleR in that it uses a
+reference in which each cell type is represented by a few hundred
+single-cells of that type, allowing a well-founded estimate of the
+confidence with which a cell type call can be made.  We already worked
+with a 'bulkified' version of this reference in the previous section.
+
+CHETAH is part of Bioconductor, and therefore uses
+`SingleCellExperiment` objects, both for the data to be classified (the
+'input') as well as for the reference data. The latter is simply a data
+set that has `celltypes` as one of its `colData()` columns.
+
+Let's look at this reference.
+
+```{r chetaref}
+file <- paste0(data.dir,"/chetah.ref.rds") 
+chetah.ref <- readRDS(file=file)
+
+show(unique(chetah.ref.singler$types)) # the bulkified reference we've used
+
+show(colData(chetah.ref)) # the CHETAH tumor reference data
+
+show(sort(table(colData(chetah.ref)$celltypes), decreasing=TRUE))
+
+```
+
+## Classifying with SingleR
+
+The data to be classified also must be cast as a `SingleCellExperiment`.
+You can use Seurat's `as.SingleCellExperiment()` function for that.
+Classifying is a matter of calling `CHETAHclassifier()` with the input
+and the reference as arguments (although there are loads of options, see
+the man page). Classification takes a bit longer than SingleR
+
+
+```{r chetah_classify}
+
+ovarian.sce <- as.SingleCellExperiment(ovarian)
+    
+ovarian.sce <-  CHETAHclassifier(input=ovarian.sce,
+                                 ref_cells = chetah.ref)
+
+```
+
+Let's explore the results. You'll notice an extra column `celltype_CHETAH` 
+in the `colData`, and things are still by and large concordant, with one
+exception: CHETAH uses the odd 'Unassigned' and 'Node3', 'Node7' etc. type.
+The largest group, as expected, is again Macrophage
+
+(Note: the `snglr_chetah_type` column is the SingleR classification
+using the bulkified CHETAH reference, whereas the `celltype_CHETAH`
+column is the CHETAH classifcation using the CHETAH reference.)
+
+```{r explore_chetah_results}
+
+names(colData(ovarian.sce))
+
+interesting.columns <- c("celltypes", "hpca_type", "bpe_type", "snglr_chetah_type", "celltype_CHETAH")
+
+## repeat the following a few times
+random.rows <- sort(sample(ncol(ovarian), size=20))
+colData(ovarian.sce)[ random.rows,  interesting.columns]
+
+show(sort(table(colData(ovarian.sce)$celltype_CHETAH), decreasing=TRUE))
+
+```
+
+## CHETAH visualization
+
+Since the CHETAH method is so inherenty dependent on
+the classification tree, it has its own routine to visualize
+both at the same time.
+
+
+```{r plotchetah}
+
+## There may still be a small bug in CHETAH: if things don't work, 
+## please use the following code before continuing
+pca.save <- ovarian.sce@reducedDims@listData$PCA
+ovarian.sce@reducedDims@listData$PCA <- NULL
+ovarian.sce@reducedDims@listData$PCA <- pca.save[,1:2]
+## end of workaround
+
+dim.red.u <- toupper(dim.red) # CHETAH uses upper case TSNE, UMAP, etc.
+PlotCHETAH(ovarian.sce, redD=dim.red.u)
+
+```
+
+Grey dots are cells that got an intermediate classification, here
+called Unassigned, Node1, Node2 etc. You can immediately see the four
+clusters that could not be classified: they are the tumor cells. 
+A check with the author classification confirms this:
+
+```{r plot_chetahVSpubl}
+p1 <- DimPlot(ovarian, group.by='celltypes', reduction=dim.red)
+p2 <- PlotCHETAH(ovarian.sce, redD=dim.red.u, tree=FALSE, return=TRUE)
+plot_grid(p1, p2, ncol=2, labels=c("publ", "chet"))
+```
+
+SingleR doesn't know CHETAH's intermediate types, so using SingleR with CHETAH's reference gives different (and misleading) results:
+
+```{r plot_chetahVSsingler}
+p1 <- DimPlot(ovarian, group.by='celltypes', reduction=tolower(dim.red))
+p2 <- DimPlot(ovarian, group.by="snglr_chetah_type", reduction=tolower(dim.red))
+p3 <- PlotCHETAH(ovarian.sce, redD=dim.red.u, tree=FALSE, return=TRUE)
+plot_grid(p1, p2, p3, ncol=3, labels=c("publ", "sng_chet", "chet"))
+```
+
+To see the details of the intermediate classifications more clearly you
+can invert the color scheme using the `interm` option. The malignant
+cells stand out even more clearly this way. 
+
+```{r plot_interm}
+p2 <- PlotCHETAH(ovarian.sce, redD=dim.red.u, interm=TRUE, tree=FALSE, return=TRUE)
+plot_grid(p1, p2, ncol=2, labels=c("publ", "chet"))
+```
+
+The dendritic cell type calls also look a bit more suspect. We can play
+with the classification threshold (the default is 0.1) By setting it to
+0, we force all cells to be classified to a final type; no intermediates
+will occur then. Adjusting the threshold parameter is done with the
+`Classify` function (this is very fast). Play with it. E.g., you'll see
+that the dendritic calls from the original publication may be in fact be
+plausible but were missed by SingleR. (But also keep track of what
+happens with the types of the tumor cells!)
+
+```{r plot_diff_confidence}
+
+threshold <- 0.0
+ovarian.sce <- Classify(ovarian.sce, thresh=threshold)
+## note: this overrides previous celltype_CHETAH, but is very fast anyway
+p2 <- PlotCHETAH(ovarian.sce, redD=dim.red.u, interm=FALSE, tree=FALSE, return=TRUE)
+plot_grid(p1, p2, ncol=2, labels=c("publ", "chet"))
+
+```
+
+# CHETAHshiny
+
+CHETAH comes with a nice [Shiny](https://shiny.rstudio.com) app that
+makes it easy to explore the classification. It makes R start a little
+web application that you can interact with in your web browser.
+
+## Launching
+
+When calling `CHETAHshiny()`, it should say something like "Listening on
+http://127.0.0.1:5433" and automatically launch your web browser. If
+not, manually open the URL just given in the web browser yourself. In
+RStudio, you may need to click 'Open in Browser' on top of the
+Rstudio-window. The R session itself will produce copious amounts of
+warnings which you can ignore. It can take up to 10 seconds or so to
+become active; it may help to click a few of the buttons.
+
+```
+CHETAHshiny(ovarian.sce, redD=dim.red.u)
+```
+
+## Explanation of the CHETAHshiny interface
+
+The left column / margin shows parameters and thresholds that can be chosen.
+The top row shows which views there are. Many of the elements are clickable or
+provide info when you hover over them.
+
+## Classification tab
+
+Shows the final classification and, further down, the statistics per cell
+type and the classification tree that was used (colors are consistent).
+
+ * you can zoom in, pan, hover, etc. Single-click a cell type adds/removes cells of that type from view. Double-click to show just that celltype or return to showing all cells
+ * 'Color the intermediate types' has the same effect as `PlotCHETAH(..., interm=TRUE`, ...)
+ * The confidence score works as `Classify(..., thresh=some.value, ...)`
+
+## Confidence scores tab:
+
+The confidence score of cell in CHETAH represents the amount of evidence
+that is available to continue classifying that cell further down the
+classificatin tree. `Choose a node` (see the tree at the bottom) shows
+only the cells classified to the specified node or more specific
+(i.e. further down), and uses color to represent the confidence. The
+fainter the color, the less evidence remains to continue making that
+cell's type more specific.  The confidence score is, by definition,
+positive, but here, negative values and colorscale are used to show
+which of the two branches, if any, is to be taken by the cells in that
+node.  The colorcode is the same as shown in the tree under it.  The
+Profile score heatmap shows the corresponding profile scores (see below)
+
+Raising the `confidence threshold` results in fewer cells 'reaching'
+the selected node, so fewer cells will show up.
+
+## Profile score tab:
+
+The profile score in CHETAH represents the similarity of cell in a
+particular node to any of the final types. If the confidence score (see
+above) is not below the threshold, the branch containing the cell type
+having the highest porfile score is taken. The classification tree is
+again shown at the bottoom.
+
+Note that the profile score can be negative, but still he the highest in
+a particular node. E.g., the Macrophage score of many the macrophages in
+Node8 is negative, but mostly less so than the dendritics. If the
+confidence score still exceeds the threshold, the branch containing
+Macrophage would still be chosen.
+
+This plot always shows all points, regardless of confidence threshold
+(and colors are also independent of this).
+
+'In a boxplot' panel: unfortunately broken currently.
+
+## Genes used by CHETAH tab: 
+
+In each node and for each final type in that node, CHETAH uses the 200
+genes that have the maximum absolute difference in expression between
+that final type, and the average of all the types in the other branch to
+calculate the profiles scores. If you set '# of genes' in this plot to
+200, the heat map will show you the mRNA counts in the input data, of
+these 200 genes, for the selected node and cell type. If you select
+fewer genes it will show (of the 200 genes) the most highly expressed
+genes in the input (this is the default), or if `Genes with
+max. difference in the INPUT` is unticked, the 200 genes most highly
+expressed in the reference. `Scale Matrix` will normalize the genes for
+better visualisation.
+
+The tree is again shown at the bottom. 
+
+If you check e.g Node6 (the that separates CD4 and CD8 cells), you
+should appreciate that using marker genes (`CD4` and `CD8A`
+respectively; can you spot them?) is not going to work: the data is
+noisy, expression is low and the differences in expression of the
+classical canonical marker genes is miniscule.  You need extra evidence
+in the form of extra genes.
+
+(More cells than strictly relevant are shown.)
+
+## Expression per gene tab: obvious
+
+
+### Session info
+
+```{r sessioninfo}
+sessionInfo()
+```

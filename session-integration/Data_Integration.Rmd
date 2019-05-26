@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # Overview
 
 
-In this tutorial we will look at different ways of integrating multiple single cell RAN-seq datasets. We will explore two different methods to correct for batch effects across datastes. We will also look at a quantitative measure to assess the quality of the inegrated data. 
+In this tutorial we will look at different ways of integrating multiple single cell RNA-seq datasets. We will explore two different methods to correct for batch effects across datasets. We will also look at a quantitative measure to assess the quality of the integrated data. 
 
 
 ## Datasets
@@ -34,7 +34,7 @@ suppressMessages(require(BiocNeighbors))
 
 ## Seurat (anchors and CCA)
 
-First we will use the data integration ethod presented in [Comprehensive Integration of Single Cell Data](https://www.biorxiv.org/content/10.1101/460147v1).
+First we will use the data integration method presented in [Comprehensive Integration of Single Cell Data](https://www.biorxiv.org/content/10.1101/460147v1).
 
 ### Data preprocessing
 
@@ -51,7 +51,7 @@ Create a Seurat object with all datasets.
 pancreas <- CreateSeuratObject(pancreas.data, meta.data = metadata)
 ```
 
-Let's first look at the datasets before applying any batch correction. We perform standard preprocessing (log-normalization), and identify variable features based on a variance stabilizing transformation (`"vst"`). Next, We scale the integrated data, run PCA, and visualize the results with UMAP. The integrated datasets cluster by cell type, instead of by technology
+Let's first look at the datasets before applying any batch correction. We perform standard preprocessing (log-normalization), and identify variable features based on a variance stabilizing transformation (`"vst"`). Next, we scale the integrated data, run PCA, and visualize the results with UMAP. The integrated datasets cluster by cell type, instead of by technology
 
 ```{r norm_clust_raw}
 # Normalize and find variable features
@@ -118,7 +118,7 @@ plot_grid(p1, p2)
 
 ## Mutual Nearest Neighbor (MNN)
 
-AN alternative approach to integrate single cell RNA-seq data is to use the Mutual Nearest Neighbor (MNN) batch-correction method by [Haghverdi et al.](https://www.nature.com/articles/nbt.4091). 
+An alternative approach to integrate single cell RNA-seq data is to use the Mutual Nearest Neighbor (MNN) batch-correction method by [Haghverdi et al.](https://www.nature.com/articles/nbt.4091). 
 
 You can either create a `SingleCellExperiment` (SCE) object directly from the count matrices, or convert directly from Seurat to SCE. 
 
@@ -142,7 +142,7 @@ fluidigmc1.data <- fluidigmc1.data[match(keep_genes, rownames(fluidigmc1.data)),
 smartseq2.data <- smartseq2.data[match(keep_genes, rownames(smartseq2.data)), ]
 ```
 
-Calculate quality control characteristics using `calculateQCMetrics()` to determine cells low quality cells by finding outliers with uncharacteristically low total counts or total number of features (genes) detected. 
+Calculate quality control characteristics using `calculateQCMetrics()` to determine low quality cells by finding outliers with uncharacteristically low total counts or total number of features (genes) detected. 
 
 ```{r sce_qc}
 ## celseq.data
@@ -167,7 +167,7 @@ low_genes_smartseq2.data <- isOutlier(smartseq2.data$log10_total_features_by_cou
 smartseq2.data <- smartseq2.data[, !(low_lib_smartseq2.data | low_genes_smartseq2.data)]
 ```
 
-Normalize the data by clalculating size using the `computeSumFactors()` and `normalize()` functions from `scarn`
+Normalize the data by clalculating size using the `computeSumFactors()` and `normalize()` functions from `scran`
 
 ```{r sce_normalize}
 # Compute sizefactors
@@ -272,7 +272,7 @@ fluidigmc1.data_rescaled <- rescaled[[3]]
 smartseq2.data_rescaled <- rescaled[[4]]
 ```
 
-We now run fastMNN. The `BNPARAM` can be specified to specify the specific nearest neighbors method to use from the BiocNeighbors package. Here we make use of the `[Annoy library](https://github.com/spotify/annoy)` via the `BiocNeighbors::AnnoyParam()` argument. We save the reduced-dimension MNN representation into the `reducedDims` slot of our `sce` object.
+We now run fastMNN. The `BNPARAM` can be used to specify the specific nearest neighbors method to use from the BiocNeighbors package. Here we make use of the `[Annoy library](https://github.com/spotify/annoy)` via the `BiocNeighbors::AnnoyParam()` argument. We save the reduced-dimension MNN representation into the `reducedDims` slot of our `sce` object.
 
 *Optional:* We can enable parallelization via the `BPPARAM` argument, enabling multicore processing. 
 
@@ -292,7 +292,7 @@ reducedDim(sce, "MNN") <- mnn_out$correct
 **NOTE:** fastMNN() does not produce a batch-corrected expression matrix. Thus, the result from fastMNN() should solely be treated as a reduced dimensionality representation, suitable for direct plotting, TSNE/UMAP, clustering, and trajectory analysis that relies on such results.
 
 
-Plot the catch-corrected data.
+Plot the batch-corrected data.
 
 ```{r MNN_plot, warning=FALSE}
 p1 <- plotReducedDim(sce, use_dimred = "MNN", colour_by = "tech") + ggtitle("MNN Ouput Reduced Dimensions")
