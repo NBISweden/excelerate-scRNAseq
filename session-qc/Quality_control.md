@@ -32,8 +32,8 @@ Genomics website
   - 1k PBMCs using 10x v3 chemistry in combination with cell surface
     proteins, but disregarding the protein data and only looking at gene
     expression.
-
-The datsets can be downloaded with these commands:
+    
+The datasets are available on the classroom computers at ~/scrna-seq2019/day1/1-qc/. If you want to access them after the course you can download them using the following commands:
 
     cd data
     curl -O http://cf.10xgenomics.com/samples/cell-exp/3.0.0/pbmc_1k_v2/pbmc_1k_v2_filtered_feature_bc_matrix.h5
@@ -53,9 +53,9 @@ suppressMessages(require(Matrix))
 Here, we use the function Read10X\_h5 to read in the expression matrices in R.
 
 ``` r
-v3.1k <- Read10X_h5("data/pbmc_1k_v3_filtered_feature_bc_matrix.h5", use.names = T)
-v2.1k <- Read10X_h5("data/pbmc_1k_v2_filtered_feature_bc_matrix.h5", use.names = T)
-p3.1k <- Read10X_h5("data/pbmc_1k_protein_v3_filtered_feature_bc_matrix.h5", use.names = T)
+v3.1k <- Read10X_h5("~/scrna-seq2019/day1/1-qc/pbmc_1k_v3_filtered_feature_bc_matrix.h5", use.names = T)
+v2.1k <- Read10X_h5("~/scrna-seq2019/day1/1-qc/pbmc_1k_v2_filtered_feature_bc_matrix.h5", use.names = T)
+p3.1k <- Read10X_h5("~/scrna-seq2019/day1/1-qc/pbmc_1k_protein_v3_filtered_feature_bc_matrix.h5", use.names = T)
 ```
 
     ## Genome matrix has multiple modalities, returning a list of matrices for this genome
