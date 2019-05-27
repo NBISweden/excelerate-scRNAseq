@@ -80,8 +80,8 @@ ovarian <- FindClusters(object = ovarian, resolution=0.5)
 ## (the default resolution yields too manh clusters)
 ovarian <- RunTSNE(object = ovarian)
 ovarian <- RunUMAP(object = ovarian, dims=1:20)
-p1 <- TSNEPlot(ovarian)
-p2 <- UMAPPlot(ovarian)
+p1 <- DimPlot(ovarian, reduction='tsne')
+p2 <- DimPlot(ovarian, reduction='umap')
 plot_grid(p1, p2)
 ```
 
