@@ -7,9 +7,7 @@ Created by: Åsa Björklund
 
 #### Quality control of data for filtering cells using Seurat and Scater packages.
 
-In this tutorial we will look at different ways of doing filtering and cell and exploring variablility in the data. If you would like 
-to repeat these or any other analyses on your computer, please follow [these instructions](conda_instructions.md) to easily get all 
-software installed and ready.
+In this tutorial we will look at different ways of doing filtering and cell and exploring variablility in the data. 
 
 The first part is using Seurat (<https://satijalab.org/seurat/>) for
 visualizing QC-measures and filtering cells. However, we will not go
@@ -20,6 +18,7 @@ The second part will explore the scater package
 (<https://bioconductor.org/packages/release/bioc/html/scater.html>) in
 some more detail. Looking at different ways of visualizing QC-stats and
 exploring variation in the data.
+
 ### Load the environment
 Please follow [these instructions](https://nbisweden.github.io/excelerate-scRNAseq/computing_environment_instructions.html) if to load the conda environment before running the code below.
 
@@ -150,25 +149,25 @@ Now we can plot some of the QC-features as violin plots
 VlnPlot(alldata, features = "nFeature_RNA", pt.size = 0.1) + NoLegend()
 ```
 
-![](Quality_control_files/figure-gfm/vln.plot-1.png)<!-- -->
+![](Quality_control_files/figure-gfm/vln.plot-1.png)
 
 ``` r
 VlnPlot(alldata, features = "nCount_RNA", pt.size = 0.1) + NoLegend()
 ```
 
-![](Quality_control_files/figure-gfm/vln.plot-2.png)<!-- -->
+![](Quality_control_files/figure-gfm/vln.plot-2.png)
 
 ``` r
 VlnPlot(alldata, features = "percent.mito", pt.size = 0.1) + NoLegend()
 ```
 
-![](Quality_control_files/figure-gfm/vln.plot-3.png)<!-- -->
+![](Quality_control_files/figure-gfm/vln.plot-3.png)
 
 ``` r
 VlnPlot(alldata, features = "percent.ribo", pt.size = 0.1) + NoLegend()
 ```
 
-![](Quality_control_files/figure-gfm/vln.plot-4.png)<!-- -->
+![](Quality_control_files/figure-gfm/vln.plot-4.png)
 
 As you can see, the v2 chemistry gives lower gene detection, but higher
 detection of ribosomal proteins. As the ribosomal proteins are highly
@@ -181,19 +180,19 @@ And we can plot the different QC-measures as scatter plots
 FeatureScatter(alldata, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
 ```
 
-![](Quality_control_files/figure-gfm/scatter-1.png)<!-- -->
+![](Quality_control_files/figure-gfm/scatter-1.png)
 
 ``` r
 FeatureScatter(alldata, feature1 = "nFeature_RNA", feature2 = "percent.mito")
 ```
 
-![](Quality_control_files/figure-gfm/scatter-2.png)<!-- -->
+![](Quality_control_files/figure-gfm/scatter-2.png)
 
 ``` r
 FeatureScatter(alldata, feature1="percent.ribo", feature2="nFeature_RNA")
 ```
 
-![](Quality_control_files/figure-gfm/scatter-3.png)<!-- -->
+![](Quality_control_files/figure-gfm/scatter-3.png)
 
 We can also subset the data to only plot one sample.
 
@@ -201,7 +200,7 @@ We can also subset the data to only plot one sample.
 FeatureScatter(alldata, feature1 = "nCount_RNA", feature2 = "nFeature_RNA", cells = WhichCells(alldata, expression = orig.ident == "v3.1k") )
 ```
 
-![](Quality_control_files/figure-gfm/scatter2-1.png)<!-- -->
+![](Quality_control_files/figure-gfm/scatter2-1.png)
 
 ### Filtering
 
@@ -238,7 +237,7 @@ data.filt <- subset(alldata, cells = selected)
 VlnPlot(data.filt, features = "percent.mito")
 ```
 
-![](Quality_control_files/figure-gfm/mito.filt-1.png)<!-- -->
+![](Quality_control_files/figure-gfm/mito.filt-1.png)
 
 As you can see, there is still quite a lot of variation in percent mito,
 so it will have to be dealt with in the data analysis step.
@@ -302,25 +301,25 @@ Lets plot the same qc-stats another time.
 VlnPlot(data.filt, features = "nFeature_RNA", pt.size = 0.1) + NoLegend()
 ```
 
-![](Quality_control_files/figure-gfm/vln.plot2-1.png)<!-- -->
+![](Quality_control_files/figure-gfm/vln.plot2-1.png)
 
 ``` r
 VlnPlot(data.filt, features = "nCount_RNA", pt.size = 0.1) + NoLegend()
 ```
 
-![](Quality_control_files/figure-gfm/vln.plot2-2.png)<!-- -->
+![](Quality_control_files/figure-gfm/vln.plot2-2.png)
 
 ``` r
 VlnPlot(data.filt, features = "percent.mito", pt.size = 0.1) + NoLegend()
 ```
 
-![](Quality_control_files/figure-gfm/vln.plot2-3.png)<!-- -->
+![](Quality_control_files/figure-gfm/vln.plot2-3.png)
 
 ``` r
 VlnPlot(data.filt, features = "percent.ribo", pt.size = 0.1) + NoLegend()
 ```
 
-![](Quality_control_files/figure-gfm/vln.plot2-4.png)<!-- -->
+![](Quality_control_files/figure-gfm/vln.plot2-4.png)
 
 ``` r
 # and check the number of cells per sample before and after filtering
@@ -354,7 +353,7 @@ data.filt <- CellCycleScoring(
 VlnPlot(data.filt, features = c("S.Score","G2M.Score"))
 ```
 
-![](Quality_control_files/figure-gfm/cc-1.png)<!-- -->
+![](Quality_control_files/figure-gfm/cc-1.png)
 
 In this case it looks like we only have a few cycling cells in the
 datasets.
@@ -487,7 +486,7 @@ the variation.
 plotHighestExprs(sce, exprs_values = "counts")
 ```
 
-![](Quality_control_files/figure-gfm/high.exr-1.png)<!-- -->
+![](Quality_control_files/figure-gfm/high.exr-1.png)
 
 As you can see, MALAT1 corresponds to an average of around 4% of the
 counts. And in some cells as high as \~30% of the counts. I would
@@ -507,7 +506,7 @@ between samples.
 plotScater(sce, block1 = "ident", nfeatures = 1000)
 ```
 
-![](Quality_control_files/figure-gfm/seq.sat-1.png)<!-- -->
+![](Quality_control_files/figure-gfm/seq.sat-1.png)
 
 #### Plot gene stats
 
@@ -518,7 +517,7 @@ instance mean expression vs number of cells with detection.
 plotRowData(sce, x = "n_cells_by_counts", y = "mean_counts")
 ```
 
-![](Quality_control_files/figure-gfm/plot.row-1.png)<!-- -->
+![](Quality_control_files/figure-gfm/plot.row-1.png)
 
 #### Plot cell stats
 
@@ -535,7 +534,7 @@ p3 <- plotColData(sce, x = "pct_counts_feature_control",
 multiplot(p1, p2, p3, cols = 2)
 ```
 
-![](Quality_control_files/figure-gfm/plot.col-1.png)<!-- -->
+![](Quality_control_files/figure-gfm/plot.col-1.png)
 
 #### Identify outliers in QC-stats
 
@@ -553,7 +552,7 @@ sce <- runPCA(sce, use_coldata = TRUE,
 plotReducedDim(sce, use_dimred="PCA_coldata", colour_by = "ident")
 ```
 
-![](Quality_control_files/figure-gfm/outlier-1.png)<!-- -->
+![](Quality_control_files/figure-gfm/outlier-1.png)
 
 ``` r
 # check if we have any outliers
@@ -599,14 +598,14 @@ sce <- runPCA(sce, ntop = 1000, exprs_values = "logcounts", ncomponents = 20)
 plotPCA(sce,ncomponents=4,colour_by="ident")
 ```
 
-![](Quality_control_files/figure-gfm/dim.red-1.png)<!-- -->
+![](Quality_control_files/figure-gfm/dim.red-1.png)
 
 ``` r
 # then by Celltype
 plotPCA(sce,ncomponents=4,colour_by="percent.mito")
 ```
 
-![](Quality_control_files/figure-gfm/dim.red-2.png)<!-- -->
+![](Quality_control_files/figure-gfm/dim.red-2.png)
 
 ``` r
 # Diffusion map, OBS! Requires installation of package destiny to run!
@@ -615,7 +614,7 @@ sce <- runDiffusionMap(sce, ntop = 1000, ncomponents = 4)
 plotDiffusionMap(sce, colour_by="ident",ncomponents=4)
 ```
 
-![](Quality_control_files/figure-gfm/dim.red-3.png)<!-- -->
+![](Quality_control_files/figure-gfm/dim.red-3.png)
 
 ``` r
 # tSNE - uses Rtsne function to run tsne, here run with first 10 PCs
@@ -624,7 +623,7 @@ sce <- runTSNE(sce, ntop = 1000, ncomponents = 2, perplexity = 30, n_dimred = 10
 plotTSNE(sce, colour_by="ident")
 ```
 
-![](Quality_control_files/figure-gfm/dim.red-4.png)<!-- -->
+![](Quality_control_files/figure-gfm/dim.red-4.png)
 
 ``` r
 # UMAP, OBS! Requires installation of package umap to run!
@@ -633,7 +632,7 @@ sce <- runUMAP(sce)
 plotUMAP(object = sce, colour_by="ident")
 ```
 
-![](Quality_control_files/figure-gfm/dim.red-5.png)<!-- -->
+![](Quality_control_files/figure-gfm/dim.red-5.png)
 
 ### Explanatory factors
 
@@ -658,7 +657,7 @@ plotExplanatoryVariables(sce, variables =  c("ident","Chemistry","pct_counts_mit
 
     ## Warning: Removed 126585 rows containing non-finite values (stat_density).
 
-![](Quality_control_files/figure-gfm/expl.var-1.png)<!-- -->
+![](Quality_control_files/figure-gfm/expl.var-1.png)
 
 Each line corresponds to one factor and represents the distribution of
 R-squared values across all genes.
@@ -672,7 +671,7 @@ factors.
 plotExplanatoryPCs(sce, variables = c("ident", "Chemistry","pct_counts_mito", "total_features_by_counts", "pct_counts_in_top_50_features", "total_counts","S.Score","G2M.Score"), npcs_to_plot = 20)
 ```
 
-![](Quality_control_files/figure-gfm/expl.pc-1.png)<!-- -->
+![](Quality_control_files/figure-gfm/expl.pc-1.png)
 
 Question: Do you think that you can see some clear batch effects in the
 data? Do you think that there are any technical biases?
