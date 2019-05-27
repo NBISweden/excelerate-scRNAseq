@@ -233,7 +233,7 @@ We will stick to the `main_types` from now on, for brevity.  In order to
 easily visualize the various classifications in the tSNE plots we have
 to add them to `meta.data` slot of the Seurat object:
 
-```
+```{r add_metadata}
 for (ref.set in names(singler$singler) ) {
   types <- singler$singler[[ref.set]]$SingleR.single.main$labels[,1]
   ovarian <- AddMetaData(ovarian,
