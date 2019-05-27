@@ -27,6 +27,8 @@ For this tutorial we will use 3 different PBMC datasets from the 10x Genomics we
 * 1k PBMCs using 10x v3 chemistry
 * 1k PBMCs using 10x v3 chemistry in combination with cell surface proteins, but disregarding the protein data and only looking at gene expression.
 
+The datasets are available on the classroom computers at `~/scrna-seq2019/day1/1-qc/`
+
 The datsets can be downloaded with these commands:
 
 ```
