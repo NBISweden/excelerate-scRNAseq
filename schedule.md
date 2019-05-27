@@ -8,7 +8,7 @@
 - **10:15-11:00** Lecture: [Quality control](session-qc/scRNAseq_QC_Asa_Bjorklund_2019.pdf) (Åsa)
 - **11:00-12:00** Labs: [Quality control](session-qc/Quality_control.md) (Åsa & Jules). Bonus exercise (not to be done in the class): [Sequencing QC and Ikura pipeline](session-seqmap/sequencing_qc.md) (Jules).
 - **12:00-13:00** _lunch_
-- **13:00-13:45** Lecture: Normalisation and removal of confounding factors (Heli Pessa  & Bishwa Ghimire)
+- **13:00-13:45** Lecture: [Normalisation](session-normalization/Normalization.pdf) and removal of confounding factors (Heli Pessa  & Bishwa Ghimire)
 - **13:45-14:30** Labs: [Normalisation and removal of confounding factors](session-normalization/Normalization.Rmd) (Heli & Bishwa)
 - **14:30-15:00** _coffee break_
 - **15:00-15:45** Lecture: [Data integration](session-integration/Data_Integration.pdf) (Ahmed Mahfouz)
