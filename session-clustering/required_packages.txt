@@ -1,0 +1,10 @@
+### CRAN:
+Seurat v3.0.0
+cowplot v0.9.4
+igraph v1.2.4.1
+tidyverse v1.2.1
+
+### Bioconductor:
+scater v1.10.1
+scran v1.10.2
+

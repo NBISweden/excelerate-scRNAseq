@@ -169,10 +169,12 @@ on the particular DE algorithm.
   - subset of robust genes is used to fit, via *EM* algorithm, the
     parameters to the mixture of models For DE, the posterior
     probability that the gene shows a fold expression difference between
-    two conditions is computed using a *Bayesian
-approach*
+    two conditions is computed using a *Bayesian approach*
 
 #### Loading the data
+
+Data can be downloaded from
+[here](https://stockholmuniversity.box.com/s/b2is7q3msfewnvnivky5w0gj9pj27pxi)
 
 ``` r
 # we will read both counts and rpkms as different method are more adopted for different type of data
