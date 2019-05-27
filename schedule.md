@@ -3,10 +3,15 @@
 ## Schedule
 
 ### Monday 27.5.2019
-- **09:00-09:45**	Lecture: Introduction and experimental design (Jules Gilet, Åsa Björklund)
+- **09:00-09:45** Lecture: [Introduction and experimental design](session-qc/introduction_Jules_GILET.pdf) (Jules Gilet)
 - **09:45-10:15** _coffee break_
+<<<<<<< HEAD
+- **10:15-11:00** Lecture: [Quality control](session-qc/scRNAseq_QC_Asa_Bjorklund_2019.pdf) (Åsa Bjorklund)
+- **11:00-12:00** Labs: [Quality control](session-qc/Quality_control.md) (Åsa & Jules)
+=======
 - **10:15-11:00** Lecture: [Quality control](session-qc/scRNAseq_QC_Asa_Bjorklund_2019.pdf) (Åsa)
 - **11:00-12:00** Labs: [Quality control](session-qc/Quality_control.md) (Åsa & Jules). Bonus exercise (not to be done in the class): [Sequencing QC and Ikura pipeline](session-seqmap/sequencing_qc.md) (Jules).
+>>>>>>> b9318b1b715238d16a991d486105ea07401fe6fc
 - **12:00-13:00** _lunch_
 - **13:00-13:45** Lecture: Normalisation and removal of confounding factors (Heli Pessa  & Bishwa Ghimire)
 - **13:45-14:30** Labs: [Normalisation and removal of confounding factors](session-normalization/Normalization.Rmd) (Heli & Bishwa)
