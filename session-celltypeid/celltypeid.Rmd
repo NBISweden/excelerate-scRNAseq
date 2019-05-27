@@ -32,6 +32,7 @@ from https://figshare.com/s/711d3fb2bd3288c8483). The data come from the
 ascites of 4 different ovarian cancer patients and contain a variety of
 leukocytes as well as tumor cells.
 
+
 First load the various packages:
 
 ```{r packages}
@@ -133,7 +134,8 @@ SingleR's highly recommend vignettes).
 The other method we will look at, CHETAH, needs several (100-200)
 single-cell expression profiles for the classification. The advantage is
 that the inherent variability is fully account for. CHETAH, originally
-developed for working with cancer data, has its 'own' reference data set
+developed for working with cancer data has its 'own' reference data set
+
 that is based on single-cell data from Head-Neck cancer, melanoma,
 breast and colorectal cancer. (For details see
 https://figshare.com/s/aaf026376912366f81b6) Note that it is easy to
@@ -335,7 +337,7 @@ calling the combination 'B-like' :
 ```{r plot_highlights_allBcells}
 p2 <- DimPlot(ovarian, group.by='hpca_type', reduction=dim.red,
                cells.highlight=findCells(ovarian, 'hpca_type',
-                 c('B_cell', 'Pre-B_cell_CD34-'),
+                 c('B_cell', 'Pre-B_cell_CD34-', 'Pro-B_cell_CD34+'),
                  name="B-like"))
 plot_grid(p1, p2, p3, p4, nrow=2, ncol=2, labels=paste(panel.labels, "all B cell"))
 ```
@@ -417,7 +419,7 @@ The data to be classified also must be cast as a `SingleCellExperiment`.
 You can use Seurat's `as.SingleCellExperiment()` function for that.
 Classifying is a matter of calling `CHETAHclassifier()` with the input
 and the reference as arguments (although there are loads of options, see
-the man page). Classification takes a bit longer than SingleR
+the man page).  Classification takes a bit longer than SingleR
 
 
 ```{r chetah_classify}

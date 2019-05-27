@@ -4,10 +4,10 @@ You can use the classroom computers where all the necessary software has been in
 1. Log in to the computer as cscuser (check password at the back of the room)
 2. Make sure that the language is set to FI in the upper panel.
 3. Open the terminal (right click on desktop)
-4. Go to the home directory
+4. You should be in the home directory by default
 5. Type `source setup-single-rna-env.sh` and the prompt should change to `(single-rna-env)`
 6. Launch Rstudio by typing `rstudio &`
-7. All the course data is available in the folder `scrna-seq2019`
+7. All the course data is available in your home directory in the folder `scrna-seq2019`
 8. When the course is over you can deactivate the Conda environment by typing `conda deactivate`
 
 If you would like to have the same software environment on your own computer after the course, please read the [Conda installation instructions](conda_instructions.md). 

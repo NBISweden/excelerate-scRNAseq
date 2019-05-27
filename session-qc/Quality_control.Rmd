@@ -27,7 +27,7 @@ For this tutorial we will use 3 different PBMC datasets from the 10x Genomics we
 * 1k PBMCs using 10x v3 chemistry
 * 1k PBMCs using 10x v3 chemistry in combination with cell surface proteins, but disregarding the protein data and only looking at gene expression.
 
-The datsets can be downloaded with these commands:
+The datasets are available on the classroom computers at ~/scrna-seq2019/day1/1-qc/. If you want to access them after the course you can download them using the following commands:
 
 ```
 cd data
@@ -50,10 +50,10 @@ suppressMessages(require(Matrix))
 Here, we use the function Read10X_h5 to read in the expression matrices.
 
 ```{r load}
-v3.1k <- Read10X_h5("data/pbmc_1k_v3_filtered_feature_bc_matrix.h5", use.names = T)
-v2.1k <- Read10X_h5("data/pbmc_1k_v2_filtered_feature_bc_matrix.h5", use.names = T)
-p3.1k <- Read10X_h5("data/pbmc_1k_protein_v3_filtered_feature_bc_matrix.h5", use.names = T)
-# select only gene expression data
+v3.1k <- Read10X_h5("~/scrna-seq2019/day1/1-qc/pbmc_1k_v3_filtered_feature_bc_matrix.h5", use.names = T)
+v2.1k <- Read10X_h5("~/scrna-seq2019/day1/1-qc/pbmc_1k_v2_filtered_feature_bc_matrix.h5", use.names = T)
+p3.1k <- Read10X_h5("~/scrna-seq2019/day1/1-qc/pbmc_1k_protein_v3_filtered_feature_bc_matrix.h5", use.names = T)
+# select only gene expression data from the CITE-seq data.
 p3.1k <- p3.1k$`Gene Expression`
 
 ```
@@ -86,13 +86,17 @@ table(Idents(alldata))
 
 Seurat automatically calculates some QC-stats, like number of UMIs and features per cell. Stored in columns nCount_RNA & nFeature_RNA of the metadata.
 
-We will manually calculate the proportion of mitochondrial reads and add to the metadata slot.
+```{r}
+head(alldata@meta.data)
+```
+
+We will manually calculate the proportion of mitochondrial reads and add to the metadata table.
 
 ```{r mito}
 mt.genes <- rownames(alldata)[grep("^MT-",rownames(alldata))]
 C<-GetAssayData(object = alldata, slot = "counts")
 
-percent.mito <- colSums(C[mt.genes,])/colSums(C)*100
+percent.mito <- colSums(C[mt.genes,])/Matrix::colSums(C)*100
 alldata <- AddMetaData(alldata, percent.mito, col.name = "percent.mito")
 ```
 
@@ -102,7 +106,7 @@ In the same manner we will calculate the proportion gene expression that comes f
 
 ```{r ribo}
 rb.genes <- rownames(alldata)[grep("^RP[SL]",rownames(alldata))]
-percent.ribo <- colSums(C[rb.genes,])/colSums(C)*100
+percent.ribo <- colSums(C[rb.genes,])/Matrix::colSums(C)*100
 alldata <- AddMetaData(alldata, percent.ribo, col.name = "percent.ribo")
 ```
 
@@ -116,6 +120,8 @@ VlnPlot(alldata, features = "nCount_RNA", pt.size = 0.1) + NoLegend()
 VlnPlot(alldata, features = "percent.mito", pt.size = 0.1) + NoLegend()
 VlnPlot(alldata, features = "percent.ribo", pt.size = 0.1) + NoLegend()
 ```
+
+As you can see, the v2 chemistry gives lower gene detection, but higher detection of ribosomal proteins. As the ribosomal proteins are highly expressed they will make up a larger proportion of the transcriptional landscape when fewer of the lowly expressed genes are detected.
 
 And we can plot the different QC-measures as scatter plots
 
@@ -139,7 +145,7 @@ We have quite a lot of cells with high proportion of mitochondrial reads. It cou
 
 In this case we have as much as 99.7% mitochondrial reads in some of the cells, so it is quite unlikely that there is much celltype signature left in those.
 
-Looking at the plots, make resonable decisions on where to draw the cutoff. In this case, the bulk of the cells are below 25% mitochondrial reads. 
+Looking at the plots, make resonable decisions on where to draw the cutoff. In this case, the bulk of the cells are below 25% mitochondrial reads and that will be used as a cutoff.
 
 ```{r mito.filt}
 #select cells with percent.mito < 25
@@ -153,7 +159,7 @@ data.filt <- subset(alldata, cells = selected)
 VlnPlot(data.filt, features = "percent.mito")
 ```
 
-As you can see, there is still quite a lot of variation in percent mito, so it will have to be dealt with in the data analysis.
+As you can see, there is still quite a lot of variation in percent mito, so it will have to be dealt with in the data analysis step.
 
 #### Gene detection filtering
 
@@ -163,7 +169,7 @@ In these datasets, there is also a clear difference between the v2 vs v3 10x che
 
 Also, in the protein assay data there is a lot of cells with few detected genes giving a bimodal distribution. This type of distribution is not seen in the other 2 datasets. Considering that they are all pbmc datasets it makes sense to regard this distribution as low quality libraries.
 
-Filter the cells with high gene detection (putative doublets):
+Filter the cells with high gene detection (putative doublets) with cutoffs 4100 for v3 chemistry and 2000 for v2.
 
 ```{r gene.filt}
 #start with cells with many genes detected.
@@ -177,7 +183,7 @@ data.filt <- subset(data.filt, cells=setdiff(WhichCells(data.filt),c(high.det.v2
 ncol(data.filt)
 ```
 
-Filter the cells with low gene detection (low quality libraries):
+Filter the cells with low gene detection (low quality libraries) with less than 1000 genes for v2 and < 500 for v2.
 
 ```{r gene.filt2}
 #start with cells with many genes detected.
@@ -227,7 +233,9 @@ In this case it looks like we only have a few cycling cells in the datasets.
 
 Very similar QC-plots and filtering of cells can be done with the scater package, but since we alredy filtered cells using Seurat we will now just use scater to explore technical bias in the data. 
 
-You can either create an SCE object directly from the count matrices, but in this case we can convert directly from Seurat to SCE. 
+You can either create an SCE object directly from the count matrices, have a look at their tutorial at: https://bioconductor.org/packages/release/bioc/vignettes/scater/inst/doc/vignette-intro.html. 
+
+In this case we can convert directly from Seurat to SCE. 
 
 ```{r sce}
 sce <- as.SingleCellExperiment(data.filt)
@@ -265,7 +273,6 @@ Scater also calculates some stats based on the genes:
 colnames(rowData(sce))
 ```
 
-
 We will give examples on how to plot some of these.
 
 ### Plot QC stats
@@ -279,7 +286,7 @@ plotHighestExprs(sce, exprs_values = "counts")
 
 ```
 
-As you can see, MALAT1 corresponds to an average of around 4% of the counts. And in some cells as high as ~30% of the counts. I would consider removing that gene before further analysis and clustering. Also, the mitochondrial genes correspond to a high proportion of the total counts.
+As you can see, MALAT1 corresponds to an average of around 4% of the counts. And in some cells as high as ~30% of the counts. I would consider removing that gene before further analysis and clustering. Also, the mitochondrial genes correspond to a high proportion of the total counts and should probably be removed.
 
 #### Cumulative expression
 
@@ -292,7 +299,7 @@ plotScater(sce, block1 = "ident", nfeatures = 1000)
 
 #### Plot gene stats
 
-The function plotRowData can plot any of the stats in rowData, for instance mean expressioni vs number of cells with detection.
+The function plotRowData can plot any of the stats in rowData, for instance mean expression vs number of cells with detection.
 
 ```{r plot.row}
 plotRowData(sce, x = "n_cells_by_counts", y = "mean_counts")
@@ -327,6 +334,8 @@ table(colData(sce)$outlier)
 
 In this case we already filtered out low quality cells and we do not detect any outliers in the QC PCA.
 
+
+
 ### Dimensionality reduction
 
 Plot the cells in reduced space and define color/shape/size by different qc-metrics or meta-data entries.
@@ -338,6 +347,8 @@ The reduced dimensions can either be plotted with functions like `plotPCA`, `plo
 OBS! Before running any dimensionality reduction with a random component, remeber to set the seed so that you can reproduce the exact same 
 
 Also, some of these dimensionality reduction functions requires installation of additional R packages. 
+
+Note! You can also run PCA/tSNE etc in Seurat and they will automatically be imported into the SCE object. 
 
 ```{r dim.red, warning=FALSE}
 # run PCA with 1000 top variable genes
@@ -358,7 +369,6 @@ plotDiffusionMap(sce, colour_by="ident",ncomponents=4)
 set.seed(1)
 sce <- runTSNE(sce, ntop = 1000, ncomponents = 2, perplexity = 30, n_dimred = 10)
 plotTSNE(sce, colour_by="ident")
-
 
 # UMAP, OBS! Requires installation of package umap to run!
 set.seed(1)
@@ -381,8 +391,7 @@ OBS! This takes a while to calculate and plot.
 plotExplanatoryVariables(sce, variables =  c("ident","Chemistry","pct_counts_mito", "total_features_by_counts", "pct_counts_in_top_50_features", "pct_counts_in_top_500_features", "total_counts", "S.Score","G2M.Score"))
 ```
 
-Each line corresponds to one factor and represents the distribution of R2 values across all genes. 
-
+Each line corresponds to one factor and represents the distribution of R-squared values across all genes. 
 
 Identify PCs that correlate strongly to certain QC or Meta-data values. By default top 10 factors are plotted, but here we select some specific factors. 
 
@@ -396,7 +405,6 @@ Question: Do you think that you can see some clear batch effects in the data? Do
 PC1 clearly correlates to the distribution of the data, e.g. the proportion of counts in top 50-500 highly expressed genes, and also to total_features/total_counts. Which is a common problem in scRNAseq data. This may be a technical artifact, or a biological features of celltypes with very different sizes and transcriptional landscape..
 
 It is also clear that many of the top PCs (especially PCs 2,3,6,7,8) are largely explained by the different samples (ident) or just by v2 vs v3 (Chemistry).
-
 
 ### Session info
 

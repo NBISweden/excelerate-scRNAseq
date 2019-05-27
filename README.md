@@ -13,7 +13,7 @@ This international hands-on course covers several aspects of single cell RNA-seq
 The course is organised in the training room Dogmi at CSC. When you come to the main entrance, turn right to the reception and follow the signs to the course. The street address is Keilaranta 14, Espoo, Finland. You can reach us easily by public transport, please find more details [here](https://www.csc.fi/how-to-reach-us).
 
 ### Course computing environment
-The software and data needed for the course is available on the classroom computers and in CSC's cPouta cloud as a virtual machine image. Please read the [instructions](computing_environment_instructions.md) and how to install the environment on your own computer after the course with [Conda](conda_instructions.md).
+The software and data required for the exercises have been installed on the classroom computers, and they are also available in CSC's cPouta cloud as a virtual machine image. Please read the [instructions](computing_environment_instructions.md) and how to install the environment on your own computer after the course with [Conda](conda_instructions.md).
 
 ## Programme
 ### Monday 27.5.2019
