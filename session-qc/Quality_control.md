@@ -20,6 +20,8 @@ The second part will explore the scater package
 (<https://bioconductor.org/packages/release/bioc/html/scater.html>) in
 some more detail. Looking at different ways of visualizing QC-stats and
 exploring variation in the data.
+### Load the environment
+Please follow [these instructions](https://nbisweden.github.io/excelerate-scRNAseq/computing_environment_instructions.html) if to load the conda environment before running the code below.
 
 ### Dataset
 
