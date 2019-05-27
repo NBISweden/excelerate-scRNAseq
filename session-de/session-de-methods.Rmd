@@ -1,7 +1,9 @@
 ---
 title: "Differential expression methods"
 bibliography: bibliography.bib
-output: github_document
+header-include: 
+  - \usepackage{amsmath}
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -17,12 +19,11 @@ knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 -------
 
 ## Methods examples
-<figure>
-<img src="session-de-files/images/methods-Wang-2019.png">
-<figcaption>Figure: Software tools for identifying DE genes using scRNAseq data [@Wang2019]</figcaption></figure>
 
-#### More more examples
-And even more examples in the  [Soneson, Charlotte, and Mark D Robinson](session-de-files/images/methods-Robinson-2018.pdf) [-@Soneson2018]
+![Software tools for identifying DE genes using scRNAseq data (Wang et al, 2019)](session-de-files/images/methods-Wang-2019.png)
+
+
+<img src="session-de-files/images/methods-Robinson-2018.pdf" alt="And even more examples in the Soneson, Charlotte, and Mark D Robinson (2018)"  width="4200" height="4200">
 
 ----------
 
@@ -81,6 +82,7 @@ yfit2<-dnorm(xfit2,mean=mean(x2),sd=sd(x2))
 yfit2 <- yfit2*diff(h$mids[1:2])*length(x2) 
 lines(xfit2, yfit2, col="black", lwd=2)
 ```
+
 $$t=\frac{x_1-x_2}{s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}$$
 
 #### Generic recipe
@@ -98,42 +100,47 @@ $$t=\frac{x_1-x_2}{s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}$$
 
 set.seed(1)
 par(mfrow=c(1,3))
-hist(rnbinom(1000, mu=4, size=1), col="grey", xlab="Read Counts", main="mu=4, size=1")
-hist(rnbinom(1000, mu = 4, size = 10), col="grey", xlab="Read Counts", main="mu=4, size=10")
-hist(rnbinom(1000, mu = 4, size = 100), col="grey", xlab="Read Counts", main="mu=4, size=100")
-
+hist(rnbinom(1000, mu=4, size=100), col="grey", xlab="Read Counts", main=expression(paste(mu,"=4, ", alpha,"=1/100")),xlim=c(0,25),ylim=c(0,0.5),20,freq=FALSE)
+hist(rnbinom(1000, mu=4, size=10), col="grey", xlab="Read Counts", main=expression(paste(mu,"=4, ", alpha,"=1/10")),xlim=c(0,25),ylim=c(0,.5),20,freq=FALSE)
+hist(rnbinom(1000, mu=4, size=1), col="grey", xlab="Read Counts", main=expression(paste(mu,"=4, ", alpha,"=1")),xlim=c(0,25),ylim=c(0,.5),20,freq=FALSE)
 ```
-$$\mu=mu$$
-$$\delta^2=mu+mu^2/size$$
-$$\mu$$, mean expression
+$$Mean=\mu$$
+$$Variance=\mu+\mu^2/\alpha$$
+$\alpha$=dispersion parameter (extra variation compared to the Poisson)
 
-_size_: and the dispersion, which is inversely related to the variance
-
-NB fits bulk RNA-seq data very well and it is used for most statistical methods designed for such data. In addition, it has been show to fit the distribution of molecule counts obtained from data tagged by unique molecular identifiers (UMIs) quite well (Grun et al. 2014, Islam et al. 2011).
+NB! fits bulk RNA-seq data very well, and it is used for most statistical methods designed for such data. In addition, it has been show to fit the distribution of molecule counts obtained from data tagged by unique molecular identifiers (UMIs) quite well (Grun et al. 2014, Islam et al. 2011).
 
 #### zero inflated NB
 ```{r, dist-zero-inflated-NB, echo=F, fig.height=3}
 
 set.seed(1)
-par(mfrow=c(1,2))
+par(mfrow=c(1,3))
+
+xlims<-c(0,10)
+ylims<-c(0,0.6)
+
+d = 0.2;
+counts <- rnbinom(1000, mu=4, size=100);
+counts[runif(1000) < d] = 0;
+hist(counts, col="grey50", xlab="Read Counts", main=expression(paste(mu,"=4, ", alpha,"=1/100, ", d,"=0.2")),freq=FALSE,xlim=xlims,ylim=ylims,n=20);
+
+d = 0.5;
+counts <- rnbinom(1000, mu=4, size=100);
+counts[runif(1000) < d] = 0;
+hist(counts, col="grey50", xlab="Read Counts", main=expression(paste(mu,"=4, ", alpha,"=1/100, ", d,"=0.5")),freq=FALSE,xlim=xlims,ylim=ylims,n=20);
 
 d = 0.5;
 counts <- rnbinom(1000, mu=10, size=100);
 counts[runif(1000) < d] = 0;
-hist(counts, col="grey50", xlab="Read Counts", main="Zero-inflated NB", n=50);
-
-d = 0.2;
-counts <- rnbinom(1000, mu=20, size=100);
-counts[runif(1000) < d] = 0;
-hist(counts, col="grey50", xlab="Read Counts", main="Zero-inflated NB", n=50);
+hist(counts, col="grey50", xlab="Read Counts", main=expression(paste(mu,"=10, ", alpha,"=1/100, ", d,"=0.2")),freq=FALSE,xlim=c(0,20),ylim=ylims,n=20);
 
 ```
-$$\mu=mu*(1-d)$$
-$$\delta^2=\mu*(1-d)*(1+d*\mu+\mu/size)$$
+$$Mean=\mu\cdot(1-d)$$
+$$Variance=\mu\cdot(1-d)\cdot(1+d\cdot\mu+\mu )$$
 
-_d_, dropout rate; dropout rate of a gene is strongly correlated with the mean expression of the gene. Different zero-inflated negative binomial models use different relationships between _mu_ and _d_ and some may fit _mu_ and _d_ to the expression of each gene independently. Implemented in MAST, SCDE.
+_d_, dropout rate; dropout rate of a gene is strongly correlated with the mean expression of the gene. Different zero-inflated negative binomial models use different relationships between _mu_ and _d_ and some may fit _mu_ and _d_ to the expression of each gene independently. Implemented in SCDE.
 
-#### Poisson distribution
+#### Poisson beta
 ```{r, dist-Poisson, echo=F, fig.height=3}
 
 set.seed(1)
@@ -165,8 +172,8 @@ hist(
 )
 
 ```
-$$\mu=g*a/(a+b)$$
-$$\delta^2=g^2*a*b/((a+b+1)*(a+b)^2)$$
+$$Mean=(g\cdot a)/(a+b)$$
+$$Variance=g^2\cdot a\cdot b/((a+b+1)\cdot(a+b)^2)$$
 
 _a_: the rate of activation of transcription;
 
@@ -229,6 +236,7 @@ savefile<-"data/mouse_embryo/DE/scde_error_models.Rdata"
 if (file.exists(savefile)){
   load(savefile)
 }else{
+  #This works only if flexmix 2.3-13 (not 2.3-15) is installed, cf: http://hms-dbmi.github.io/scde/package.html
   o.ifm <- scde.error.models(counts = cd, groups = stages, n.cores = 1, 
                              threshold.segmentation = TRUE, save.crossfit.plots = FALSE, 
                              save.model.plots = FALSE, verbose = 0)
@@ -341,20 +349,6 @@ write.table(fcHurdle,file="data/mouse_embryo/DE/mast_8cell_vs_16_cell.tab",sep="
 ```
 
 
-### Monocole
-- Originally designed for ordering cells by progress through differentiation stages (pseudo-time)
-- The mean expression level of each gene is _modeled with a GAM_, generalized additive model, which relates one or more predictor variables to a response variable as $g(E(Y))=\beta_0+f_1(x_1)+f_2(x_2)+...+f_m(x_m)$ where Y is a specific gene expression level, $x_i$ are predictor variables, _g_ is a link function, typically log function, and $f_i$ are non-parametric functions (e.g. cubic splines)
-- The observable expression level Y is then modeled using GAM,
-$E(Y)=s(\varphi_t(b_x, s_i))+\epsilon$ where $\varphi_t(b_x, s_i)$ is the assigned pseudo-time of a cell and $s$ is a cubic smoothing function with three degrees of freedom. The error term $\epsilon$ is normally distributed with a mean of zero
-- The DE test is performed using an _approx. $\chi^2$ likelihood ratio test_
-
-
-#### Run Monocole
-```{r. monocole, echo=T, eval=F}
-
-# No example, put one in?
-
-```
 
 ### SC3 Kruskall-Wallis test
 In the SC3 package they have implemented non-parametric Kruskal-Wallis test for differential expression.
@@ -386,9 +380,9 @@ Seurat has several tests for differential expression (DE) which can be set with 
 * "bimod" : Likelihood-ratio test for single cell gene expression, (McDavid et al., Bioinformatics, 2013)
 * "roc" : Standard AUC classifier
 * "t" : Student's t-test
-* "tobit" : Tobit-test for differential gene expression (Trapnell et al., Nature Biotech, 2014)
-* "poisson" : Likelihood ratio test assuming an underlying poisson distribution. Use only for UMI-based datasets
-* "negbinom" : Likelihood ratio test assuming an underlying  negative binomial distribution. Use only for UMI-based  datasets
+* "negbinom" : Identifies differentially expressed genes between two groups of cells using a negative binomial generalized linear model. Use only for UMI-based datasets
+* "poisson" : Identifies differentially expressed genes between two groups of cells using a poisson generalized linear model. Use only for UMI-based datasets
+* "LR": Uses a logistic regression framework to determine differentially expressed genes. Constructs a logistic regression model predicting group membership based on each feature individually and compares this to a null model with a likelihood ratio test.
 * "MAST" : GLM-framework that treates cellular detection rate as a covariate (Finak et al, Genome Biology, 2015)
 * "DESeq2" : DE based on a model using the negative binomial distribution (Love et al, Genome Biology, 2014)
 
@@ -421,14 +415,13 @@ for (m in methods){
 
 ```
 
+### Monocole
+- Originally designed for ordering cells by progress through differentiation stages (pseudo-time)
+- The mean expression level of each gene is _modeled with a GAM_, generalized additive model, which relates one or more predictor variables to a response variable as $g(E(Y))=\beta_0+f_1(x_1)+f_2(x_2)+...+f_m(x_m)$ where Y is a specific gene expression level, $x_i$ are predictor variables, _g_ is a link function, typically log function, and $f_i$ are non-parametric functions (e.g. cubic splines)
+- The observable expression level Y is then modeled using GAM,
+$E(Y)=s(\varphi_t(b_x, s_i))+\epsilon$ where $\varphi_t(b_x, s_i)$ is the assigned pseudo-time of a cell and $s$ is a cubic smoothing function with three degrees of freedom. The error term $\epsilon$ is normally distributed with a mean of zero
+- The DE test is performed using an _approx. $\chi^2$ likelihood ratio test_
 
-```{r}
-x2 <- rnorm(1000, 173, 1)
-xfit2<-seq(min(x2),max(x2),length=40) 
-yfit2<-dnorm(xfit2,mean=mean(x2),sd=sd(x2)) 
-yfit2 <- yfit2*diff(h$mids[1:2])*length(x2) 
-
-```
 
 
 ---------
