@@ -392,35 +392,31 @@ Seurat has several tests for differential expression (DE) which can be set with 
 * "MAST" : GLM-framework that treates cellular detection rate as a covariate (Finak et al, Genome Biology, 2015)
 * "DESeq2" : DE based on a model using the negative binomial distribution (Love et al, Genome Biology, 2014)
 
-#### Run Seurat methods
+#### Run Seurat methods (for Seurat v3)
 ```{r, seurat, eval=F}
 
 library(Seurat)
 
-data <- CreateSeuratObject(raw.data = R, min.cells = 3, min.genes = 200, 
-                           project = "ILC",is.expr=1,meta.data=M)
+data <- CreateSeuratObject(C)
 
 # Normalize the data
-scale.factor <- mean(colSums(R))
-data <- NormalizeData(object = data, normalization.method = "LogNormalize",  
-                      scale.factor = scale.factor)
+scale.factor <- mean(colSums(C))
+data <- NormalizeData(object = data, normalization.method = "LogNormalize",
+                     scale.factor = scale.factor)
 
-# regress out number of detected genes.d
-data <- ScaleData(object = data, vars.to.regress = c("nGene"),display.progress = F)
-
-# check that the seurat identity is set to the stages
-head(data@ident)
+# Scale the data (needed for PCA etc)
+data <- ScaleData(object = data)
 
 # run all DE methods
-methods <- c("wilcox","bimod","roc","t","tobit")
+methods <- c("wilcox","bimod","roc","t","negbinom","poisson","LR","MAST","DESeq2")
 DE <- list()
 for (m in methods){
-    outfile <- paste("data/mouse_embryo/DE/seurat_",m,"_8cell_vs_16_cell.tab", sep='')
-    if(!file.exists(outfile)){
-      DE[[m]]<- FindMarkers(object = data,ident.1 = "X8cell",
-                        ident.2 = "X16cell",test.use = m)
-      write.table(DE[[m]],file=outfile,sep="\t",quote=F)
-    }
+ outfile <- paste("data/mouse_embryo/DE/seurat_",m,"_8cell_vs_16_cell.tab", sep='')
+ if(!file.exists(outfile)){
+   DE[[m]]<- FindMarkers(object = data,ident.1 = "X8cell",
+                         ident.2 = "X16cell",test.use = m)
+   write.table(DE[[m]],file=outfile,sep="\t",quote=F)
+ }
 }
 
 ```
