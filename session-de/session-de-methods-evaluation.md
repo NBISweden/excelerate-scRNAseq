@@ -1,88 +1,121 @@
 Differential expression methods evaluation
 ================
 
-## Learning objectives
+Learning objectives
+-------------------
 
-  - describe common ways to assess methods’ performance
-  - explain `false positive` and `false negative` errors
-  - assess method given top DE genes and consistency matrix
+-   describe common ways to assess methods' performance
+-   explain `false positive` and `false negative` errors
+-   assess method given top DE genes and consistency matrix
 
------
+------------------------------------------------------------------------
 
-## Performance indicators
+Performance indicators
+----------------------
 
-  - known data: using data we know something about to get “positive
-    controls”
-  - simulated data: null-data sets by re-sampling, modeling data sets
-    based on various distributions
-  - comparing methods under different scenarios
-  - investigating results, i.e. distributions of the detected
-DEs
+-   known data: using data we know something about to get "positive controls"
+-   simulated data: null-data sets by re-sampling, modeling data sets based on various distributions
+-   comparing methods under different scenarios
+-   investigating results, i.e. distributions of the detected DEs
 
-## Type I and II errors
+Type I and II errors
+--------------------
 
 <figure>
-
 <img src="session-de-files/images/perf-wiki-sensitivity-specificity.png">
-
 <figcaption>
-
-Fig: Sensitivity and specificity \[adapated from Wikipedia\]
-
+Fig: Sensitivity and specificity (adapated from Wikipedia)
 </figcaption>
-
 </figure>
+<figure>
+<img src="session-de-files/images/perf-wiki-confusion.png">
+<figcaption>
+Fig: Error types (adapated from Wikipedia)
+</figcaption>
+</figure>
+Comparative study (1)
+---------------------
+
+Comparative analysis of differential gene expression analysis tools for single-cell RNA sequencing data (Wang et al, BMC Bioinformatics 2019)
 
 <figure>
-
-<img src="session-de-files/images/perf-wiki-confusion.png" height="50">
-
+<img src="session-de-files/images/wang1.png">
 <figcaption>
-
-Fig: Error types \[adapated from Wikipedia\]
-
+Differential expression scenarios
 </figcaption>
-
 </figure>
+#### Comparison using simulated data
 
 <figure>
-
-<img src="session-de-files/images/perf-Miao-2016.png">
-
+<img src="session-de-files/images/wang2.png">
 <figcaption>
-
-Fig: Precision and recall examples (Dal Molin, Baruzzo, and Di Camillo
-2017)
-
+ROC curves on simulated data
 </figcaption>
-
 </figure>
+<figure>
+<img src="session-de-files/images/wang3.png">
+<figcaption>
+True positive rate and true negative rate for different scenarios (simulated data)
+</figcaption>
+</figure>
+<figure>
+<img src="session-de-files/images/wang7.png">
+<figcaption>
+Effect of sample size (simulated data)
+</figcaption>
+</figure>
+#### Comparison using real data
+
+-   Dataset provided by Islam et al (Characterization of the single-cell transcriptional landscape by highly multiplex RNA-seq. Genome Res. 2011). The datasets consist of 22,928 genes from 48 mouse embryonic stem cells and 44 mouse embryonic fibroblasts.
+-   To assess TPs, already-published top 1000 DE genes that are validated through qRT-PCR experiments was used as a gold standard gene set.
+-   To assess FPs, resampling of samples was employed (creating artificial groups with no real differences)
 
 <figure>
-
-<img src="session-de-files/images/perf-DalMolin.png">
-
+<img src="session-de-files/images/wang4.png">
 <figcaption>
-
-Fig: Methods consistency (Miao and Zhang 2016)
-
 </figcaption>
-
 </figure>
+<figure>
+<img src="session-de-files/images/wang5.png">
+<figcaption>
+</figcaption>
+</figure>
+<figure>
+<img src="session-de-files/images/wang6.png">
+<figcaption>
+</figcaption>
+</figure>
+<figure>
+<img src="session-de-files/images/wang8.png">
+<figcaption>
+</figcaption>
+</figure>
+<figure>
+<img src="session-de-files/images/wang9.png">
+<figcaption>
+</figcaption>
+</figure>
+Some conclusions from the study:
+
+-   In general, tools that show higher sensitivity also show lower specifity.
+-   Tools developed for scRNAseq data focus on handling zero counts or multimodality but not both
+-   Methods that can capture multimodality (non-parametric methods), perform better than do the model-based methods designed for handling zero counts
+-   Methods developed specifically for scRNAseq data do not show significantly better performance compared to the methods designed for bulk RNAseq data
+-   Lack of agreement in finding DE genes by these tools and their limitations in detecting true DE genes and biologically relevant gene sets indicate the need for developing more precise methods for differential expression analysis of scRNAseq data
+
+Comparative study (2)
+---------------------
+
+Bias, robustness and scalability in single-cell differential expression analysis (Sonesson and Robinson, Nature Methods, 2018)
 
 <figure>
-
 <img src="session-de-files/images/perf-Robinson-2018.png">
-
 <figcaption>
-
 Fig: Methods assessment (Soneson and Robinson 2018)
-
 </figcaption>
-
 </figure>
-
-## Comparing methods
+Comparing methods in our data
+-----------------------------
 
 ``` r
 DE <- list()
@@ -92,9 +125,13 @@ files <- c("data/mouse_embryo/DE/sc3_kwtest_8cell_vs_16_cell.tab",
            "data/mouse_embryo/DE/seurat_bimod_8cell_vs_16_cell.tab",
            "data/mouse_embryo/DE/seurat_roc_8cell_vs_16_cell.tab",
            "data/mouse_embryo/DE/seurat_t_8cell_vs_16_cell.tab",
-           "data/mouse_embryo/DE/seurat_tobit_8cell_vs_16_cell.tab")
+           "data/mouse_embryo/DE/seurat_negbinom_8cell_vs_16_cell.tab",
+           "data/mouse_embryo/DE/seurat_poisson_8cell_vs_16_cell.tab",
+           "data/mouse_embryo/DE/seurat_LR_8cell_vs_16_cell.tab",
+           "data/mouse_embryo/DE/seurat_MAST_8cell_vs_16_cell.tab",
+           "data/mouse_embryo/DE/seurat_DESeq2_8cell_vs_16_cell.tab")
 
-for (i in 1:7){ 
+for (i in 1:11){ 
   DE[[i]]<-read.table(files[i],sep="\t",header=T)
 }
 names(DE)<-c("SC3","SCDE","seurat-wilcox", "seurat-bimod","seurat-roc","seurat-t","seurat-tobit")
@@ -113,15 +150,11 @@ source("data/mouse_embryo/DE/overlap_phyper.R")
 o <- overlap_phyper(top.100,plot=T,bg=nrow(DE$`seurat-bimod`))
 ```
 
-Rows and columns are the different gene lists, and in the upper triangle
-the comparison of 2 datasets is shown with number of genes in common and
-color according to significance of overlap. Last columns show number of
-unique genes per list.
+Rows and columns are the different gene lists, and in the upper triangle the comparison of 2 datasets is shown with number of genes in common and color according to significance of overlap. Last columns show number of unique genes per list.
 
 #### Significant DE genes
 
-Now we select significant genes from the different tests. In this case
-we use a cutoff for adjusted p-value at 0.05.
+Now we select significant genes from the different tests. In this case we use a cutoff for adjusted p-value at 0.05.
 
 ``` r
 # the  p-values from all Seurat functions except wilcox does not 
@@ -152,12 +185,9 @@ t<-table(unlist(sign.genes))
 head(sort(t,decreasing=T),n=10)
 ```
 
-Only 3 genes detected by all 7 methods as DE.
-
 #### Plotting top DE genes
 
-Plot onto the tSNE created with Seurat. So we first need to find
-variable genes, run PCA and tSNE for the Seurat object.
+Plot onto the tSNE created with Seurat. So we first need to find variable genes, run PCA and tSNE for the Seurat object.
 
 ``` r
 # run a tsne for plotting onto
@@ -191,41 +221,21 @@ for (n in names(sign.genes)){
 }
 ```
 
------
+<figure>
+<img src="session-de-files/images/wrap-dist.png">
+<figcaption>
+Fig: Staying critical
+</figcaption>
+</figure>
 
-# [Jump to Schedule](../schedule.md)
+------------------------------------------------------------------------
 
-# [Back to Introduction](session-de.md)
+[Jump to Schedule](../schedule.md)
+==================================
 
-# [Next to Wrap-up](session-de-wrap-up.md)
+[Back to Introduction](session-de.md)
+=====================================
 
------
+------------------------------------------------------------------------
 
-<div id="refs" class="references">
-
-<div id="ref-DalMolin2017">
-
-Dal Molin, Alessandra, Giacomo Baruzzo, and Barbara Di Camillo. 2017.
-“Single-Cell RNA-Sequencing: Assessment of Differential Expression
-Analysis Methods.”
-<https://www.frontiersin.org/article/10.3389/fgene.2017.00062>.
-
-</div>
-
-<div id="ref-Miao2016">
-
-Miao, Zhun, and Xuegong Zhang. 2016. “Differential expression analyses
-for single-cell RNA-Seq: old questions on new data.” *Quantitative
-Biology* 4 (4): 243–60. <https://doi.org/10.1007/s40484-016-0089-7>.
-
-</div>
-
-<div id="ref-Soneson2018">
-
-Soneson, Charlotte, and Mark D Robinson. 2018. “Bias, robustness and
-scalability in single-cell differential expression analysis.” *Nature
-Methods* 15 (February): 255. <https://doi.org/10.1038/nmeth.4612>.
-
-</div>
-
-</div>
+Soneson, Charlotte, and Mark D Robinson. 2018. “Bias, robustness and scalability in single-cell differential expression analysis.” *Nature Methods* 15 (February). Nature Publishing Group, a division of Macmillan Publishers Limited. All Rights Reserved.: 255. <https://doi.org/10.1038/nmeth.4612>.

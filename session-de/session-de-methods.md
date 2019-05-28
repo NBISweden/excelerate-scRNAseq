@@ -1,180 +1,143 @@
 Differential expression methods
 ================
 
-## Learning objectives
+Learning objectives
+-------------------
 
-  - describe main classes of methods used
-  - understand statistical concepts behind the key scRNA-seq DE methods
-  - run the key scRNA-seq DE methods
+-   describe main classes of methods used
+-   understand statistical concepts behind the key scRNA-seq DE methods
+-   run the key scRNA-seq DE methods
 
------
+------------------------------------------------------------------------
 
-## Methods examples
+Methods examples
+----------------
 
 <figure>
-
 <img src="session-de-files/images/methods-Wang-2019.png">
-
 <figcaption>
-
-Figure: Software tools for identifying DE genes using scRNAseq data
-(Wang et al. 2019)
-
+Figure: Software tools for identifying DE genes using scRNAseq data (Wang et al. 2019)
 </figcaption>
-
 </figure>
-
 #### More more examples
 
-And even more examples in the [Soneson, Charlotte, and Mark D
-Robinson](session-de-files/images/methods-Robinson-2018.pdf) (2018)
+And even more examples in the [Soneson, Charlotte, and Mark D Robinson](session-de-files/images/methods-Robinson-2018.pdf) (2018)
 
------
+------------------------------------------------------------------------
 
-## Main classes
+Main classes
+------------
 
 #### non-parameteric tests
 
-  - generic methods
-  - e.g. Wilcoxon rank-sum test, Kruskal-Wallis, Kolmogorov-Smirnov test
-  - non-parametric tests generally convert observed expression values to
-    ranks & test whether the distribution of ranks for one group are
-    signficantly different from the distribution of ranks for the other
-    group
-  - some non-parametric methods fail in the presence of a large number
-    of tied values, such as the case for dropouts (zeros) in single-cell
-    RNA-seq expression data
-  - if the conditions for a parametric test hold, then it will typically
-    be more powerful than a non-parametric test
+-   generic methods
+-   e.g. Wilcoxon rank-sum test, Kruskal-Wallis, Kolmogorov-Smirnov test
+-   non-parametric tests generally convert observed expression values to ranks & test whether the distribution of ranks for one group are signficantly different from the distribution of ranks for the other group
+-   some non-parametric methods fail in the presence of a large number of tied values, such as the case for dropouts (zeros) in single-cell RNA-seq expression data
+-   if the conditions for a parametric test hold, then it will typically be more powerful than a non-parametric test
 
 #### bulk RNA-seq based method
 
-  - developed for bulk RNA-seq
-  - e.g. edgeR, DE-seq2
-  - compare estimates of mean-expression (sample size), based on
-    negative binomial distribution
-  - can be assessed by datasets where RNA-seq data has beeen validated
-    by RT-qPCR
+-   developed for bulk RNA-seq
+-   e.g. edgeR, DE-seq2
+-   compare estimates of mean-expression (sample size), based on negative binomial distribution
+-   can be assessed by datasets where RNA-seq data has beeen validated by RT-qPCR
 
 #### scRNA-seq specific methods
 
-  - developed for scRNA-seq
-  - e.g. MAST, SCDE, Monocle, Pagoda, D\[^3\]E etc.
-  - large number of samples, i.e. cells, for each group we are comparing
-    in single-cell experiments. Thus we can take advantage of the whole
-    distribution of expression values in each group to identify
-    differences between groups -we usually do not have a defined set of
-    experimental conditions; instead we try to identify the cell groups
-    by using an unsupervised clustering approach.
+-   developed for scRNA-seq
+-   e.g. MAST, SCDE, Monocle, Pagoda, D
+    **<sup>3</sup>
+    E etc.
+-   large number of samples, i.e. cells, for each group we are comparing in single-cell experiments. Thus we can take advantage of the whole distribution of expression values in each group to identify differences between groups -we usually do not have a defined set of experimental conditions; instead we try to identify the cell groups by using an unsupervised clustering approach.
 
 #### modeling wise
 
-  - distribution free (non-parameteric)
-  - negative binomial
-  - zero inflated negative binomial
-  - Poisson and negative binomial
-  - GLM and
-GAM
-  - etc.
+-   distribution free (non-parameteric)
+-   negative binomial
+-   zero inflated negative binomial
+-   Poisson and negative binomial
+-   GLM and GAM
+-   etc.
 
------
+------------------------------------------------------------------------
 
-## Statistical thinking
+Statistical thinking
+--------------------
 
 <figure>
-
 <!-- <img src="session-de-files/images/methods-stats.png" width="400" height="400"> -->
-
 <img src="session-de-files/images/methods-stats.png">
-
 <figcaption>
-
-\[Outcome_i=(Model_i)+error_i\]
-
+*O**u**t**c**o**m**e*<sub>*i*</sub> = (*M**o**d**e**l*<sub>*i*</sub>)+*e**r**r**o**r*<sub>*i*</sub>
 </figcaption>
-
 </figure>
-
 #### Normal distribution example
 
-![](session-de-files/figures/dist-normal-1.png)<!-- -->
-\[t=\frac{x_1-x_2}{s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}\]
+![](session-de-files/figures/dist-normal-1.png)
+
+*μ*
+ $\\frac{1}{2}$
+$$t=\\frac{x\_1-x\_2}{s\_p\\sqrt{\\frac{1}{n\_1}+\\frac{1}{n\_2}}}$$
 
 #### Generic recipe
 
-  - model e.g. gene expression with random error
-  - fit model to the data and/or data to the model, estimate model
-    parameters
-  - use model for prediction and/or inference
-  - the better model fits the data the better statistics \\end{block}
-    \\end{frame}
+-   model e.g. gene expression with random error
+-   fit model to the data and/or data to the model, estimate model parameters
+-   use model for prediction and/or inference
+-   the better model fits the data the better statistics \\end{block} \\end{frame}
 
-## Common distributions
+Common distributions
+--------------------
 
 #### Negative binomial (NB)
 
-![](session-de-files/figures/dist-NB-1.png)<!-- --> \[\mu=mu\]
-\[\delta^2=mu+mu^2/size\] \[\mu\], mean expression
+![](session-de-files/figures/dist-NB-1.png)
+*M**e**a**n* = *μ*
+*V**a**r**i**a**n**c**e* = *μ* + *μ*<sup>2</sup>/*α*
+ *α*=dispersion parameter (extra variation compared to the Poisson)
 
-*size*: and the dispersion, which is inversely related to the variance
-
-NB fits bulk RNA-seq data very well and it is used for most statistical
-methods designed for such data. In addition, it has been show to fit the
-distribution of molecule counts obtained from data tagged by unique
-molecular identifiers (UMIs) quite well (Grun et al. 2014, Islam et
-al. 2011).
+NB! fits bulk RNA-seq data very well and it is used for most statistical methods designed for such data. In addition, it has been show to fit the distribution of molecule counts obtained from data tagged by unique molecular identifiers (UMIs) quite well (Grun et al. 2014, Islam et al. 2011).
 
 #### zero inflated NB
 
-![](session-de-files/figures/dist-zero-inflated-NB-1.png)<!-- -->
-\[\mu=mu*(1-d)\] \[\delta^2=\mu*(1-d)*(1+d*\mu+\mu/size)\]
+![](session-de-files/figures/dist-zero-inflated-NB-1.png)
+*μ* = *m**u* \* (1 − *d*)
+*σ*<sup>2</sup> = *m**u* ⋅ (1 − *d*)⋅(1 + *d* ⋅ *μ* + *μ*)
 
-*d*, dropout rate; dropout rate of a gene is strongly correlated with
-the mean expression of the gene. Different zero-inflated negative
-binomial models use different relationships between *mu* and *d* and
-some may fit *mu* and *d* to the expression of each gene independently.
-Implemented in MAST, SCDE.
+*d*, dropout rate; dropout rate of a gene is strongly correlated with the mean expression of the gene. Different zero-inflated negative binomial models use different relationships between *mu* and *d* and some may fit *mu* and *d* to the expression of each gene independently. Implemented in MAST, SCDE.
 
 #### Poisson distribution
 
-![](session-de-files/figures/dist-Poisson-1.png)<!-- -->
-\[\mu=g*a/(a+b)\] \[\delta^2=g^2*a*b/((a+b+1)*(a+b)^2)\]
+![](session-de-files/figures/dist-Poisson-1.png)
+*μ* = *g* \* *a*/(*a* + *b*)
+*δ*<sup>2</sup> = *g*<sup>2</sup> \* *a* \* *b*/((*a* + *b* + 1)\*(*a* + *b*)<sup>2</sup>)
 
 *a*: the rate of activation of transcription;
 
 *b*: the rate of inhibition of transcription;
 
-*g*: the rate of transcript production while transcription is active at
-the locus.
+*g*: the rate of transcript production while transcription is active at the locus.
 
-Differential expression methods may test each of the parameters for
-differences across groups or only one (often *g*). Implemented in BPSC.
+Differential expression methods may test each of the parameters for differences across groups or only one (often *g*). Implemented in BPSC.
 
-May be further expanded to explicitly account for other sources of gene
-expression differences such as batch-effect or library depth depending
-on the particular DE algorithm.
+May be further expanded to explicitly account for other sources of gene expression differences such as batch-effect or library depth depending on the particular DE algorithm.
 
------
+------------------------------------------------------------------------
 
-## Under the hood
+Under the hood
+--------------
 
 ### SCDE
 
-  - *models* the read counts for each gene using a mixture of a NB,
-    negative binomial, and a Poisson distribution
-  - *NB distribution* models the transcripts that are amplified and
-    detected
-  - *Poisson distribution* models the unobserved or background-level
-    signal of transcripts that are not amplified (e.g. dropout events)
-  - subset of robust genes is used to fit, via *EM* algorithm, the
-    parameters to the mixture of models For DE, the posterior
-    probability that the gene shows a fold expression difference between
-    two conditions is computed using a *Bayesian approach*
+-   *models* the read counts for each gene using a mixture of a NB, negative binomial, and a Poisson distribution
+-   *NB distribution* models the transcripts that are amplified and detected
+-   *Poisson distribution* models the unobserved or background-level signal of transcripts that are not amplified (e.g. dropout events)
+-   subset of robust genes is used to fit, via *EM* algorithm, the parameters to the mixture of models For DE, the posterior probability that the gene shows a fold expression difference between two conditions is computed using a *Bayesian approach*
 
 #### Loading the data
 
-Data can be downloaded from
-[here](https://stockholmuniversity.box.com/s/b2is7q3msfewnvnivky5w0gj9pj27pxi)
+Data can be downloaded from [here](https://stockholmuniversity.box.com/s/b2is7q3msfewnvnivky5w0gj9pj27pxi)
 
 ``` r
 # we will read both counts and rpkms as different method are more adopted for different type of data
@@ -207,9 +170,7 @@ stages <- factor(M$Stage,levels=c("X8cell","X16cell"))
 names(stages) <- colnames(C)
 
 # fit error models - takes a while to run (~20 mins).
-# you can skip this step and load the precomputed file 
-# found [in here](https://github.com/NBISweden/excelerate-scRNAseq/blob/session-de-1/session-de/scde_error_models.Rdata).
-# Remember to change the file path in the next line:
+# you can skip this step and load the precomputed file.
 savefile<-"data/mouse_embryo/DE/scde_error_models.Rdata"
 if (file.exists(savefile)){
   load(savefile)
@@ -262,28 +223,16 @@ head(de.batch[order(abs(de.batch$Z), decreasing  =  TRUE), ])
 
 ### MAST
 
-  - uses *generalized linear hurdle model*
+-   uses *generalized linear hurdle model*
+-   designed to account for stochastic dropouts and bimodal expression distribution in which expression is either strongly non-zero or non-detectable
+-   the rate of expression *Z*, and the level of expression *Y*, are modeled for each gene *g*, indicating whether gene *g* is expressed in cell *i* (i.e.,
+    *Z*<sub>*i**g*</sub> = 0
+     if *y*<sub>*i**g*</sub> = 0 and *z*<sub>*i**g*</sub> = 1 if *y*<sub>*i**g*</sub> &gt; 0)
+-   A *logistic regression model* for the discrete variable *Z* and a *Gaussian linear model* for the continuous variable (Y|Z=1): *l**o**g**i**t*(*P*<sub>*r*</sub>(*Z*<sub>*i**g*</sub> = 1)) = *X*<sub>*i*</sub>*β*<sub>*g*</sub><sup>*D*</sup> *P*<sub>*r*</sub>(*Y*<sub>*i**g*</sub> = *Y*|*Z*<sub>*i**g*</sub> = 1)=*N*(*X*<sub>*i*</sub>*β*<sub>*g*</sub><sup>*C*</sup>, *σ*<sub>*g*</sub><sup>2</sup>), where *X*<sub>*i*</sub> is a design matrix
 
-  - designed to account for stochastic dropouts and bimodal expression
-    distribution in which expression is either strongly non-zero or
-    non-detectable
-
-  - the rate of expression *Z*, and the level of expression *Y*, are
-    modeled for each gene *g*, indicating whether gene *g* is expressed
-    in cell *i* (i.e., \[Z_{ig}=0\] if \(y_{ig}=0\) and \(z_{ig}=1\) if
-    \(y_{ig}>0\))
-
-  - A *logistic regression model* for the discrete variable *Z* and a
-    *Gaussian linear model* for the continuous variable (Y|Z=1):
-    \(logit (P_r(Z_{ig}=1))=X_i\beta_g^D\)
-    \(P_r(Y_{ig}=Y|Z_{ig}=1)=N(X_i\beta_g^C,\sigma_g^2)\), where \(X_i\)
-    is a design matrix
-
-  - Model parameters are *fitted* using an empirical Bayesian framework
-
-  - Allows for a joint estimate of nuisance and treatment effects
-
-  - DE is determined using *the likelihood ratio test*
+-   Model parameters are *fitted* using an empirical Bayesian framework
+-   Allows for a joint estimate of nuisance and treatment effects
+-   DE is determined using *the likelihood ratio test*
 
 #### Run MAST
 
@@ -336,23 +285,10 @@ write.table(fcHurdle,file="data/mouse_embryo/DE/mast_8cell_vs_16_cell.tab",sep="
 
 ### Monocole
 
-  - Originally designed for ordering cells by progress through
-    differentiation stages (pseudo-time)
-  - The mean expression level of each gene is *modeled with a GAM*,
-    generalized additive model, which relates one or more predictor
-    variables to a response variable as
-    \(g(E(Y))=\beta_0+f_1(x_1)+f_2(x_2)+...+f_m(x_m)\) where Y is a
-    specific gene expression level, \(x_i\) are predictor variables, *g*
-    is a link function, typically log function, and \(f_i\) are
-    non-parametric functions (e.g. cubic splines)
-  - The observable expression level Y is then modeled using GAM,
-    \(E(Y)=s(\varphi_t(b_x, s_i))+\epsilon\) where
-    \(\varphi_t(b_x, s_i)\) is the assigned pseudo-time of a cell and
-    \(s\) is a cubic smoothing function with three degrees of freedom.
-    The error term \(\epsilon\) is normally distributed with a mean of
-    zero
-  - The DE test is performed using an *approx. \(\chi^2\) likelihood
-    ratio test*
+-   Originally designed for ordering cells by progress through differentiation stages (pseudo-time)
+-   The mean expression level of each gene is *modeled with a GAM*, generalized additive model, which relates one or more predictor variables to a response variable as *g*(*E*(*Y*)) = *β*<sub>0</sub> + *f*<sub>1</sub>(*x*<sub>1</sub>)+*f*<sub>2</sub>(*x*<sub>2</sub>)+...+*f*<sub>*m*</sub>(*x*<sub>*m*</sub>) where Y is a specific gene expression level, *x*<sub>*i*</sub> are predictor variables, *g* is a link function, typically log function, and *f*<sub>*i*</sub> are non-parametric functions (e.g. cubic splines)
+-   The observable expression level Y is then modeled using GAM, *E*(*Y*)=*s*(*φ*<sub>*t*</sub>(*b*<sub>*x*</sub>, *s*<sub>*i*</sub>)) + *ϵ* where *φ*<sub>*t*</sub>(*b*<sub>*x*</sub>, *s*<sub>*i*</sub>) is the assigned pseudo-time of a cell and *s* is a cubic smoothing function with three degrees of freedom. The error term *ϵ* is normally distributed with a mean of zero
+-   The DE test is performed using an *approx. *χ*<sup>2</sup> likelihood ratio test*
 
 #### Run Monocole
 
@@ -362,8 +298,7 @@ write.table(fcHurdle,file="data/mouse_embryo/DE/mast_8cell_vs_16_cell.tab",sep="
 
 ### SC3 Kruskall-Wallis test
 
-In the SC3 package they have implemented non-parametric Kruskal-Wallis
-test for differential expression.
+In the SC3 package they have implemented non-parametric Kruskal-Wallis test for differential expression.
 
 #### Run SC3 Kruskall-Wallis test
 
@@ -383,54 +318,43 @@ write.table(de.results,file="data/mouse_embryo/DE/sc3_kwtest_8cell_vs_16_cell.ta
 
 ### Seurat methods
 
-Seurat has several tests for differential expression (DE) which can be
-set with the test.use parameter in the FindMarkers() function:
+Seurat has several tests for differential expression (DE) which can be set with the test.use parameter in the FindMarkers() function:
 
-  - “wilcox” : Wilcoxon rank sum test (default)
-  - “bimod” : Likelihood-ratio test for single cell gene expression,
-    (McDavid et al., Bioinformatics, 2013)
-  - “roc” : Standard AUC classifier
-  - “t” : Student’s t-test
-  - “tobit” : Tobit-test for differential gene expression (Trapnell et
-    al., Nature Biotech, 2014)
-  - “poisson” : Likelihood ratio test assuming an underlying poisson
-    distribution. Use only for UMI-based datasets
-  - “negbinom” : Likelihood ratio test assuming an underlying negative
-    binomial distribution. Use only for UMI-based datasets
-  - “MAST” : GLM-framework that treates cellular detection rate as a
-    covariate (Finak et al, Genome Biology, 2015)
-  - “DESeq2” : DE based on a model using the negative binomial
-    distribution (Love et al, Genome Biology, 2014)
+-   "wilcox" : Wilcoxon rank sum test (default)
+-   "bimod" : Likelihood-ratio test for single cell gene expression, (McDavid et al., Bioinformatics, 2013)
+-   "roc" : Standard AUC classifier
+-   "t" : Student's t-test
+-   "tobit" : Tobit-test for differential gene expression (Trapnell et al., Nature Biotech, 2014)
+-   "poisson" : Likelihood ratio test assuming an underlying poisson distribution. Use only for UMI-based datasets
+-   "negbinom" : Likelihood ratio test assuming an underlying negative binomial distribution. Use only for UMI-based datasets
+-   "MAST" : GLM-framework that treates cellular detection rate as a covariate (Finak et al, Genome Biology, 2015)
+-   "DESeq2" : DE based on a model using the negative binomial distribution (Love et al, Genome Biology, 2014)
 
-#### Run Seurat methods
+#### Run Seurat methods (for Seurat v3)
 
 ``` r
 library(Seurat)
 
-data <- CreateSeuratObject(raw.data = R, min.cells = 3, min.genes = 200, 
-                           project = "ILC",is.expr=1,meta.data=M)
+data <- CreateSeuratObject(C)
 
 # Normalize the data
-scale.factor <- mean(colSums(R))
-data <- NormalizeData(object = data, normalization.method = "LogNormalize",  
-                      scale.factor = scale.factor)
+scale.factor <- mean(colSums(C))
+data <- NormalizeData(object = data, normalization.method = "LogNormalize",
+                     scale.factor = scale.factor)
 
-# regress out number of detected genes.d
-data <- ScaleData(object = data, vars.to.regress = c("nGene"),display.progress = F)
-
-# check that the seurat identity is set to the stages
-head(data@ident)
+# Scale the data (needed for PCA etc)
+data <- ScaleData(object = data)
 
 # run all DE methods
-methods <- c("wilcox","bimod","roc","t","tobit")
+methods <- c("wilcox","bimod","roc","t","negbinom","poisson","LR","MAST","DESeq2")
 DE <- list()
 for (m in methods){
-    outfile <- paste("data/mouse_embryo/DE/seurat_",m,"_8cell_vs_16_cell.tab", sep='')
-    if(!file.exists(outfile)){
-      DE[[m]]<- FindMarkers(object = data,ident.1 = "X8cell",
-                        ident.2 = "X16cell",test.use = m)
-      write.table(DE[[m]],file=outfile,sep="\t",quote=F)
-    }
+ outfile <- paste("data/mouse_embryo/DE/seurat_",m,"_8cell_vs_16_cell.tab", sep='')
+ if(!file.exists(outfile)){
+   DE[[m]]<- FindMarkers(object = data,ident.1 = "X8cell",
+                         ident.2 = "X16cell",test.use = m)
+   write.table(DE[[m]],file=outfile,sep="\t",quote=F)
+ }
 }
 ```
 
@@ -441,35 +365,21 @@ yfit2<-dnorm(xfit2,mean=mean(x2),sd=sd(x2))
 yfit2 <- yfit2*diff(h$mids[1:2])*length(x2) 
 ```
 
------
+------------------------------------------------------------------------
 
-# [Jump to Schedule](../schedule.md)
+[Jump to Schedule](../schedule.md)
+==================================
 
-# [Back to Introduction](session-de.md)
+[Back to Introduction](session-de.md)
+=====================================
 
-# [Next to Methods Evaluation](session-de-methods-evaluation.md)
+[Next to Methods Evaluation](session-de-methods-evaluation.md)
+==============================================================
 
------
+------------------------------------------------------------------------
 
------
+------------------------------------------------------------------------
 
-<div id="refs" class="references">
+Soneson, Charlotte, and Mark D Robinson. 2018. “Bias, robustness and scalability in single-cell differential expression analysis.” *Nature Methods* 15 (February). Nature Publishing Group, a division of Macmillan Publishers Limited. All Rights Reserved.: 255. <https://doi.org/10.1038/nmeth.4612>.
 
-<div id="ref-Soneson2018">
-
-Soneson, Charlotte, and Mark D Robinson. 2018. “Bias, robustness and
-scalability in single-cell differential expression analysis.” *Nature
-Methods* 15 (February): 255. <https://doi.org/10.1038/nmeth.4612>.
-
-</div>
-
-<div id="ref-Wang2019">
-
-Wang, Tianyu, Boyang Li, Craig E Nelson, and Sheida Nabavi. 2019.
-“Comparative analysis of differential gene expression analysis tools
-for single-cell RNA sequencing data.” *BMC Bioinformatics* 20 (1): 40.
-<https://doi.org/10.1186/s12859-019-2599-6>.
-
-</div>
-
-</div>
+Wang, Tianyu, Boyang Li, Craig E Nelson, and Sheida Nabavi. 2019. “Comparative analysis of differential gene expression analysis tools for single-cell RNA sequencing data.” *BMC Bioinformatics* 20 (1): 40. doi:[10.1186/s12859-019-2599-6](https://doi.org/10.1186/s12859-019-2599-6).

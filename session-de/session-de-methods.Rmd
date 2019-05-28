@@ -43,7 +43,7 @@ knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 
 #### scRNA-seq specific methods
 - developed for scRNA-seq
-- e.g. MAST, SCDE, Monocle, Pagoda, D$$^3$$E etc. 
+- e.g. MAST, SCDE, Monocle, Pagoda, D3E, DESeingle, SigEMD, etc. 
 - large number of samples, i.e. cells, for each group we are comparing in single-cell experiments. Thus we can take advantage of the whole distribution of expression values in each group to identify differences between groups 
 -we usually do not have a defined set of experimental conditions; instead we try to  identify the cell groups by using an unsupervised clustering approach.
 
@@ -62,7 +62,7 @@ knitr::opts_chunk$set(fig.path="session-de-files/figures/")
 <figure>
 <!-- <img src="session-de-files/images/methods-stats.png" width="400" height="400"> -->
 <img src="session-de-files/images/methods-stats.png">
-<figcaption>$$Outcome_i=(Model_i)+error_i$$</figcaption>
+<figcaption>$$Outcome_i=Model_i+error_i$$</figcaption>
 </figure>
 
 #### Normal distribution example
@@ -83,15 +83,14 @@ yfit2 <- yfit2*diff(h$mids[1:2])*length(x2)
 lines(xfit2, yfit2, col="black", lwd=2)
 ```
 
-$$t=\frac{x_1-x_2}{s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}$$
+$$t=\frac{m_1-m_2}{s_p\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}$$
 
 #### Generic recipe
 - model e.g. gene expression with random error
-- fit model to the data and/or data to the model, estimate model parameters
+- estimate model parameters
 - use model for prediction and/or inference
-- the better model fits the data the better statistics
-\end{block}
-\end{frame}
+- the better the model fits the data, the better statistics
+
 
 ## Common distributions
 
@@ -136,7 +135,7 @@ hist(counts, col="grey50", xlab="Read Counts", main=expression(paste(mu,"=10, ",
 
 ```
 $$Mean=\mu\cdot(1-d)$$
-$$Variance=\mu\cdot(1-d)\cdot(1+d\cdot\mu+\mu )$$
+$$Variance=\mu\cdot(1-d)\cdot(1+\mu(d+\mu))$$
 
 _d_, dropout rate; dropout rate of a gene is strongly correlated with the mean expression of the gene. Different zero-inflated negative binomial models use different relationships between _mu_ and _d_ and some may fit _mu_ and _d_ to the expression of each gene independently. Implemented in SCDE.
 
@@ -181,7 +180,7 @@ _b_: the rate of inhibition of transcription;
 
 _g_: the rate of transcript production while transcription is active at the locus.
 
-Differential expression methods may test each of the parameters for differences across groups or only one (often _g_). Implemented in BPSC.
+Differential expression methods may test each of the parameters for differences across groups or only one (often _g_). Implemented in BPSC, D3E
 
 May be further expanded to explicitly account for other sources of gene expression differences such as batch-effect or library depth depending on the particular DE algorithm.
 
