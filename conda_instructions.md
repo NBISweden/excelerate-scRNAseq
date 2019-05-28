@@ -3,6 +3,10 @@
 In this workshop you will use the classroom computers, so you'll have all the necessary software installed
 and ready to run everything.  
 
+Briefly, conda allows users to run pieces of code just like the developer created them.
+[conda illustration](logos/conda_illustration.png)
+
+
 If you want to install the same software on your own laptop after the course, you can follow the 
 instructions below to do so. These rely on [Conda environments](https://docs.conda.io/projects/conda/en/latest/user-guide/concepts/environments.html), a self-contained directory that 
 you can use in order to reproduce all your results. Two of the required software are not available as Conda packages, please see the separate [instructions for installing SingleR and CHETAH](https://raw.githubusercontent.com/NBISweden/excelerate-scRNAseq/master/notes_installation.txt).
