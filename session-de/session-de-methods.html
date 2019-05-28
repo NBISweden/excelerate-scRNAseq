@@ -341,12 +341,15 @@ stages &lt;- factor(M$Stage,levels=c(&quot;X8cell&quot;,&quot;X16cell&quot;))
 names(stages) &lt;- colnames(C)
 
 # fit error models - takes a while to run (~20 mins).
-# you can skip this step and load the precomputed file.
+# you can skip this step and load the precomputed file
+# found [in here](https://github.com/NBISweden/excelerate-scRNAseq/blob/master/session-de/scde_error_models.Rdata?raw=true)
+# Make sure to fix the file path in the next line.
 savefile&lt;-&quot;data/mouse_embryo/DE/scde_error_models.Rdata&quot;
 if (file.exists(savefile)){
   load(savefile)
 }else{
   #This works only if flexmix 2.3-13 (not 2.3-15) is installed, cf: http://hms-dbmi.github.io/scde/package.html
+  #check your environment file to change this.
   o.ifm &lt;- scde.error.models(counts = cd, groups = stages, n.cores = 1, 
                              threshold.segmentation = TRUE, save.crossfit.plots = FALSE, 
                              save.model.plots = FALSE, verbose = 0)
@@ -421,6 +424,7 @@ colData(sca)$cngeneson &lt;- scale(cdr2)
 # of the factor.
 
 # takes a while to run, so save to an file so that you do not have to rerun each time
+# You can load it [from here](https://github.com/NBISweden/excelerate-scRNAseq/blob/master/session-de/mast_data.Rdata?raw=true)
 savefile&lt;-&quot;data/mouse_embryo/DE/mast_data.Rdata&quot;
 if (file.exists(savefile)){
   load(savefile)
