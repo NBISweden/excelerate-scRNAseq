@@ -42,6 +42,7 @@ dependencies:
  - clang=4.0.1
  - gcc-6
  - r-tidyverse=1.2.1
+ - r-flexmix=2.3_15 
  # for CHETAH
  - bioconductor-biodist=1.54.0
  - r-dendextend=1.10.0

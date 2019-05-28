@@ -39,6 +39,7 @@ dependencies:
  - bioconductor-singscore=1.2.2
  - clang=4.0.1
  - gcc=4.8.5
+ - r-flexmix=2.3_15
  # for CHETAH
  - bioconductor-biodist=1.54.0
  - r-dendextend=1.10.0
