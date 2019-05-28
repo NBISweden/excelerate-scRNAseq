@@ -21,7 +21,7 @@
 - **10:15-11:00**	Labs: Continue from [Data integration](session-integration/Data_Integration.md), ([Rmd file](session-integration/Data_Integration.Rmd))
 - **11:00-12:00**	Lecture: [Clustering](session-clustering/Clustering.pdf) (Ahmed Mahfouz)
 - **12:00-13:00** _lunch_
-- **13:00-15:00** Labs: [Clustering](session-clustering/Clustering.md), ([Rmd file](session-clustering/Clustering.Rmd)) (Ahmed Mahfouz)
+- **13:00-14:30** Labs: [Clustering](session-clustering/Clustering.md), ([Rmd file](session-clustering/Clustering.Rmd)) (Ahmed Mahfouz)
 - **14:30-15:00** _coffee break_
 - **15:00-17:00**	[Differential expression](session-de/session-de.md) (Ståle Nygård). Lab: [Differential expression](session-de/session-de-methods.html)
 
