@@ -23,7 +23,7 @@
 - **12:00-13:00** _lunch_
 - **13:00-14:30** Labs: [Clustering](session-clustering/Clustering.md), ([Rmd file](session-clustering/Clustering.Rmd)) (Ahmed Mahfouz)
 - **14:30-15:00** _coffee break_
-- **15:00-17:00**	[Differential expression](session-de/session-de.html) (Ståle Nygård)
+- **15:00-17:00**	[Differential expression](session-de/session-de.html), ([Rmd file 1](session-de/session-de-methods.Rmd)), ([Rmd file 2](session-de/session-de-methods-evaluation.Rmd)) (Ståle Nygård)
 
 ### Wednesday 29.5.2019
 - **09:00-11:00**	Lecture: [Cell type identification](session-celltypeid/celltypeidentification-may2019.pptx) (Philip Lijnzaad)
