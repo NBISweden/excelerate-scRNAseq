@@ -152,7 +152,7 @@ obj2 <- ScaleData(obj1,
 ## load saved object
 # obj2 <- readRDS( file = "obj2.RDS" )
 
-obj2 <- RunPCA(obj2, features = VariableFeatures(obj2), verbose=FALSE)
+obj2 <- RunPCA(obj2, features = c(cc.genes$s.genes, cc.genes$g2m.genes), verbose=FALSE)
 
 DimPlot(obj2)
 
