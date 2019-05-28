@@ -31,7 +31,7 @@ In this tutorial, we will use a small dataset of cells from developing mouse emb
 
 ```{r load}
 #load expression matrix
-deng <- readRDS("session-clustering_files/deng-reads.rds")
+deng <- readRDS("~/scrna-seq2019/day2/5-clustering/deng-reads.rds")
 deng
 
 #look at the cell type annotation
