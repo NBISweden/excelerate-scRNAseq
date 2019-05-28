@@ -41,8 +41,8 @@ First we will use the data integration method presented in [Comprehensive Integr
 Load in expression matrix and metadata. The metadata file contains the technology (`tech` column) and cell type annotations (`cell type` column) for each cell in the four datasets.
 
 ```{r load}
-pancreas.data <- readRDS(file = "session-integration_files/pancreas_expression_matrix.rds")
-metadata <- readRDS(file = "session-integration_files/pancreas_metadata.rds")
+pancreas.data <- readRDS(file = "~/scrna-seq2019/day1/3-integration/pancreas_expression_matrix.rds")
+metadata <- readRDS(file = "~/scrna-seq2019/day1/3-integration/pancreas_metadata.rds")
 ```
 
 Create a Seurat object with all datasets.

@@ -8,7 +8,7 @@ of Åsa Björklund*
 ## Content overview
 
   - [Introduction](session-de.md) (\~15 min)
-  - [Common methods](session-de-methods.md) (\~30 min)
+  - [Common methods](session-de-methods.html) (\~30 min)
   - [Methods performance and
     evaluation](session-de-methods-evaluation.md) (\~30 min)
   - [Practicalities & wrap-up](session-de-wrap-up.md) (\~30 min)

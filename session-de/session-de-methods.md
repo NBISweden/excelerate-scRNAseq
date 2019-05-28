@@ -207,7 +207,9 @@ stages <- factor(M$Stage,levels=c("X8cell","X16cell"))
 names(stages) <- colnames(C)
 
 # fit error models - takes a while to run (~20 mins).
-# you can skip this step and load the precomputed file.
+# you can skip this step and load the precomputed file 
+# found [in here](https://github.com/NBISweden/excelerate-scRNAseq/blob/session-de-1/session-de/scde_error_models.Rdata).
+# Remember to change the file path in the next line:
 savefile<-"data/mouse_embryo/DE/scde_error_models.Rdata"
 if (file.exists(savefile)){
   load(savefile)
