@@ -25,7 +25,7 @@ system("curl -O http://cf.10xgenomics.com/samples/cell-exp/3.0.0/pbmc_1k_v3/pbmc
 Read in the data and set up the SingleCellExperiment object.
 
 ```{r}
-# setwd("~/scrna-seq2019/day1/2-normalization/")
+setwd("~/scrna-seq2019/day1/2-normalization/")
 pbmc.mat <- Read10X_h5("pbmc_1k_v3_filtered_feature_bc_matrix.h5")
 pbmc.sce <- SingleCellExperiment(assays = list(counts = as.matrix(pbmc.mat)))
 pbmc.sce <- pbmc.sce[rowSums(counts(pbmc.sce) > 0) > 2,]

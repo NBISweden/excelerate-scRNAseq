@@ -2,11 +2,6 @@
 
 # Single cell RNA-seq data analysis with R
 
--------------
-
-
-## About
-
 This international hands-on course covers several aspects of single cell RNA-seq data analysis, ranging from clustering and differential gene expression analysis to trajectories, cell type identification and spatial transcriptomics. The course is kindly sponsored by the ELIXIR EXCELERATE project.
 
 ### [Schedule](schedule.md)
@@ -15,16 +10,10 @@ This international hands-on course covers several aspects of single cell RNA-seq
 27.05.2019 - 29.05.2019
 
 ### Location
-The event is organised at the CSC Training Facilities located in the premises of CSC at Keilaranta 14, Espoo, Finland. The best way to reach us is by public transportation; more detailed travel tips are available [here](https://www.csc.fi/how-to-reach-us).
+The course is organised in the training room Dogmi at CSC. When you come to the main entrance, turn right to the reception and follow the signs to the course. The street address is Keilaranta 14, Espoo, Finland. You can reach us easily by public transport, please find more details [here](https://www.csc.fi/how-to-reach-us).
 
-### Prerequisities
-In order to participate in this course you should have prior experience in using R.
-
-### Learning objectives
-After this course you will be able to:
-- use a range of bioinformatics tools to analyze single cell RNA-seq data
-- discuss a variety of aspects of single cell RNA-seq data analysis
-- understand the advantages and limitations of single cell RNA-seq data analysis
+### Course computing environment
+The software and data required for the exercises have been installed on the classroom computers, and they are also available in CSC's cPouta cloud as a virtual machine image. Please read the [instructions](computing_environment_instructions.md) and how to install the environment on your own computer after the course with [Conda](conda_instructions.md).
 
 ## Programme
 ### Monday 27.5.2019
@@ -37,20 +26,28 @@ After this course you will be able to:
 ### Tuesday 28.5.2019
 - Dimensionality reduction (PCA, tSNE and UMAP) (Paulo Czarnewski)
 - Clustering (Ahmed Mahfouz)
-- Differential gene expression analysis (Ståle Nygård and Olga Dethlefsen)
+- Differential gene expression analysis (Ståle Nygård)
 
 ### Wednesday 29.5.2019
 - Cell type identification (Philip Lijnzaad)
 - Trajectories/Pseudo-time (Paulo Czarnewski)
 - Spatial transcriptomics (Jeongbin Park and Lars Borm)
 
+### Prerequisities
+In order to participate in this course you should have prior experience in using R.
+
+### Learning objectives
+After this course you will be able to:
+- use a range of bioinformatics tools to analyze single cell RNA-seq data
+- discuss a variety of aspects of single cell RNA-seq data analysis
+- understand the advantages and limitations of single cell RNA-seq data analysis
+
 ### Lecturers
-- Åsa Björklund (SciLifeLab, NBIS, Sweden)
-- Paulo Czarnewski (SciLifeLab, NBIS, Sweden)
+- Åsa Björklund (NBIS, ELIXIR-SE, Sweden)
+- Paulo Czarnewski (NBIS, ELIXIR-SE, Sweden)
 - Ahmed Mahfouz (LUMC, Netherlands)
 - Ståle Nygård (UIO, Norway)
-- Olga Dethlefsen (SciLifeLab, NBIS, Sweden)
-- Jeongbin Park (Charité-Universitätsmedizin Berlin & de.NBI - German Network for Bioinformatics Infrastructure, Germany)
+- Jeongbin Park (Charité-Universitätsmedizin Berlin & de.NBI, Germany)
 - Lars Borm (Karolinska Institutet, Sweden)
 - Jules Gilet (Institut Curie, France)
 - Heli Pessa (University of Helsinki, Finland)
