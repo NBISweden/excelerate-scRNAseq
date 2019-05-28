@@ -335,6 +335,8 @@ lines(decomp$mean[o], decomp$tech[o], col = "red", lwd = 2)
 
 ![](Normalization_with_answers_files/figure-markdown_github/unnamed-chunk-16-1.png)
 
+The trend is not a very good fit to the data. This may be because the dataset is quite small, only about 1000 cells. This problem can be overcome by running trendVar with option 'parametric=TRUE', but only if your dataset follows the expected distribution.
+
 We choose genes that have a biological component that is significantly greater than zero, using a false discovery rate (FDR) of 5%.
 
 ``` r
