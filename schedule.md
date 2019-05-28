@@ -8,7 +8,7 @@
 - **10:15-11:00** Lecture: [Quality control](session-qc/scRNAseq_QC_Asa_Bjorklund_2019.pdf) (Åsa)
 - **11:00-12:00** Labs: [Quality control](session-qc/Quality_control.md) (Åsa & Jules). Bonus exercise (not to be done in the class): [Sequencing QC and Ikura pipeline](session-seqmap/sequencing_qc.md) (Jules).
 - **12:00-13:00** _lunch_
-- **13:00-13:45** Lecture: [Normalisation](session-normalization/Normalization.pdf) and removal of confounding factors (Heli Pessa  & Bishwa Ghimire)
+- **13:00-13:45** Lecture: [Normalisation](session-normalization/Normalization.pdf) and [removal of confounding factors](session-normalization/confounding-factors.pdf) (Heli Pessa  & Bishwa Ghimire)
 - **13:45-14:30** Labs: [Normalisation](session-normalization/Normalization.Rmd) and [removal of confounding factors](session-normalization/confounding-factors.Rmd) (Heli & Bishwa)
 - **14:30-15:00** _coffee break_
 - **15:00-15:45** Lecture: [Data integration](session-integration/Data_Integration.pdf) (Ahmed Mahfouz)
@@ -26,7 +26,7 @@
 - **15:00-17:00**	[Differential expression](session-de/session-de.md) (Ståle Nygård)
 
 ### Wednesday 29.5.2019
-- **09:00-11:00**	Lecture: Cell type identification (Philip Lijnzaad)
+- **09:00-11:00**	Lecture: [Cell type identification](session-celltypeid/celltypeidentification-may2019.pptx) (Philip Lijnzaad)
 - **09:45-10:15** _coffee break_
 - **10:15-11:00**	Labs: [Cell type identification](session-celltypeid/celltypeid.Rmd) (Philip)
 - **11:00-12:00**	Lecture: [Trajectories/Pseudo-time I](session-trajectories/trajectory_inference_analysis.pdf) (Paulo, Jules). [Labs](session-trajectories/session-trajectories.md)
