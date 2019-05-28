@@ -4,7 +4,8 @@ In this workshop you will use the classroom computers, so you'll have all the ne
 and ready to run everything.  
 
 Briefly, conda allows users to run pieces of code just like the developer created them.
-[conda illustration](logos/conda_illustration.png)
+
+![conda illustration](logos/conda_illustration.png)
 
 
 If you want to install the same software on your own laptop after the course, you can follow the 
