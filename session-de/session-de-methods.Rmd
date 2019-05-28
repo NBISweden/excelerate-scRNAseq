@@ -231,12 +231,15 @@ stages <- factor(M$Stage,levels=c("X8cell","X16cell"))
 names(stages) <- colnames(C)
 
 # fit error models - takes a while to run (~20 mins).
-# you can skip this step and load the precomputed file.
+# you can skip this step and load the precomputed file
+# found [in here](https://github.com/NBISweden/excelerate-scRNAseq/blob/master/session-de/scde_error_models.Rdata?raw=true)
+# Make sure to fix the file path in the next line.
 savefile<-"data/mouse_embryo/DE/scde_error_models.Rdata"
 if (file.exists(savefile)){
   load(savefile)
 }else{
   #This works only if flexmix 2.3-13 (not 2.3-15) is installed, cf: http://hms-dbmi.github.io/scde/package.html
+  #check your environment file to change this.
   o.ifm <- scde.error.models(counts = cd, groups = stages, n.cores = 1, 
                              threshold.segmentation = TRUE, save.crossfit.plots = FALSE, 
                              save.model.plots = FALSE, verbose = 0)
