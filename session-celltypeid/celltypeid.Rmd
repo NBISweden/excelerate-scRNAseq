@@ -80,8 +80,8 @@ ovarian <- FindClusters(object = ovarian, resolution=0.5)
 ## (the default resolution yields too manh clusters)
 ovarian <- RunTSNE(object = ovarian)
 ovarian <- RunUMAP(object = ovarian, dims=1:20)
-p1 <- TSNEPlot(ovarian)
-p2 <- UMAPPlot(ovarian)
+p1 <- DimPlot(ovarian, reduction='tsne')
+p2 <- DimPlot(ovarian, reduction='umap')
 plot_grid(p1, p2)
 ```
 
@@ -233,7 +233,7 @@ We will stick to the `main_types` from now on, for brevity.  In order to
 easily visualize the various classifications in the tSNE plots we have
 to add them to `meta.data` slot of the Seurat object:
 
-```
+```{r add_metadata}
 for (ref.set in names(singler$singler) ) {
   types <- singler$singler[[ref.set]]$SingleR.single.main$labels[,1]
   ovarian <- AddMetaData(ovarian,
@@ -602,7 +602,7 @@ that final type, and the average of all the types in the other branch to
 calculate the profiles scores. If you set '# of genes' in this plot to
 200, the heat map will show you the mRNA counts in the input data, of
 these 200 genes, for the selected node and cell type. If you select
-fewer genes it will show (of the 200 genes) the most highly expressed
+fewer genes it will show (of these 200 genes) the most highly expressed
 genes in the input (this is the default), or if `Genes with
 max. difference in the INPUT` is unticked, the 200 genes most highly
 expressed in the reference. `Scale Matrix` will normalize the genes for
@@ -610,7 +610,7 @@ better visualisation.
 
 The tree is again shown at the bottom. 
 
-If you check e.g Node6 (the that separates CD4 and CD8 cells), you
+If you check e.g Node6 (the one that separates CD4 and CD8 cells), you
 should appreciate that using marker genes (`CD4` and `CD8A`
 respectively; can you spot them?) is not going to work: the data is
 noisy, expression is low and the differences in expression of the
