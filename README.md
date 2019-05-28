@@ -15,11 +15,6 @@ The course is organised in the training room Dogmi at CSC. When you come to the 
 ### Course computing environment
 The software and data required for the exercises have been installed on the classroom computers, and they are also available in CSC's cPouta cloud as a virtual machine image. Please read the [instructions](computing_environment_instructions.md) and how to install the environment on your own computer after the course with [Conda](conda_instructions.md).
 
-### Instructions on how to
-- [launch the Conda environment](computing_environment_instructions.md) on the classroom computers
-- [access the virtual machine image](computing_environment_instructions.md) in the cPouta cloud
-- [install the Conda environment](conda_instructions.md) on your own computer after the course
-
 ## Programme
 ### Monday 27.5.2019
 
