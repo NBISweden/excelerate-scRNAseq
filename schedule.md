@@ -32,7 +32,7 @@
 - **11:00-12:00**	Lecture: [Trajectories/Pseudo-time I](session-trajectories/trajectory_inference_analysis.pdf) (Paulo, Jules). [Labs](session-trajectories/session-trajectories.md)
 - **12:00-13:00** _lunch_
 - **13:00-14:00**	Trajectories/Pseudo-time II (Paulo, Jules). [Labs](session-trajectories/session-trajectories.md#part-ii---diffusion-map)
-- **14:00-14:30**	Lecture: Spatial transcriptomics I (Lars Borm)
+- **14:00-14:30**	[Lecture: Spatial transcriptomics I](session-spatial/Spatial_transcriptomics_Elixir2019.pdf) (Lars Borm)
 - **14:30-15:00** _coffee break_
 - **15:00-16:30**	Lecture: Spatial transcriptomics II (Lars Borm & Jeongbin Park)
 - **16:30-17:00** Discussion and questions
