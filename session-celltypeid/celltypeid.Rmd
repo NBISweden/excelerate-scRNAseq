@@ -337,7 +337,7 @@ calling the combination 'B-like' :
 ```{r plot_highlights_allBcells}
 p2 <- DimPlot(ovarian, group.by='hpca_type', reduction=dim.red,
                cells.highlight=findCells(ovarian, 'hpca_type',
-                 c('B_cell', 'Pre-B_cell_CD34-', 'Pro-B_cell_CD34+'),
+                 c('B_cell', 'Pre-B_cell_CD34-'),
                  name="B-like"))
 plot_grid(p1, p2, p3, p4, nrow=2, ncol=2, labels=paste(panel.labels, "all B cell"))
 ```
