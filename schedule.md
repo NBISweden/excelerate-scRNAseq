@@ -1,7 +1,7 @@
 ![logo](logos/excelerate.png)
 
 ## Lecture recordings
-All lectures of this course were recorded and can be found at [CSC](https://www.csc.fi/web/training/-/scrnaseq). 
+All lectures of this course were recorded and can be found at [YouTube](https://www.youtube.com/playlist?list=PLjiXAZO27elC_xnk7gVNM85I2IQl5BEJN).
 
 ## Schedule
 
