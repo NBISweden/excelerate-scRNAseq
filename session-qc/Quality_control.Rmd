@@ -183,7 +183,7 @@ data.filt <- subset(data.filt, cells=setdiff(WhichCells(data.filt),c(high.det.v2
 ncol(data.filt)
 ```
 
-Filter the cells with low gene detection (low quality libraries) with less than 1000 genes for v2 and < 500 for v2.
+Filter the cells with low gene detection (low quality libraries) with less than 1000 genes for v3 and < 500 for v2.
 
 ```{r gene.filt2}
 #start with cells with many genes detected.
